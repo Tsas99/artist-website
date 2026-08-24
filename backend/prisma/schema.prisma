@@ -25,8 +25,14 @@ model Work {
   slug        String   @unique
   description String?
   imageUrl    String?
+  imageUrls   String[] @default([])
   place       String?
   year        Int?
+  material    String?
+  dimensions  String?
+  mediums     String[] @default([])
+  eventName   String?
+  theme       String?
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

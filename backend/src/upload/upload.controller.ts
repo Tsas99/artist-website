@@ -1,5 +1,7 @@
 import {
+  Body,
   Controller,
+  Delete,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -11,15 +13,15 @@ import type { UploadedImageFile } from './upload.service';
 
 @Controller('upload')
 export class UploadController {
-  constructor(private readonly uploadService: UploadService) {}
+  constructor(private readonly uploadService: UploadService) { }
 
   @Post('image')
   @UseInterceptors(FileInterceptor('file'))
   async uploadImage(@UploadedFile() file: UploadedImageFile) {
-    const imageUrl = await this.uploadService.uploadImage(file);
-
-    return {
-      imageUrl,
-    };
+    return this.uploadService.uploadImage(file);
+  }
+  @Delete('image')
+  async deleteImage(@Body('publicId') publicId: string) {
+    return this.uploadService.deleteImage(publicId);
   }
 }

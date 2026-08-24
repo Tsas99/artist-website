@@ -9,6 +9,11 @@ export type UploadedImageFile = {
   size: number;
 };
 
+export type UploadedImageResult = {
+  imageUrl: string;
+  publicId: string;
+}
+
 @Injectable()
 export class UploadService {
   constructor() {
@@ -19,7 +24,7 @@ export class UploadService {
     });
   }
 
-  async uploadImage(file: UploadedImageFile): Promise<string> {
+  async uploadImage(file: UploadedImageFile): Promise<UploadedImageResult> {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
@@ -35,11 +40,17 @@ export class UploadService {
             return reject(new Error('Cloudinary upload failed'));
           }
 
-          resolve(result.secure_url);
+          resolve({
+            imageUrl: result.secure_url,
+            publicId: result.public_id,
+          })
         },
       );
 
       Readable.from(file.buffer).pipe(uploadStream);
     });
+  }
+  async deleteImage(publicId: string) {
+    return cloudinary.uploader.destroy(publicId);
   }
 }

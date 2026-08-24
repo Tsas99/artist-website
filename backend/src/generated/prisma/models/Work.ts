@@ -44,6 +44,10 @@ export type WorkMinAggregateOutputType = {
   imageUrl: string | null
   place: string | null
   year: number | null
+  material: string | null
+  dimensions: string | null
+  eventName: string | null
+  theme: string | null
   isPublished: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -57,6 +61,10 @@ export type WorkMaxAggregateOutputType = {
   imageUrl: string | null
   place: string | null
   year: number | null
+  material: string | null
+  dimensions: string | null
+  eventName: string | null
+  theme: string | null
   isPublished: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -68,8 +76,14 @@ export type WorkCountAggregateOutputType = {
   slug: number
   description: number
   imageUrl: number
+  imageUrls: number
   place: number
   year: number
+  material: number
+  dimensions: number
+  mediums: number
+  eventName: number
+  theme: number
   isPublished: number
   createdAt: number
   updatedAt: number
@@ -95,6 +109,10 @@ export type WorkMinAggregateInputType = {
   imageUrl?: true
   place?: true
   year?: true
+  material?: true
+  dimensions?: true
+  eventName?: true
+  theme?: true
   isPublished?: true
   createdAt?: true
   updatedAt?: true
@@ -108,6 +126,10 @@ export type WorkMaxAggregateInputType = {
   imageUrl?: true
   place?: true
   year?: true
+  material?: true
+  dimensions?: true
+  eventName?: true
+  theme?: true
   isPublished?: true
   createdAt?: true
   updatedAt?: true
@@ -119,8 +141,14 @@ export type WorkCountAggregateInputType = {
   slug?: true
   description?: true
   imageUrl?: true
+  imageUrls?: true
   place?: true
   year?: true
+  material?: true
+  dimensions?: true
+  mediums?: true
+  eventName?: true
+  theme?: true
   isPublished?: true
   createdAt?: true
   updatedAt?: true
@@ -219,8 +247,14 @@ export type WorkGroupByOutputType = {
   slug: string
   description: string | null
   imageUrl: string | null
+  imageUrls: string[]
   place: string | null
   year: number | null
+  material: string | null
+  dimensions: string | null
+  mediums: string[]
+  eventName: string | null
+  theme: string | null
   isPublished: boolean
   createdAt: Date
   updatedAt: Date
@@ -255,8 +289,14 @@ export type WorkWhereInput = {
   slug?: Prisma.StringFilter<"Work"> | string
   description?: Prisma.StringNullableFilter<"Work"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Work"> | string | null
+  imageUrls?: Prisma.StringNullableListFilter<"Work">
   place?: Prisma.StringNullableFilter<"Work"> | string | null
   year?: Prisma.IntNullableFilter<"Work"> | number | null
+  material?: Prisma.StringNullableFilter<"Work"> | string | null
+  dimensions?: Prisma.StringNullableFilter<"Work"> | string | null
+  mediums?: Prisma.StringNullableListFilter<"Work">
+  eventName?: Prisma.StringNullableFilter<"Work"> | string | null
+  theme?: Prisma.StringNullableFilter<"Work"> | string | null
   isPublished?: Prisma.BoolFilter<"Work"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Work"> | Date | string
@@ -268,8 +308,14 @@ export type WorkOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrls?: Prisma.SortOrder
   place?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrderInput | Prisma.SortOrder
+  material?: Prisma.SortOrderInput | Prisma.SortOrder
+  dimensions?: Prisma.SortOrderInput | Prisma.SortOrder
+  mediums?: Prisma.SortOrder
+  eventName?: Prisma.SortOrderInput | Prisma.SortOrder
+  theme?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -284,8 +330,14 @@ export type WorkWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Work"> | string
   description?: Prisma.StringNullableFilter<"Work"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Work"> | string | null
+  imageUrls?: Prisma.StringNullableListFilter<"Work">
   place?: Prisma.StringNullableFilter<"Work"> | string | null
   year?: Prisma.IntNullableFilter<"Work"> | number | null
+  material?: Prisma.StringNullableFilter<"Work"> | string | null
+  dimensions?: Prisma.StringNullableFilter<"Work"> | string | null
+  mediums?: Prisma.StringNullableListFilter<"Work">
+  eventName?: Prisma.StringNullableFilter<"Work"> | string | null
+  theme?: Prisma.StringNullableFilter<"Work"> | string | null
   isPublished?: Prisma.BoolFilter<"Work"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Work"> | Date | string
@@ -297,8 +349,14 @@ export type WorkOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrls?: Prisma.SortOrder
   place?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrderInput | Prisma.SortOrder
+  material?: Prisma.SortOrderInput | Prisma.SortOrder
+  dimensions?: Prisma.SortOrderInput | Prisma.SortOrder
+  mediums?: Prisma.SortOrder
+  eventName?: Prisma.SortOrderInput | Prisma.SortOrder
+  theme?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -318,8 +376,14 @@ export type WorkScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"Work"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
+  imageUrls?: Prisma.StringNullableListFilter<"Work">
   place?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   year?: Prisma.IntNullableWithAggregatesFilter<"Work"> | number | null
+  material?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
+  dimensions?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
+  mediums?: Prisma.StringNullableListFilter<"Work">
+  eventName?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
+  theme?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   isPublished?: Prisma.BoolWithAggregatesFilter<"Work"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Work"> | Date | string
@@ -330,8 +394,14 @@ export type WorkCreateInput = {
   slug: string
   description?: string | null
   imageUrl?: string | null
+  imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
   year?: number | null
+  material?: string | null
+  dimensions?: string | null
+  mediums?: Prisma.WorkCreatemediumsInput | string[]
+  eventName?: string | null
+  theme?: string | null
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -343,8 +413,14 @@ export type WorkUncheckedCreateInput = {
   slug: string
   description?: string | null
   imageUrl?: string | null
+  imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
   year?: number | null
+  material?: string | null
+  dimensions?: string | null
+  mediums?: Prisma.WorkCreatemediumsInput | string[]
+  eventName?: string | null
+  theme?: string | null
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -355,8 +431,14 @@ export type WorkUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediums?: Prisma.WorkUpdatemediumsInput | string[]
+  eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -368,8 +450,14 @@ export type WorkUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediums?: Prisma.WorkUpdatemediumsInput | string[]
+  eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -381,8 +469,14 @@ export type WorkCreateManyInput = {
   slug: string
   description?: string | null
   imageUrl?: string | null
+  imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
   year?: number | null
+  material?: string | null
+  dimensions?: string | null
+  mediums?: Prisma.WorkCreatemediumsInput | string[]
+  eventName?: string | null
+  theme?: string | null
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -393,8 +487,14 @@ export type WorkUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediums?: Prisma.WorkUpdatemediumsInput | string[]
+  eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -406,11 +506,25 @@ export type WorkUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediums?: Prisma.WorkUpdatemediumsInput | string[]
+  eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type WorkCountOrderByAggregateInput = {
@@ -419,8 +533,14 @@ export type WorkCountOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imageUrls?: Prisma.SortOrder
   place?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  material?: Prisma.SortOrder
+  dimensions?: Prisma.SortOrder
+  mediums?: Prisma.SortOrder
+  eventName?: Prisma.SortOrder
+  theme?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -439,6 +559,10 @@ export type WorkMaxOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   place?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  material?: Prisma.SortOrder
+  dimensions?: Prisma.SortOrder
+  eventName?: Prisma.SortOrder
+  theme?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -452,6 +576,10 @@ export type WorkMinOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   place?: Prisma.SortOrder
   year?: Prisma.SortOrder
+  material?: Prisma.SortOrder
+  dimensions?: Prisma.SortOrder
+  eventName?: Prisma.SortOrder
+  theme?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -462,12 +590,30 @@ export type WorkSumOrderByAggregateInput = {
   year?: Prisma.SortOrder
 }
 
+export type WorkCreateimageUrlsInput = {
+  set: string[]
+}
+
+export type WorkCreatemediumsInput = {
+  set: string[]
+}
+
+export type WorkUpdateimageUrlsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type WorkUpdatemediumsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -482,8 +628,14 @@ export type WorkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   slug?: boolean
   description?: boolean
   imageUrl?: boolean
+  imageUrls?: boolean
   place?: boolean
   year?: boolean
+  material?: boolean
+  dimensions?: boolean
+  mediums?: boolean
+  eventName?: boolean
+  theme?: boolean
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -495,8 +647,14 @@ export type WorkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   slug?: boolean
   description?: boolean
   imageUrl?: boolean
+  imageUrls?: boolean
   place?: boolean
   year?: boolean
+  material?: boolean
+  dimensions?: boolean
+  mediums?: boolean
+  eventName?: boolean
+  theme?: boolean
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -508,8 +666,14 @@ export type WorkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   slug?: boolean
   description?: boolean
   imageUrl?: boolean
+  imageUrls?: boolean
   place?: boolean
   year?: boolean
+  material?: boolean
+  dimensions?: boolean
+  mediums?: boolean
+  eventName?: boolean
+  theme?: boolean
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -521,14 +685,20 @@ export type WorkSelectScalar = {
   slug?: boolean
   description?: boolean
   imageUrl?: boolean
+  imageUrls?: boolean
   place?: boolean
   year?: boolean
+  material?: boolean
+  dimensions?: boolean
+  mediums?: boolean
+  eventName?: boolean
+  theme?: boolean
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type WorkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "imageUrl" | "place" | "year" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["work"]>
+export type WorkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "imageUrl" | "imageUrls" | "place" | "year" | "material" | "dimensions" | "mediums" | "eventName" | "theme" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["work"]>
 
 export type $WorkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Work"
@@ -539,8 +709,14 @@ export type $WorkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     slug: string
     description: string | null
     imageUrl: string | null
+    imageUrls: string[]
     place: string | null
     year: number | null
+    material: string | null
+    dimensions: string | null
+    mediums: string[]
+    eventName: string | null
+    theme: string | null
     isPublished: boolean
     createdAt: Date
     updatedAt: Date
@@ -972,8 +1148,14 @@ export interface WorkFieldRefs {
   readonly slug: Prisma.FieldRef<"Work", 'String'>
   readonly description: Prisma.FieldRef<"Work", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Work", 'String'>
+  readonly imageUrls: Prisma.FieldRef<"Work", 'String[]'>
   readonly place: Prisma.FieldRef<"Work", 'String'>
   readonly year: Prisma.FieldRef<"Work", 'Int'>
+  readonly material: Prisma.FieldRef<"Work", 'String'>
+  readonly dimensions: Prisma.FieldRef<"Work", 'String'>
+  readonly mediums: Prisma.FieldRef<"Work", 'String[]'>
+  readonly eventName: Prisma.FieldRef<"Work", 'String'>
+  readonly theme: Prisma.FieldRef<"Work", 'String'>
   readonly isPublished: Prisma.FieldRef<"Work", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Work", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Work", 'DateTime'>
