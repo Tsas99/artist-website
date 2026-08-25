@@ -29,7 +29,9 @@ export default function NewWorkPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+   const [medium, setMedium] = useState('');
 
+  
   function createSlug(value: string) {
     return value
       .toLowerCase()
@@ -155,6 +157,10 @@ export default function NewWorkPage() {
             year: year ? Number(year) : undefined,
             eventName: eventName || undefined,
             theme: theme || undefined,
+            mediums: medium
+               .split(',')
+               .map((item) => item.trim())
+               .filter(Boolean),
             isPublished,
           }),
         },
@@ -231,7 +237,19 @@ export default function NewWorkPage() {
                   required
                 />
               </div>
-
+              <div>
+                <label htmlFor="medium"
+                 className='text-sm font-medium text-neutral-800'
+                > Medium
+                </label>
+                <input type="text" id='medium' name='medium' 
+                   value={medium}
+                    onChange={(event) => setMedium(event.target.value)}
+                    placeholder='Installation, sculpture, ..'
+                     className="mt-2 w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900/10"
+                />
+              </div>
+               
               <div className="md:col-span-2">
                 <label
                   htmlFor="slug"
@@ -257,7 +275,7 @@ export default function NewWorkPage() {
                   Used in the artwork page URL.
                 </p>
               </div>
-
+               
               <div>
                 <label
                   htmlFor="place"
@@ -278,7 +296,7 @@ export default function NewWorkPage() {
                   placeholder="Ulaanbaatar Biennale, Mongolia"
                 />
               </div>
-
+              
               <div>
                 <label
                   htmlFor="year"
@@ -572,318 +590,3 @@ export default function NewWorkPage() {
     </main>
   );
 }
-// "use client";
-
-// import { FormEvent, useState } from "react";
-// import { useRouter } from "next/navigation";
-
-// type UploadedImage = {
-//   imageUrl:string;
-//   publicId:string;
-// }
-
-// export default function NewWorkPage() {
-//   const router = useRouter();
-
-//   const [title, setTitle] = useState("");
-//   const [slug, setSlug] = useState("");
-//   const [place, setPlace] = useState("");
-//   const [year, setYear] = useState("");
-//   const [description, setDescription] = useState("");
-//   const [material, setMaterial] = useState('');
-//   const [dimensions, setDimensions] = useState('');
-//   const [images, setImages] = useState<UploadedImage[]>([])
-//   const [imageUrl, setImageUrl] = useState("");
-//   const [imageUrls, setImageUrls] = useState<string[]>([]);
-//   const [isPublished, setIsPublished] = useState(false);
-
-//   const [isUploading, setIsUploading] = useState(false);
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const [error, setError] = useState("");
-
- 
-
-
-
-//   function createSlug(value: string) {
-//     return value
-//       .toLowerCase()
-//       .trim()
-//       .replace(/['’]/g, "")
-//       .replace(/[^a-z0-9]+/g, "-")
-//       .replace(/^-+|-+$/g, "");
-//   }
-
-//   function handleTitleChange(value: string) {
-//     setTitle(value);
-//     setSlug(createSlug(value));
-//   }
-//   async function handleImagesUpload(files: FileList) {
-//     setIsUploading(true);
-//     setError('');
-
-//     try {
-//       const uploadedImages: UploadedImage[] = [];
-//       for (const file of Array.from(files)) {
-//         const formData = new FormData();
-//         formData.append('file', file);
-
-//         const response = await fetch(
-//           'http://localhost:3001/upload/image',
-//           {
-//             method:'POST',
-//             body: formData,
-//           },
-//         );
-
-//         if (!response.ok) {
-//           throw new Error('Image upload failed');
-//         }
-//         const data = await response.json();
-//         uploadedImages.push({
-//           imageUrl: data.imageUrl,
-//           publicId: data.publicId,
-//         });   
-//       }
-
-//       setImages((current) => [
-//         ...current,
-//         ...uploadedImages,
-//       ]);
-//     } catch (err) {
-//       console.error(err);
-//       setError('Images could not be uploaded.');
-//     } finally {
-//       setIsUploading(false);
-//     }
-//   }
-  
-//   async function handleRemoveImage(image: UploadedImage) {
-//     try {
-//       const response = await fetch('http://localhost:3001/upload/image', {
-//         method:'DELETE',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//           publicId: image.publicId,
-//         }),
-//       });
-      
-//       if (!response.ok) {
-//         throw new Error('Failed to delete image');
-//       }
-
-//       setImages((current) => 
-//       current.filter((item) => item.publicId !== image.publicId),
-
-//     );
-      
-//       if (imageUrl === image.imageUrl) {
-//         setImageUrl('');
-//       }
-//     } catch (err) {
-//       console.error(err);
-//       setError('image could not be removed');
-//     }
-//   }
-
-//   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-//     event.preventDefault();
-//     if (images.length > 0 && !imageUrl) {
-//       setError('Please choose a cover photo');
-//       return;
-//     }
-
-//     setIsSubmitting(true);
-//     setError("");
-
-//     try {
-//       const response = await fetch("http://localhost:3001/works", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           title,
-//           slug,
-//           description: description || undefined,
-//           material: material || undefined,
-//           dimensions: dimensions || undefined,
-//           imageUrl: imageUrl || undefined,
-//           imageUrls: images.map((image) => image.imageUrl),
-//           place: place || undefined,
-//           year: year ? Number(year) : undefined,
-//           isPublished,
-//         }),
-//       });
-
-//       if (!response.ok) {
-//         throw new Error("Failed to create work");
-//       }
-
-//       router.push("/works");
-//       router.refresh();
-//     } catch (err) {
-//       console.error(err);
-//       setError("Work could not be added.");
-//     } finally {
-//       setIsSubmitting(false);
-//     }
-//   }
-
-//   return (
-//     <main className="min-h-screen bg-neutral-50">
-//       <h1 className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">Add New Work</h1>
-
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           <label htmlFor="title">Title</label>
-//           <input
-//             id="title"
-//             name="title"
-//             type="text"
-//             value={title}
-//             onChange={(event) => handleTitleChange(event.target.value)}
-//             required
-//           />
-//         </div>
-
-//         <div>
-//           <label htmlFor="slug">Slug</label>
-//           <input
-//             id="slug"
-//             name="slug"
-//             type="text"
-//             value={slug}
-//             onChange={(event) => setSlug(event.target.value)}
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label htmlFor="material">Material</label>
-//           <input 
-//               type="text"
-//               id="material"
-//               name="matrial"
-//               value={material}
-//               onChange={(event) => setMaterial(event.target.value)}
-//               placeholder="Steel, acrylic, wood"
-
-//             />
-//         </div>
-//         <div>
-//           <label htmlFor="dimensions">Dimensions</label>
-//           <input 
-//             type="text"
-//             id="dimensions"
-//             name="dimensions"
-//             value={dimensions}
-//             onChange={(event) => setDimensions(event.target.value)}
-//             placeholder="120 x 80 x 40 cm"
-//            />
-//         </div>
-//         <div>
-//           <label htmlFor="place">Place / Exhibition</label>
-//           <input
-//             id="place"
-//             name="place"
-//             type="text"
-//             value={place}
-//             onChange={(event) => setPlace(event.target.value)}
-//           />
-//         </div>
-
-//         <div>
-//           <label htmlFor="year">Year</label>
-//           <input
-//             id="year"
-//             name="year"
-//             type="number"
-//             value={year}
-//             onChange={(event) => setYear(event.target.value)}
-//           />
-//         </div>
-
-//         <div>
-//           <label htmlFor="description">Description</label>
-//           <textarea
-//             id="description"
-//             name="description"
-//             value={description}
-//             onChange={(event) => setDescription(event.target.value)}
-//           />
-//         </div>
-
-//         <div>
-//           <label htmlFor="image">Image</label>
-//           <input
-//             id="image"
-//             name="image"
-//             type="file"
-//             accept="image/*"
-//             multiple
-//             onChange={(event) => {
-//               const files = event.target.files;
-
-//               if (files && files.length > 0) {
-//                 handleImagesUpload(files);
-//               }
-//             }}
-//           />
-
-//           {isUploading && <p>Uploading image...</p>}
-
-//           {images.length > 0  && (
-//             <div className="mt-6" >
-//               <p >{images.length} Image uploaded successfully.</p>
-//               {images.map((image, index) => (
-//                 <div key={image.publicId}>
-//                   <img src={image.imageUrl} 
-//                     alt={ `Artwork preview ${index + 1}`}
-//                     width={200}
-//                    />
-//                   {imageUrl === imageUrl ? (
-//                     <p>Cover photo</p>
-//                   ) :(
-//                     <button
-//                      type="button"
-//                      onClick={() => setImageUrl(image.imageUrl)}
-//                     > 
-//                      Choose as cover
-//                      </button>
-//                   ) }
-//                   <button
-//                      type="button"
-//                      onClick={() => handleRemoveImage(image)}
-//                      > 
-//                      Remove
-//                   </button> 
-//                 </div>
-//               ))}
-//             </div>
-//           )}
-//         </div>
-
-//         <div>
-//           <label htmlFor="isPublished">
-//             <input
-//               id="isPublished"
-//               name="isPublished"
-//               type="checkbox"
-//               checked={isPublished}
-//               onChange={(event) => setIsPublished(event.target.checked)}
-//             />
-//             Published
-//           </label>
-//         </div>
-
-//         {error && <p>{error}</p>}
-
-//         <button type="submit" disabled={isSubmitting || isUploading}>
-//           {isSubmitting ? "Adding..." : "Add Project"}
-//         </button>
-//       </form>
-//     </main>
-//   );
-// }

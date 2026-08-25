@@ -9,7 +9,7 @@ export class CreateWorkDto {
   theme?: string;
   place?: string;
   material?: string;
-  dimendions?: string;
+  dimensions?: string;
   year?: number;
   isPublished?: boolean;
 
