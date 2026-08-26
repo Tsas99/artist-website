@@ -4,40 +4,46 @@ import { CreateWorkDto } from "./dto/create-work.dto";
 import { UpdateWorkDto } from "./dto/update-work.dto";
 
 @Injectable()
-export class WorkService{
-constructor(private readonly prisma: PrismaService) {}
+export class WorkService {
+  constructor(private readonly prisma: PrismaService) { }
 
-create(createWorkDto: CreateWorkDto) {
-  return this.prisma.work.create({
-    data:createWorkDto,
-  });
-}
+  create(createWorkDto: CreateWorkDto) {
+    return this.prisma.work.create({
+      data: createWorkDto,
+    });
+  }
 
 
-findAll() {
- return this.prisma.work.findMany({
-  orderBy: {
-    createdAt: 'desc'
-  },
- });
-}
+  findAll() {
+    return this.prisma.work.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      },
+    });
+  }
 
-findOne(id: number) {
-  return this.prisma.work.findUnique({
-    where:{ id },
-  });
-}
+  findOne(id: number) {
+    return this.prisma.work.findUnique({
+      where: { id },
+    });
+  }
 
-update(id: number, updateWorkDto: UpdateWorkDto) {
+  findBySlug(slug: string) {
+    return this.prisma.work.findUnique({
+      where: { slug },
+    });
+  }
+
+  update(id: number, updateWorkDto: UpdateWorkDto) {
     return this.prisma.work.update({
       where: { id },
       data: updateWorkDto,
     });
   }
 
-remove(id: number ) {
-  return this.prisma.work.delete({
-    where: { id }
-  });
-} 
+  remove(id: number) {
+    return this.prisma.work.delete({
+      where: { id }
+    });
+  }
 }

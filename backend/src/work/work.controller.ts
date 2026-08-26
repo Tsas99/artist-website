@@ -1,4 +1,4 @@
-import{
+import {
   Controller,
   Get,
   Post,
@@ -12,9 +12,9 @@ import { WorkService } from './work.service';
 import { CreateWorkDto } from './dto/create-work.dto';
 import { UpdateWorkDto } from './dto/update-work.dto';
 
-@Controller ('works')
-export class WorkController{
-  constructor(private readonly workService: WorkService) {}
+@Controller('works')
+export class WorkController {
+  constructor(private readonly workService: WorkService) { }
   @Post()
   create(@Body() CreateWorkDto: CreateWorkDto) {
     return this.workService.create(CreateWorkDto);
@@ -25,11 +25,16 @@ export class WorkController{
     return this.workService.findAll();
   }
 
+  @Get('slug/:slug')
+  findBySlug(@Param('slug') slug: string) {
+    return this.workService.findBySlug(slug);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.workService.findOne(+id);
   }
-  
+
   @Patch('id')
   update(
     @Param('id') id: string,
@@ -42,6 +47,6 @@ export class WorkController{
   remove(@Param('id') id: string) {
     return this.workService.remove(+id);
   }
-  
-  
+
+
 }

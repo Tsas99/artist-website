@@ -19,22 +19,27 @@ type Work = {
   isPublished: boolean;
 };
 
-async function getWork(slug: string): Promise<Work | null> {
-  const response = await fetch('http://localhost:3001/works', {
-    cache: 'no-store',
-  });
+async function getWork(slug: string) : Promise<Work | null> {
+  const response = await fetch(
+    `http://localhost:3001/works/slug/${encodeURIComponent(slug)}`,
+    {
+      cache: "no-store",
+    
+    },
+  );
 
+  if (response.status === 404) {
+    return null;
+  }
   if (!response.ok) {
     throw new Error('Failed to fetch work');
   }
 
-  const works: Work[] = await response.json();
-
-  return (
-    works.find(
-      (work) => work.slug === slug && work.isPublished,
-    ) ?? null
-  );
+  const work: Work = await response.json();
+  if (!work || !work.isPublished) {
+    return null;
+  }
+  return work
 }
 
 export default async function WorkDetailPage({
