@@ -19,6 +19,10 @@ type Work = {
   year: number | null;
   isPublished: boolean;
 };
+type UploadedImage = {
+  imageUrl: string;
+  publicId: string;
+};
 
 type EditableField =
   | 'title'
@@ -46,39 +50,43 @@ export default function AdminWorkDetailPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+
+  const [newImages, setNewImages] = useState<UploadedImage[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+
   const [error, setError] = useState('');
 
   useEffect(() => {
-  if (!id) {
-    return;
-  }
-
-  async function loadWork() {
-    try {
-      setIsLoading(true);
-      setError('');
-
-      const response = await fetch(
-        `http://localhost:3001/works/${id}`,
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to load work');
-      }
-
-      const data: Work = await response.json();
-
-      setWork(data);
-    } catch (err) {
-      console.error(err);
-      setError('Work could not be loaded.');
-    } finally {
-      setIsLoading(false);
+    if (!id) {
+      return;
     }
-  }
 
-  loadWork();
-}, [id]);
+    async function loadWork() {
+      try {
+        setIsLoading(true);
+        setError('');
+
+        const response = await fetch(
+          `http://localhost:3001/works/${id}`,
+        );
+
+        if (!response.ok) {
+          throw new Error('Failed to load work');
+        }
+
+        const data: Work = await response.json();
+
+        setWork(data);
+      } catch (err) {
+        console.error(err);
+        setError('Work could not be loaded.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadWork();
+  }, [id]);
 
   function startEditing(field: EditableField) {
     if (!work) return;
@@ -136,13 +144,13 @@ export default function AdminWorkDetailPage() {
         },
       );
 
-     if (!response.ok) {
+      if (!response.ok) {
         const errorData = await response.text();
 
-         console.error('Update failed:', errorData);
+        console.error('Update failed:', errorData);
 
-         throw new Error(errorData || 'Failed to update field');
-     }
+        throw new Error(errorData || 'Failed to update field');
+      }
 
       const updatedWork: Work = await response.json();
 
@@ -217,39 +225,172 @@ export default function AdminWorkDetailPage() {
     label: string;
     multiline?: boolean;
   }[] = [
-    { field: 'title', label: 'Title' },
-    { field: 'slug', label: 'Slug' },
-    { field: 'mediums', label: 'Medium' },
-    { field: 'year', label: 'Year' },
-    { field: 'eventName', label: 'Event name' },
-    { field: 'theme', label: 'Theme' },
-    { field: 'place', label: 'Place' },
-    { field: 'material', label: 'Material' },
-    { field: 'dimensions', label: 'Dimensions' },
-    {
-      field: 'description',
-      label: 'Description',
-      multiline: true,
-    },
-  ];
+      { field: 'title', label: 'Title' },
+      { field: 'slug', label: 'Slug' },
+      { field: 'mediums', label: 'Medium' },
+      { field: 'year', label: 'Year' },
+      { field: 'eventName', label: 'Event name' },
+      { field: 'theme', label: 'Theme' },
+      { field: 'place', label: 'Place' },
+      { field: 'material', label: 'Material' },
+      { field: 'dimensions', label: 'Dimensions' },
+      {
+        field: 'description',
+        label: 'Description',
+        multiline: true,
+      },
+    ];
 
   function displayValue(field: EditableField) {
-  if (!work) {
-    return 'Not added';
+    if (!work) {
+      return 'Not added';
+    }
+
+    if (field === 'mediums') {
+      return work.mediums.length
+        ? work.mediums.join(', ')
+        : 'Not added';
+    }
+
+    if (field === 'year') {
+      return work.year ? String(work.year) : 'Not added';
+    }
+
+    return work[field] || 'Not added';
   }
 
-  if (field === 'mediums') {
-    return work.mediums.length
-      ? work.mediums.join(', ')
-      : 'Not added';
+  async function handleImagesUpload(files: FileList) {
+    if (!work) return;
+
+    setIsUploading(true);
+    setError('');
+
+    try {
+      const uploaded: UploadedImage[] = [];
+
+      for (const file of Array.from(files)) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch('http://localhost:3001/upload/image', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Image upload failed');
+        }
+
+        const data = await response.json();
+
+        uploaded.push({
+          imageUrl: data.imageUrl,
+          publicId: data.publicId,
+        });
+      }
+
+      const updatedImageUrls = [
+        ...work.imageUrls,
+        ...uploaded.map((image) => image.imageUrl),
+      ];
+
+      const updateResponse = await fetch(
+        `http://localhost:3001/works/${work.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            imageUrls: updatedImageUrls,
+          }),
+        },
+      );
+
+      if (!updateResponse.ok) {
+        throw new Error('Failed to update gallery');
+      }
+
+      const updatedWork: Work = await updateResponse.json();
+
+      setWork(updatedWork);
+      setNewImages((current) => [...current, ...uploaded]);
+    } catch (err) {
+      console.error(err);
+      setError('Images could not be uploaded.');
+    } finally {
+      setIsUploading(false);
+    }
   }
 
-  if (field === 'year') {
-    return work.year ? String(work.year) : 'Not added';
+  async function setCoverImage(url: string) {
+    if (!work) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/works/${work.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            imageUrl: url,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to change cover image');
+      }
+
+      const updatedWork: Work = await response.json();
+      setWork(updatedWork);
+    } catch (err) {
+      console.error(err);
+      setError('Cover image could not be changed.');
+    }
   }
 
-  return work[field] || 'Not added';
-}
+  async function removeImageFromGallery(url: string) {
+    if (!work) return;
+
+    const updatedImageUrls = work.imageUrls.filter(
+      (image) => image !== url,
+    );
+
+    const newCover =
+      work.imageUrl === url
+        ? updatedImageUrls[0] ?? null
+        : work.imageUrl;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/works/${work.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            imageUrls: updatedImageUrls,
+            imageUrl: newCover,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to remove image');
+      }
+
+      const updatedWork: Work = await response.json();
+      setWork(updatedWork);
+    } catch (err) {
+      console.error(err);
+      setError('Image could not be removed.');
+    }
+  }
+
 
   return (
     <main className="min-h-screen bg-neutral-50">
@@ -276,11 +417,10 @@ export default function AdminWorkDetailPage() {
           <button
             type="button"
             onClick={togglePublished}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-              work.isPublished
-                ? 'bg-green-50 text-green-700 hover:bg-green-100'
-                : 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300'
-            }`}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${work.isPublished
+              ? 'bg-green-50 text-green-700 hover:bg-green-100'
+              : 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300'
+              }`}
           >
             {work.isPublished ? 'Published' : 'Draft'}
           </button>
@@ -309,11 +449,10 @@ export default function AdminWorkDetailPage() {
             return (
               <div
                 key={field}
-                className={`p-5 sm:p-6 ${
-                  index !== fields.length - 1
-                    ? 'border-b border-neutral-200'
-                    : ''
-                }`}
+                className={`p-5 sm:p-6 ${index !== fields.length - 1
+                  ? 'border-b border-neutral-200'
+                  : ''
+                  }`}
               >
                 <div className="flex items-start justify-between gap-6">
                   <div className="min-w-0 flex-1">
@@ -374,11 +513,10 @@ export default function AdminWorkDetailPage() {
                       </div>
                     ) : (
                       <p
-                        className={`mt-2 text-sm leading-7 ${
-                          displayValue(field) === 'Not added'
-                            ? 'text-neutral-400'
-                            : 'whitespace-pre-line text-neutral-800'
-                        }`}
+                        className={`mt-2 text-sm leading-7 ${displayValue(field) === 'Not added'
+                          ? 'text-neutral-400'
+                          : 'whitespace-pre-line text-neutral-800'
+                          }`}
                       >
                         {displayValue(field)}
                       </p>
@@ -398,6 +536,97 @@ export default function AdminWorkDetailPage() {
               </div>
             );
           })}
+        </section>
+        <section className="mb-8 rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-neutral-950">
+                Images
+              </h2>
+
+              <p className="mt-1 text-sm text-neutral-500">
+                Add images, choose a cover, or remove images from this work.
+              </p>
+            </div>
+
+            <label className="inline-flex cursor-pointer items-center justify-center rounded-xl bg-neutral-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800">
+              {isUploading ? 'Uploading...' : 'Add images'}
+
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="sr-only"
+                disabled={isUploading}
+                onChange={(event) => {
+                  const files = event.target.files;
+
+                  if (files && files.length > 0) {
+                    handleImagesUpload(files);
+                  }
+                }}
+              />
+            </label>
+          </div>
+
+          {work.imageUrls.length > 0 ? (
+            <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {work.imageUrls.map((url, index) => {
+                const isCover = work.imageUrl === url;
+
+                return (
+                  <div
+                    key={`${url}-${index}`}
+                    className="overflow-hidden rounded-2xl border border-neutral-200"
+                  >
+                    <div className="relative aspect-[4/3] bg-neutral-100">
+                      <img
+                        src={url}
+                        alt={`${work.title} image ${index + 1}`}
+                        className="h-full w-full object-cover"
+                      />
+
+                      {isCover && (
+                        <span className="absolute left-3 top-3 rounded-full bg-neutral-950 px-3 py-1 text-xs font-medium text-white">
+                          Cover
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="space-y-2 p-4">
+                      {!isCover && (
+                        <button
+                          type="button"
+                          onClick={() => setCoverImage(url)}
+                          className="min-h-11 w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-neutral-50"
+                        >
+                          Choose as cover
+                        </button>
+                      )}
+
+                      {isCover && (
+                        <div className="flex min-h-11 items-center justify-center rounded-xl bg-neutral-100 px-4 py-2 text-sm font-medium text-neutral-700">
+                          Cover photo
+                        </div>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => removeImageFromGallery(url)}
+                        className="min-h-11 w-full rounded-xl px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="mt-6 text-sm text-neutral-500">
+              No images added yet.
+            </p>
+          )}
         </section>
       </div>
     </main>

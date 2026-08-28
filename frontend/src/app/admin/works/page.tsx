@@ -1,3 +1,4 @@
+import DeleteWork from '@/components/admin/DeleteWork';
 import Link from 'next/link';
 
 type Work = {
@@ -10,9 +11,9 @@ type Work = {
 };
 
 async function getWorks(): Promise<Work[]> {
-const response = await fetch('http://127.0.0.1:3001/works', {
-  cache: 'no-store',
-});
+  const response = await fetch('http://127.0.0.1:3001/works', {
+    cache: 'no-store',
+  });
 
   if (!response.ok) {
     throw new Error('Failed to fetch works');
@@ -92,11 +93,10 @@ export default async function AdminWorksPage() {
                       </h2>
 
                       <span
-                        className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-                          work.isPublished
-                            ? 'bg-green-50 text-green-700'
-                            : 'bg-neutral-100 text-neutral-500'
-                        }`}
+                        className={`rounded-full px-2.5 py-1 text-xs font-medium ${work.isPublished
+                          ? 'bg-green-50 text-green-700'
+                          : 'bg-neutral-100 text-neutral-500'
+                          }`}
                       >
                         {work.isPublished ? 'Published' : 'Draft'}
                       </span>
@@ -111,27 +111,25 @@ export default async function AdminWorksPage() {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 sm:justify-end">
+                  <div className="flex flex-wrap items-center gap-2 sm:justify-end">
                     <Link
                       href={`/works/${work.slug}`}
-                      className="min-h-10 rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50"
+                      className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-300 px-3 text-sm font-medium leading-none text-neutral-700 transition hover:bg-neutral-50"
                     >
                       View
                     </Link>
 
                     <Link
-                       href={`/admin/works/${work.id}`}
-                      className="min-h-10 rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-neutral-50"
+                      href={`/admin/works/${work.id}`}
+                      className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-300 px-3 text-sm font-medium leading-none text-neutral-900 transition hover:bg-neutral-50"
                     >
-                     Manage
+                      Manage
                     </Link>
 
-                    <button
-                      type="button"
-                      className="min-h-10 rounded-lg px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
-                    >
-                      Delete
-                    </button>
+                    <DeleteWork
+                      workId={work.id}
+                      title={work.title}
+                    />
                   </div>
                 </div>
               </article>
