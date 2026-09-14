@@ -10,7 +10,7 @@ type Work = {
 };
 
 async function getWorks(): Promise<Work[]> {
-  const response = await fetch('http://localhost:3001/works', {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/works`, {
     cache: 'no-store',
   });
 

@@ -385,7 +385,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Artist: 'Artist',
-  Work: 'Work'
+  Work: 'Work',
+  WorkMedia: 'WorkMedia'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -401,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "artist" | "work"
+    modelProps: "artist" | "work" | "workMedia"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -553,6 +554,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WorkMedia: {
+      payload: Prisma.$WorkMediaPayload<ExtArgs>
+      fields: Prisma.WorkMediaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WorkMediaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WorkMediaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload>
+        }
+        findFirst: {
+          args: Prisma.WorkMediaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WorkMediaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload>
+        }
+        findMany: {
+          args: Prisma.WorkMediaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload>[]
+        }
+        create: {
+          args: Prisma.WorkMediaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload>
+        }
+        createMany: {
+          args: Prisma.WorkMediaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WorkMediaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload>[]
+        }
+        delete: {
+          args: Prisma.WorkMediaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload>
+        }
+        update: {
+          args: Prisma.WorkMediaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload>
+        }
+        deleteMany: {
+          args: Prisma.WorkMediaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WorkMediaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WorkMediaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload>[]
+        }
+        upsert: {
+          args: Prisma.WorkMediaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkMediaPayload>
+        }
+        aggregate: {
+          args: Prisma.WorkMediaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorkMedia>
+        }
+        groupBy: {
+          args: Prisma.WorkMediaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkMediaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WorkMediaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkMediaCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -624,6 +699,19 @@ export const WorkScalarFieldEnum = {
 } as const
 
 export type WorkScalarFieldEnum = (typeof WorkScalarFieldEnum)[keyof typeof WorkScalarFieldEnum]
+
+
+export const WorkMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  publicId: 'publicId',
+  type: 'type',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  workId: 'workId'
+} as const
+
+export type WorkMediaScalarFieldEnum = (typeof WorkMediaScalarFieldEnum)[keyof typeof WorkMediaScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -830,6 +918,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   artist?: Prisma.ArtistOmit
   work?: Prisma.WorkOmit
+  workMedia?: Prisma.WorkMediaOmit
 }
 
 /* Types for Logging */

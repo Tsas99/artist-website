@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { API_URL } from '@/lib/api';
 
 export type Work = {
     id: number;
@@ -123,7 +124,7 @@ export default function WorkInfoEditor({
 
         try {
             const response = await fetch(
-                `http://localhost:3001/works/${work.id}`,
+                `${API_URL}/works/${work.id}`,
                 {
                     method: 'PATCH',
                     headers: {
@@ -162,8 +163,8 @@ export default function WorkInfoEditor({
                     <div
                         key={field}
                         className={`p-5 sm:p-6 ${index !== fields.length - 1
-                                ? 'border-b border-neutral-200'
-                                : ''
+                            ? 'border-b border-neutral-200'
+                            : ''
                             }`}
                     >
                         <div className="flex items-start justify-between gap-6">
@@ -226,8 +227,8 @@ export default function WorkInfoEditor({
                                 ) : (
                                     <p
                                         className={`mt-2 text-sm leading-7 ${value === 'Not added'
-                                                ? 'text-neutral-400'
-                                                : 'whitespace-pre-line text-neutral-800'
+                                            ? 'text-neutral-400'
+                                            : 'whitespace-pre-line text-neutral-800'
                                             }`}
                                     >
                                         {value}

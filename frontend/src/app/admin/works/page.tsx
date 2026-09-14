@@ -1,4 +1,5 @@
 import DeleteWork from '@/components/admin/DeleteWork';
+import { API_URL } from '@/lib/api';
 import Link from 'next/link';
 
 type Work = {
@@ -11,7 +12,7 @@ type Work = {
 };
 
 async function getWorks(): Promise<Work[]> {
-  const response = await fetch('http://127.0.0.1:3001/works', {
+  const response = await fetch(`${API_URL}/works`, {
     cache: 'no-store',
   });
 

@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { WorkModule } from './work/work.module';
 import { ConfigModule } from '@nestjs/config';
 import { UploadModule } from './upload/upload.module';
+import { WorkMediaModule } from './work-media/work-media.module';
 
 
 @Module({
@@ -13,7 +14,7 @@ import { UploadModule } from './upload/upload.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    PrismaModule, ArtistModule, WorkModule, UploadModule],
+    PrismaModule, ArtistModule, WorkModule, UploadModule, WorkMediaModule],
   controllers: [AppController],
   providers: [AppService],
 })

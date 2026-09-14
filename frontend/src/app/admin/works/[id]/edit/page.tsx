@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { API_URL } from '@/lib/api';
 
 type Work = {
   id: number;
@@ -45,7 +46,7 @@ export default function EditWorkPage() {
     async function loadWork() {
       try {
         const response = await fetch(
-          `http://localhost:3001/works/${id}`,
+          `${API_URL}/works/${id}`,
         );
 
         if (!response.ok) {
@@ -86,7 +87,7 @@ export default function EditWorkPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/works/${id}`,
+        `${API_URL}/works/${id}`,
         {
           method: 'PATCH',
           headers: {

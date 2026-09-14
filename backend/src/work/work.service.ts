@@ -1,49 +1,181 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
-import { CreateWorkDto } from "./dto/create-work.dto";
-import { UpdateWorkDto } from "./dto/update-work.dto";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+
+import { Prisma } from '../generated/prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+
+import { CreateWorkDto } from './dto/create-work.dto';
+import { UpdateWorkDto } from './dto/update-work.dto';
 
 @Injectable()
 export class WorkService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
-  create(createWorkDto: CreateWorkDto) {
-    return this.prisma.work.create({
-      data: createWorkDto,
-    });
+  async create(createWorkDto: CreateWorkDto) {
+    const { media, ...workData } = createWorkDto;
+
+    try {
+      return await this.prisma.$transaction(async (tx) => {
+        const work = await tx.work.create({
+          data: workData,
+        });
+
+        if (media?.length) {
+          await tx.workMedia.createMany({
+            data: media.map((item, index) => ({
+              url: item.url,
+              publicId: item.publicId,
+              type: item.type,
+              sortOrder: item.sortOrder ?? index,
+              workId: work.id,
+            })),
+          });
+        }
+
+        return tx.work.findUnique({
+          where: {
+            id: work.id,
+          },
+          include: {
+            media: {
+              orderBy: {
+                sortOrder: 'asc',
+              },
+            },
+          },
+        });
+      });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new ConflictException(
+          'A work with this slug already exists.',
+        );
+      }
+
+      throw error;
+    }
   }
-
 
   findAll() {
     return this.prisma.work.findMany({
       orderBy: {
-        createdAt: 'desc'
+        createdAt: 'desc',
+      },
+      include: {
+        media: {
+          orderBy: {
+            sortOrder: 'asc',
+          },
+        },
       },
     });
   }
 
-  findOne(id: number) {
-    return this.prisma.work.findUnique({
-      where: { id },
+  async findOne(id: number) {
+    const work = await this.prisma.work.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        media: {
+          orderBy: {
+            sortOrder: 'asc',
+          },
+        },
+      },
     });
+
+    if (!work) {
+      throw new NotFoundException('Work not found.');
+    }
+
+    return work;
   }
 
-  findBySlug(slug: string) {
-    return this.prisma.work.findUnique({
-      where: { slug },
+  async findBySlug(slug: string) {
+    const work = await this.prisma.work.findUnique({
+      where: {
+        slug,
+      },
+      include: {
+        media: {
+          orderBy: {
+            sortOrder: 'asc',
+          },
+        },
+      },
     });
+
+    if (!work) {
+      throw new NotFoundException('Work not found.');
+    }
+
+    return work;
   }
 
-  update(id: number, updateWorkDto: UpdateWorkDto) {
-    return this.prisma.work.update({
-      where: { id },
-      data: updateWorkDto,
-    });
+  async update(
+    id: number,
+    updateWorkDto: UpdateWorkDto,
+  ) {
+    const { media, ...workData } = updateWorkDto;
+
+    try {
+      return await this.prisma.work.update({
+        where: {
+          id,
+        },
+        data: workData,
+        include: {
+          media: {
+            orderBy: {
+              sortOrder: 'asc',
+            },
+          },
+        },
+      });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError
+      ) {
+        if (error.code === 'P2002') {
+          throw new ConflictException(
+            'A work with this slug already exists.',
+          );
+        }
+
+        if (error.code === 'P2025') {
+          throw new NotFoundException(
+            'Work not found.',
+          );
+        }
+      }
+
+      throw error;
+    }
   }
 
-  remove(id: number) {
-    return this.prisma.work.delete({
-      where: { id }
-    });
+  async remove(id: number) {
+    try {
+      return await this.prisma.work.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException('Work not found.');
+      }
+
+      throw error;
+    }
   }
 }

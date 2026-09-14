@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Artist: 'Artist',
-  Work: 'Work'
+  Work: 'Work',
+  WorkMedia: 'WorkMedia'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -103,6 +104,19 @@ export const WorkScalarFieldEnum = {
 } as const
 
 export type WorkScalarFieldEnum = (typeof WorkScalarFieldEnum)[keyof typeof WorkScalarFieldEnum]
+
+
+export const WorkMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  publicId: 'publicId',
+  type: 'type',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  workId: 'workId'
+} as const
+
+export type WorkMediaScalarFieldEnum = (typeof WorkMediaScalarFieldEnum)[keyof typeof WorkMediaScalarFieldEnum]
 
 
 export const SortOrder = {

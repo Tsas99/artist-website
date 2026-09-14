@@ -1,6 +1,7 @@
 'use client';
 
 import type { Work } from './WorkInfoEditor';
+import { API_URL } from '@/lib/api';
 
 type Props = {
     work: Work;
@@ -18,7 +19,7 @@ export default function WorkPublishToggle({
             onError('');
 
             const response = await fetch(
-                `http://localhost:3001/works/${work.id}`,
+                `${API_URL}/works/${work.id}`,
                 {
                     method: 'PATCH',
                     headers: {
@@ -48,8 +49,8 @@ export default function WorkPublishToggle({
             type="button"
             onClick={togglePublished}
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${work.isPublished
-                    ? 'bg-green-50 text-green-700 hover:bg-green-100'
-                    : 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300'
+                ? 'bg-green-50 text-green-700 hover:bg-green-100'
+                : 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300'
                 }`}
         >
             {work.isPublished ? 'Published' : 'Draft'}

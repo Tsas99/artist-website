@@ -300,6 +300,7 @@ export type WorkWhereInput = {
   isPublished?: Prisma.BoolFilter<"Work"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Work"> | Date | string
+  media?: Prisma.WorkMediaListRelationFilter
 }
 
 export type WorkOrderByWithRelationInput = {
@@ -319,6 +320,7 @@ export type WorkOrderByWithRelationInput = {
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  media?: Prisma.WorkMediaOrderByRelationAggregateInput
 }
 
 export type WorkWhereUniqueInput = Prisma.AtLeast<{
@@ -341,6 +343,7 @@ export type WorkWhereUniqueInput = Prisma.AtLeast<{
   isPublished?: Prisma.BoolFilter<"Work"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Work"> | Date | string
+  media?: Prisma.WorkMediaListRelationFilter
 }, "id" | "slug">
 
 export type WorkOrderByWithAggregationInput = {
@@ -405,6 +408,7 @@ export type WorkCreateInput = {
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  media?: Prisma.WorkMediaCreateNestedManyWithoutWorkInput
 }
 
 export type WorkUncheckedCreateInput = {
@@ -424,6 +428,7 @@ export type WorkUncheckedCreateInput = {
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  media?: Prisma.WorkMediaUncheckedCreateNestedManyWithoutWorkInput
 }
 
 export type WorkUpdateInput = {
@@ -442,6 +447,7 @@ export type WorkUpdateInput = {
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  media?: Prisma.WorkMediaUpdateManyWithoutWorkNestedInput
 }
 
 export type WorkUncheckedUpdateInput = {
@@ -461,6 +467,7 @@ export type WorkUncheckedUpdateInput = {
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  media?: Prisma.WorkMediaUncheckedUpdateManyWithoutWorkNestedInput
 }
 
 export type WorkCreateManyInput = {
@@ -590,6 +597,11 @@ export type WorkSumOrderByAggregateInput = {
   year?: Prisma.SortOrder
 }
 
+export type WorkScalarRelationFilter = {
+  is?: Prisma.WorkWhereInput
+  isNot?: Prisma.WorkWhereInput
+}
+
 export type WorkCreateimageUrlsInput = {
   set: string[]
 }
@@ -620,6 +632,139 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type WorkCreateNestedOneWithoutMediaInput = {
+  create?: Prisma.XOR<Prisma.WorkCreateWithoutMediaInput, Prisma.WorkUncheckedCreateWithoutMediaInput>
+  connectOrCreate?: Prisma.WorkCreateOrConnectWithoutMediaInput
+  connect?: Prisma.WorkWhereUniqueInput
+}
+
+export type WorkUpdateOneRequiredWithoutMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.WorkCreateWithoutMediaInput, Prisma.WorkUncheckedCreateWithoutMediaInput>
+  connectOrCreate?: Prisma.WorkCreateOrConnectWithoutMediaInput
+  upsert?: Prisma.WorkUpsertWithoutMediaInput
+  connect?: Prisma.WorkWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WorkUpdateToOneWithWhereWithoutMediaInput, Prisma.WorkUpdateWithoutMediaInput>, Prisma.WorkUncheckedUpdateWithoutMediaInput>
+}
+
+export type WorkCreateWithoutMediaInput = {
+  title: string
+  slug: string
+  description?: string | null
+  imageUrl?: string | null
+  imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
+  place?: string | null
+  year?: number | null
+  material?: string | null
+  dimensions?: string | null
+  mediums?: Prisma.WorkCreatemediumsInput | string[]
+  eventName?: string | null
+  theme?: string | null
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type WorkUncheckedCreateWithoutMediaInput = {
+  id?: number
+  title: string
+  slug: string
+  description?: string | null
+  imageUrl?: string | null
+  imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
+  place?: string | null
+  year?: number | null
+  material?: string | null
+  dimensions?: string | null
+  mediums?: Prisma.WorkCreatemediumsInput | string[]
+  eventName?: string | null
+  theme?: string | null
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type WorkCreateOrConnectWithoutMediaInput = {
+  where: Prisma.WorkWhereUniqueInput
+  create: Prisma.XOR<Prisma.WorkCreateWithoutMediaInput, Prisma.WorkUncheckedCreateWithoutMediaInput>
+}
+
+export type WorkUpsertWithoutMediaInput = {
+  update: Prisma.XOR<Prisma.WorkUpdateWithoutMediaInput, Prisma.WorkUncheckedUpdateWithoutMediaInput>
+  create: Prisma.XOR<Prisma.WorkCreateWithoutMediaInput, Prisma.WorkUncheckedCreateWithoutMediaInput>
+  where?: Prisma.WorkWhereInput
+}
+
+export type WorkUpdateToOneWithWhereWithoutMediaInput = {
+  where?: Prisma.WorkWhereInput
+  data: Prisma.XOR<Prisma.WorkUpdateWithoutMediaInput, Prisma.WorkUncheckedUpdateWithoutMediaInput>
+}
+
+export type WorkUpdateWithoutMediaInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediums?: Prisma.WorkUpdatemediumsInput | string[]
+  eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type WorkUncheckedUpdateWithoutMediaInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediums?: Prisma.WorkUpdatemediumsInput | string[]
+  eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type WorkCountOutputType
+ */
+
+export type WorkCountOutputType = {
+  media: number
+}
+
+export type WorkCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  media?: boolean | WorkCountOutputTypeCountMediaArgs
+}
+
+/**
+ * WorkCountOutputType without action
+ */
+export type WorkCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkCountOutputType
+   */
+  select?: Prisma.WorkCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * WorkCountOutputType without action
+ */
+export type WorkCountOutputTypeCountMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkMediaWhereInput
+}
 
 
 export type WorkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -639,6 +784,8 @@ export type WorkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  media?: boolean | Prisma.Work$mediaArgs<ExtArgs>
+  _count?: boolean | Prisma.WorkCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["work"]>
 
 export type WorkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -699,10 +846,18 @@ export type WorkSelectScalar = {
 }
 
 export type WorkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "imageUrl" | "imageUrls" | "place" | "year" | "material" | "dimensions" | "mediums" | "eventName" | "theme" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["work"]>
+export type WorkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  media?: boolean | Prisma.Work$mediaArgs<ExtArgs>
+  _count?: boolean | Prisma.WorkCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type WorkIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type WorkIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $WorkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Work"
-  objects: {}
+  objects: {
+    media: Prisma.$WorkMediaPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
@@ -1114,6 +1269,7 @@ readonly fields: WorkFieldRefs;
  */
 export interface Prisma__WorkClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  media<T extends Prisma.Work$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Work$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1176,6 +1332,10 @@ export type WorkFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
+  /**
    * Filter, which Work to fetch.
    */
   where: Prisma.WorkWhereUniqueInput
@@ -1194,6 +1354,10 @@ export type WorkFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
+  /**
    * Filter, which Work to fetch.
    */
   where: Prisma.WorkWhereUniqueInput
@@ -1211,6 +1375,10 @@ export type WorkFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Work
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
   /**
    * Filter, which Work to fetch.
    */
@@ -1260,6 +1428,10 @@ export type WorkFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
+  /**
    * Filter, which Work to fetch.
    */
   where?: Prisma.WorkWhereInput
@@ -1307,6 +1479,10 @@ export type WorkFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Work
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
   /**
    * Filter, which Works to fetch.
    */
@@ -1356,6 +1532,10 @@ export type WorkCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
+  /**
    * The data needed to create a Work.
    */
   data: Prisma.XOR<Prisma.WorkCreateInput, Prisma.WorkUncheckedCreateInput>
@@ -1403,6 +1583,10 @@ export type WorkUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the Work
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
   /**
    * The data needed to update a Work.
    */
@@ -1470,6 +1654,10 @@ export type WorkUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
+  /**
    * The filter to search for the Work to update in case it exists.
    */
   where: Prisma.WorkWhereUniqueInput
@@ -1496,6 +1684,10 @@ export type WorkDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
+  /**
    * Filter which Work to delete.
    */
   where: Prisma.WorkWhereUniqueInput
@@ -1516,6 +1708,30 @@ export type WorkDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * Work.media
+ */
+export type Work$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkMedia
+   */
+  select?: Prisma.WorkMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkMedia
+   */
+  omit?: Prisma.WorkMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkMediaInclude<ExtArgs> | null
+  where?: Prisma.WorkMediaWhereInput
+  orderBy?: Prisma.WorkMediaOrderByWithRelationInput | Prisma.WorkMediaOrderByWithRelationInput[]
+  cursor?: Prisma.WorkMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorkMediaScalarFieldEnum | Prisma.WorkMediaScalarFieldEnum[]
+}
+
+/**
  * Work without action
  */
 export type WorkDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1527,4 +1743,8 @@ export type WorkDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the Work
    */
   omit?: Prisma.WorkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkInclude<ExtArgs> | null
 }

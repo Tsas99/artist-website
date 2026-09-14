@@ -1,3 +1,13 @@
+import { API_URL } from '@/lib/api';
+type WorkMedia = {
+  id: number;
+  url: string;
+  publicId: string;
+  type: 'image' | 'video';
+  sortOrder: number;
+  workId: number;
+};
+
 type Work = {
   id: number;
   title: string;
@@ -17,29 +27,37 @@ type Work = {
   year: number | null;
 
   isPublished: boolean;
+
+  media: WorkMedia[];
 };
 
-async function getWork(slug: string) : Promise<Work | null> {
+
+
+async function getWork(
+  slug: string,
+): Promise<Work | null> {
   const response = await fetch(
-    `http://localhost:3001/works/slug/${encodeURIComponent(slug)}`,
+    `${API_URL}/works/slug/${encodeURIComponent(slug)}`,
     {
-      cache: "no-store",
-    
+      cache: 'no-store',
     },
   );
 
   if (response.status === 404) {
     return null;
   }
+
   if (!response.ok) {
     throw new Error('Failed to fetch work');
   }
 
   const work: Work = await response.json();
+
   if (!work || !work.isPublished) {
     return null;
   }
-  return work
+
+  return work;
 }
 
 export default async function WorkDetailPage({
@@ -62,6 +80,14 @@ export default async function WorkDetailPage({
     );
   }
 
+  const galleryMedia = work.media.filter(
+    (item) =>
+      !(
+        item.type === 'image' &&
+        item.url === work.imageUrl
+      ),
+  );
+
   return (
     <main className="min-h-screen bg-white">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
@@ -70,15 +96,20 @@ export default async function WorkDetailPage({
             {work.title}
           </h1>
 
-          {(work.year || work.mediums.length > 0) && (
-            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-neutral-500">
-              {work.year && <span>{work.year}</span>}
+          {(work.year ||
+            work.mediums.length > 0) && (
+              <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-neutral-500">
+                {work.year && (
+                  <span>{work.year}</span>
+                )}
 
-              {work.mediums.length > 0 && (
-                <span>{work.mediums.join(', ')}</span>
-              )}
-            </div>
-          )}
+                {work.mediums.length > 0 && (
+                  <span>
+                    {work.mediums.join(', ')}
+                  </span>
+                )}
+              </div>
+            )}
         </header>
 
         {work.imageUrl && (
@@ -98,6 +129,7 @@ export default async function WorkDetailPage({
                 <p className="text-xs uppercase tracking-wider text-neutral-400">
                   Event
                 </p>
+
                 <p className="mt-1 text-neutral-900">
                   {work.eventName}
                 </p>
@@ -109,6 +141,7 @@ export default async function WorkDetailPage({
                 <p className="text-xs uppercase tracking-wider text-neutral-400">
                   Theme
                 </p>
+
                 <p className="mt-1 text-neutral-900">
                   {work.theme}
                 </p>
@@ -120,6 +153,7 @@ export default async function WorkDetailPage({
                 <p className="text-xs uppercase tracking-wider text-neutral-400">
                   Place
                 </p>
+
                 <p className="mt-1 text-neutral-900">
                   {work.place}
                 </p>
@@ -131,6 +165,7 @@ export default async function WorkDetailPage({
                 <p className="text-xs uppercase tracking-wider text-neutral-400">
                   Material
                 </p>
+
                 <p className="mt-1 text-neutral-900">
                   {work.material}
                 </p>
@@ -142,6 +177,7 @@ export default async function WorkDetailPage({
                 <p className="text-xs uppercase tracking-wider text-neutral-400">
                   Dimensions
                 </p>
+
                 <p className="mt-1 text-neutral-900">
                   {work.dimensions}
                 </p>
@@ -160,23 +196,32 @@ export default async function WorkDetailPage({
           </section>
         </div>
 
-        {work.imageUrls.length > 0 && (
+        {galleryMedia.length > 0 && (
           <section className="mt-14 border-t border-neutral-200 pt-10 sm:mt-20 sm:pt-14">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {work.imageUrls
-                .filter((url) => url !== work.imageUrl)
-                .map((url, index) => (
+              {galleryMedia.map(
+                (item, index) => (
                   <div
-                    key={`${url}-${index}`}
+                    key={item.id}
                     className="overflow-hidden bg-neutral-100"
                   >
-                    <img
-                      src={url}
-                      alt={`${work.title} detail ${index + 1}`}
-                      className="h-auto w-full object-contain"
-                    />
+                    {item.type === 'image' ? (
+                      <img
+                        src={item.url}
+                        alt={`${work.title} detail ${index + 1}`}
+                        className="h-auto w-full object-contain"
+                      />
+                    ) : (
+                      <video
+                        src={item.url}
+                        controls
+                        preload="metadata"
+                        className="h-auto w-full"
+                      />
+                    )}
                   </div>
-                ))}
+                ),
+              )}
             </div>
           </section>
         )}

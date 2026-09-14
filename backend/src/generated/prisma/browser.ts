@@ -27,3 +27,8 @@ export type Artist = Prisma.ArtistModel
  * 
  */
 export type Work = Prisma.WorkModel
+/**
+ * Model WorkMedia
+ * 
+ */
+export type WorkMedia = Prisma.WorkMediaModel

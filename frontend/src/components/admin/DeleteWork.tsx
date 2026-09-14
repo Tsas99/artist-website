@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { API_URL } from '@/lib/api';
 
 type DeleteWorkProps = {
     workId: number;
@@ -24,7 +25,7 @@ export default function DeleteWork({
             setError('');
 
             const response = await fetch(
-                `http://localhost:3001/works/${workId}`,
+                `${API_URL}/works/${workId}`,
                 {
                     method: 'DELETE',
                 },

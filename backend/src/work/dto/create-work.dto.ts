@@ -1,3 +1,9 @@
+export type CreateWorkMediaInput = {
+  url: string;
+  publicId: string;
+  type: 'image' | 'video';
+  sortOrder?:number;
+}; 
 export class CreateWorkDto {
   title!: string;
   slug!: string;
@@ -12,5 +18,6 @@ export class CreateWorkDto {
   dimensions?: string;
   year?: number;
   isPublished?: boolean;
+  media?: CreateWorkMediaInput[]
 
 }

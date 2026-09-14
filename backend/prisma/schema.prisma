@@ -15,27 +15,36 @@ model Artist {
   email     String?  @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
- 
 }
 
 model Work {
-  id          Int      @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   title       String
-  slug        String   @unique
+  slug        String      @unique
   description String?
   imageUrl    String?
-  imageUrls   String[] @default([])
+  imageUrls   String[]    @default([])
   place       String?
   year        Int?
   material    String?
   dimensions  String?
-  mediums     String[] @default([])
+  mediums     String[]    @default([])
   eventName   String?
   theme       String?
-  isPublished Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isPublished Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  media       WorkMedia[]
+}
 
-  
+model WorkMedia {
+  id        Int      @id @default(autoincrement())
+  url       String
+  publicId  String
+  type      String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  workId Int
+  work   Work @relation(fields: [workId], references: [id], onDelete: Cascade)
 }
