@@ -11,4 +11,5 @@
 export type * from './models/Artist.js'
 export type * from './models/Work.js'
 export type * from './models/WorkMedia.js'
+export type * from './models/Admin.js'
 export type * from './commonInputTypes.js'

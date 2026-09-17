@@ -48,3 +48,11 @@ model WorkMedia {
   workId Int
   work   Work @relation(fields: [workId], references: [id], onDelete: Cascade)
 }
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

@@ -32,3 +32,8 @@ export type Work = Prisma.WorkModel
  * 
  */
 export type WorkMedia = Prisma.WorkMediaModel
+/**
+ * Model Admin
+ * 
+ */
+export type Admin = Prisma.AdminModel

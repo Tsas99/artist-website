@@ -5,6 +5,7 @@ import {
   Delete,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 
@@ -12,6 +13,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import { UploadService } from './upload.service';
 import type { UploadedMediaFile } from './upload.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('upload')
 export class UploadController {
@@ -20,6 +22,7 @@ export class UploadController {
   ) {}
 
   @Post('media')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(
     FileInterceptor('file', {
       limits: {
@@ -40,6 +43,7 @@ export class UploadController {
   }
 
   @Delete('media')
+  @UseGuards(JwtAuthGuard)
   async deleteMedia(
     @Body('publicId') publicId: string,
     @Body('type') type: 'image' | 'video',

@@ -7,13 +7,16 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
 import { WorkMediaService } from './work-media.service';
 import { CreateWorkMediaDto } from './dto/create-work-media.dto';
 import { UpdateWorkMediaDto } from './dto/update-work-media.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('work-media')
+@UseGuards(JwtAuthGuard)
 export class WorkMediaController {
   constructor(
     private readonly workMediaService: WorkMediaService,

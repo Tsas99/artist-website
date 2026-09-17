@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Artist: 'Artist',
   Work: 'Work',
-  WorkMedia: 'WorkMedia'
+  WorkMedia: 'WorkMedia',
+  Admin: 'Admin'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -117,6 +118,17 @@ export const WorkMediaScalarFieldEnum = {
 } as const
 
 export type WorkMediaScalarFieldEnum = (typeof WorkMediaScalarFieldEnum)[keyof typeof WorkMediaScalarFieldEnum]
+
+
+export const AdminScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  passwordHash: 'passwordHash',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
 
 
 export const SortOrder = {
