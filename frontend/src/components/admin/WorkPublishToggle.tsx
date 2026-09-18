@@ -1,7 +1,7 @@
 'use client';
 
 import type { Work } from './WorkInfoEditor';
-import { API_URL } from '@/lib/api';
+
 
 type Props = {
     work: Work;
@@ -19,7 +19,7 @@ export default function WorkPublishToggle({
             onError('');
 
             const response = await fetch(
-                `${API_URL}/works/${work.id}`,
+                `/api/admin/works/${work.id}`,
                 {
                     method: 'PATCH',
                     headers: {

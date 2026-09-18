@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { API_URL } from '@/lib/api';
+
 
 export type Work = {
     id: number;
@@ -109,22 +109,33 @@ export default function WorkInfoEditor({
         setIsSaving(true);
         onError('');
 
-        let value: string | number | string[] | null;
-
-        if (field === 'mediums') {
-            value = editValue
-                .split(',')
-                .map((item) => item.trim())
-                .filter(Boolean);
-        } else if (field === 'year') {
-            value = editValue ? Number(editValue) : null;
-        } else {
-            value = editValue.trim() || null;
-        }
-
         try {
+            let value: string | number | string[] | null;
+
+            if (field === 'mediums') {
+                value = editValue
+                    .split(',')
+                    .map((item) => item.trim())
+                    .filter(Boolean);
+            } else if (field === 'year') {
+                if (!editValue.trim()) {
+                    value = null;
+                } else {
+                    const year = Number(editValue);
+
+                    if (!Number.isInteger(year)) {
+                        onError('Year must be a valid whole number.');
+                        return;
+                    }
+
+                    value = year;
+                }
+            } else {
+                value = editValue.trim() || null;
+            }
+
             const response = await fetch(
-                `${API_URL}/works/${work.id}`,
+                `/api/admin/works/${work.id}`,
                 {
                     method: 'PATCH',
                     headers: {

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import type { Work } from './WorkInfoEditor';
-import { API_URL } from '@/lib/api';
 
 type WorkMedia = {
     id: number;
@@ -44,7 +43,10 @@ export default function WorkMediaManager({
             onError('');
 
             const response = await fetch(
-                `${API_URL}/work-media/work/${work.id}`,
+                `/api/admin/work-media/work/${work.id}`,
+                {
+                    cache: 'no-store',
+                },
             );
 
             if (!response.ok) {
@@ -71,9 +73,9 @@ export default function WorkMediaManager({
                 const formData = new FormData();
                 formData.append('file', file);
 
-                // 1. Upload to Cloudinary
+                // 1. Upload file to Cloudinary through protected proxy
                 const uploadResponse = await fetch(
-                    `${API_URL}/upload/media`,
+                    '/api/admin/upload/media',
                     {
                         method: 'POST',
                         body: formData,
@@ -87,9 +89,9 @@ export default function WorkMediaManager({
                 const uploaded: UploadedMedia =
                     await uploadResponse.json();
 
-                // 2. Save media information to database
+                // 2. Save media record to database
                 const mediaResponse = await fetch(
-                    `  ${API_URL}/work-media`,
+                    '/api/admin/work-media',
                     {
                         method: 'POST',
                         headers: {
@@ -112,7 +114,6 @@ export default function WorkMediaManager({
                 }
             }
 
-            // 3. Reload gallery
             await loadMedia();
         } catch (error) {
             console.error(error);
@@ -127,7 +128,7 @@ export default function WorkMediaManager({
             onError('');
 
             const response = await fetch(
-                `${API_URL}/work-media/work/${work.id}`,
+                `/api/admin/works/${work.id}`,
                 {
                     method: 'PATCH',
                     headers: {
@@ -156,7 +157,8 @@ export default function WorkMediaManager({
         try {
             onError('');
 
-            // If deleting the current cover, remove cover first
+            // If current cover is being deleted,
+            // choose another image as cover first.
             if (
                 item.type === 'image' &&
                 work.imageUrl === item.url
@@ -168,7 +170,7 @@ export default function WorkMediaManager({
                 );
 
                 const workResponse = await fetch(
-                    `${API_URL}/works/${work.id}`,
+                    `/api/admin/works/${work.id}`,
                     {
                         method: 'PATCH',
                         headers: {
@@ -190,9 +192,9 @@ export default function WorkMediaManager({
                 onWorkChange(updatedWork);
             }
 
-            // Delete Cloudinary file
+            // Delete file from Cloudinary
             const cloudinaryResponse = await fetch(
-                '${API_URL}/upload/media',
+                '/api/admin/upload/media',
                 {
                     method: 'DELETE',
                     headers: {
@@ -211,9 +213,9 @@ export default function WorkMediaManager({
                 );
             }
 
-            // Delete WorkMedia database record
+            // Delete WorkMedia record from database
             const databaseResponse = await fetch(
-                `${API_URL}/work-media/${item.id}`,
+                `/api/admin/work-media/${item.id}`,
                 {
                     method: 'DELETE',
                 },
@@ -252,8 +254,8 @@ export default function WorkMediaManager({
 
                 <label
                     className={`inline-flex items-center justify-center rounded-xl bg-neutral-950 px-4 py-2.5 text-sm font-medium text-white transition ${isUploading
-                        ? 'cursor-not-allowed opacity-50'
-                        : 'cursor-pointer hover:bg-neutral-800'
+                            ? 'cursor-not-allowed opacity-50'
+                            : 'cursor-pointer hover:bg-neutral-800'
                         }`}
                 >
                     {isUploading
@@ -333,7 +335,9 @@ export default function WorkMediaManager({
                                                 <button
                                                     type="button"
                                                     onClick={() =>
-                                                        setCoverImage(item.url)
+                                                        setCoverImage(
+                                                            item.url,
+                                                        )
                                                     }
                                                     className="min-h-11 w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-neutral-50"
                                                 >
@@ -345,7 +349,9 @@ export default function WorkMediaManager({
 
                                     <button
                                         type="button"
-                                        onClick={() => removeMedia(item)}
+                                        onClick={() =>
+                                            removeMedia(item)
+                                        }
                                         className="min-h-11 w-full rounded-xl px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
                                     >
                                         Remove

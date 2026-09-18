@@ -9,11 +9,7 @@ type UploadedMedia = {
   type: 'image' | 'video';
 };
 
-type CreatedWork = {
-  id: number;
-  title: string;
-  slug: string;
-};
+
 
 export default function NewWorkPage() {
   const router = useRouter();
@@ -66,7 +62,7 @@ export default function NewWorkPage() {
         formData.append('file', file);
 
         const response = await fetch(
-          '${API_URL}/upload/media',
+          '/api/admin/upload/media',
           {
             method: 'POST',
             body: formData,
@@ -109,7 +105,7 @@ export default function NewWorkPage() {
 
     try {
       const response = await fetch(
-        '${API_URL}/upload/media',
+        '/api/admin/upload/media',
         {
           method: 'DELETE',
           headers: {
@@ -161,7 +157,7 @@ export default function NewWorkPage() {
 
     try {
       const response = await fetch(
-        '${API_URL}/works',
+        '/api/admin/works',
         {
           method: 'POST',
           headers: {
@@ -203,7 +199,7 @@ export default function NewWorkPage() {
 
             isPublished,
 
-            // Work + WorkMedia are now saved together
+
             media: media.map((item, index) => ({
               url: item.url,
               publicId: item.publicId,
@@ -227,7 +223,7 @@ export default function NewWorkPage() {
             message = data.message;
           }
         } catch {
-          // Ignore JSON parsing failure
+
         }
 
         if (response.status === 409) {
