@@ -1,4 +1,6 @@
+import WorkGallery from '@/components/works/WorkGallerey';
 import { API_URL } from '@/lib/api';
+import Image from 'next/image';
 type WorkMedia = {
   id: number;
   url: string;
@@ -113,7 +115,7 @@ export default async function WorkDetailPage({
         </header>
 
         {work.imageUrl && (
-          <div className="mb-12 overflow-hidden bg-neutral-100 sm:mb-16">
+          <div className="mb-12 overflow-hidden sm:mb-16">
             <img
               src={work.imageUrl}
               alt={work.title}
@@ -196,35 +198,9 @@ export default async function WorkDetailPage({
           </section>
         </div>
 
-        {galleryMedia.length > 0 && (
-          <section className="mt-14 border-t border-neutral-200 pt-10 sm:mt-20 sm:pt-14">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {galleryMedia.map(
-                (item, index) => (
-                  <div
-                    key={item.id}
-                    className="overflow-hidden bg-neutral-100"
-                  >
-                    {item.type === 'image' ? (
-                      <img
-                        src={item.url}
-                        alt={`${work.title} detail ${index + 1}`}
-                        className="h-auto w-full object-contain"
-                      />
-                    ) : (
-                      <video
-                        src={item.url}
-                        controls
-                        preload="metadata"
-                        className="h-auto w-full"
-                      />
-                    )}
-                  </div>
-                ),
-              )}
-            </div>
-          </section>
-        )}
+        <WorkGallery
+          media={galleryMedia}
+          workTitle={work.title} />
       </div>
     </main>
   );

@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { adminFetch } from '@/lib/admin-fetch';
 
 type UploadedMedia = {
   url: string;
@@ -34,6 +35,7 @@ export default function NewWorkPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [isCancelling, setIsCancelling] = useState(false);
 
   function createSlug(value: string) {
     return value
@@ -61,7 +63,7 @@ export default function NewWorkPage() {
 
         formData.append('file', file);
 
-        const response = await fetch(
+        const response = await adminFetch(
           '/api/admin/upload/media',
           {
             method: 'POST',
@@ -104,7 +106,7 @@ export default function NewWorkPage() {
     setError('');
 
     try {
-      const response = await fetch(
+      const response = await adminFetch(
         '/api/admin/upload/media',
         {
           method: 'DELETE',
@@ -137,7 +139,59 @@ export default function NewWorkPage() {
       setError('Media could not be removed.');
     }
   }
+  async function handleCancel() {
+    if (isUploading || isSubmitting) {
+      return;
+    }
+    if (media.length === 0) {
+      router.back();
+      return;
+    }
 
+    const confirmed = window.confirm(
+      'Cancel this project? Uploaded images and videos will be deleted.',
+
+    );
+    if (!confirmed) {
+      return;
+    }
+    setError('');
+    try {
+      for (const item of media) {
+        const response = await adminFetch(
+          '/api/admin/upload/media',
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              publicId: item.publicId,
+              type: item.type,
+            }),
+          },
+        );
+        if (!response.ok) {
+          throw new Error(
+            `Failed to delete ${item.publicId}`,
+          );
+        }
+      }
+      setMedia([]);
+      setCoverUrl('');
+      router.back();
+    } catch (err) {
+      console.error('Cancel cleanup failed:', err,);
+      setError(
+        'Some uploaded media could not be removed. Please try again.',
+      );
+      setIsCancelling(true);
+    }
+    finally {
+      setIsCancelling(false);
+
+    }
+  }
   async function handleSubmit(
     event: FormEvent<HTMLFormElement>,
   ) {
@@ -156,7 +210,7 @@ export default function NewWorkPage() {
     setError('');
 
     try {
-      const response = await fetch(
+      const response = await adminFetch(
         '/api/admin/works',
         {
           method: 'POST',
@@ -709,16 +763,23 @@ export default function NewWorkPage() {
           <div className="flex flex-col-reverse gap-3 border-t border-neutral-200 pt-6 sm:flex-row sm:justify-end">
             <button
               type="button"
-              onClick={() => router.back()}
-              className="min-h-12 rounded-xl border border-neutral-300 px-6 py-3 text-sm font-medium text-neutral-800 transition hover:bg-neutral-100"
+              onClick={handleCancel}
+              disabled={
+                isUploading ||
+                isSubmitting ||
+                isCancelling
+              }
+              className="min-h-12 rounded-xl border border-neutral-300 px-6 py-3 text-sm font-medium text-neutral-800 transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Cancel
+              {isCancelling
+                ? 'Cleaning up...'
+                : 'Cancel'}
             </button>
 
             <button
               type="submit"
               disabled={
-                isSubmitting || isUploading
+                isSubmitting || isUploading || isCancelling
               }
               className="min-h-12 rounded-xl bg-neutral-950 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
             >

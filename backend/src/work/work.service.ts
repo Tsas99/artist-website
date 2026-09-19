@@ -9,10 +9,13 @@ import { PrismaService } from '../prisma/prisma.service';
 
 import { CreateWorkDto } from './dto/create-work.dto';
 import { UpdateWorkDto } from './dto/update-work.dto';
+import { UploadService } from '../upload/upload.service';
 
 @Injectable()
 export class WorkService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService,
+              private readonly uploadService: UploadService
+  ) {}
 
   async create(createWorkDto: CreateWorkDto) {
     const { media, ...workData } = createWorkDto;
@@ -161,21 +164,39 @@ export class WorkService {
   }
 
   async remove(id: number) {
-    try {
-      return await this.prisma.work.delete({
+    const work = await this.prisma.work.findUnique({
         where: {
-          id,
+            id,
         },
-      });
-    } catch (error) {
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === 'P2025'
-      ) {
-        throw new NotFoundException('Work not found.');
-      }
+        include: {
+            media: true,
+        },
+    });
 
-      throw error;
+    if (!work) {
+        throw new NotFoundException(
+            'Work not found.',
+        );
     }
-  }
+
+    for (const media of work.media) {
+        if (
+            media.type !== 'image' &&
+            media.type !== 'video'
+        ) {
+            continue;
+        }
+
+        await this.uploadService.deleteMedia(
+            media.publicId,
+            media.type,
+        );
+    }
+
+    return this.prisma.work.delete({
+        where: {
+            id,
+        },
+    });
+}
 }

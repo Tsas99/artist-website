@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { unauthorized } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
 const API_URL =
@@ -77,6 +78,29 @@ async function proxyRequest(
     body,
     cache: 'no-store',
   });
+  if (response.status === 401) {
+    const unauthorizedResponse = NextResponse.json(
+        {
+            message:
+                'Your session has expired. Please log in again.',
+        },
+        {
+            status: 401,
+        },
+    );
+
+    unauthorizedResponse.cookies.set({
+        name: 'admin_access_token',
+        value: '',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+        maxAge: 0,
+    });
+
+    return unauthorizedResponse;
+}
 
   const responseBody = await response.arrayBuffer();
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { adminFetch } from '@/lib/admin-fetch';
 
 
 export type Work = {
@@ -134,7 +135,7 @@ export default function WorkInfoEditor({
                 value = editValue.trim() || null;
             }
 
-            const response = await fetch(
+            const response = await adminFetch(
                 `/api/admin/works/${work.id}`,
                 {
                     method: 'PATCH',

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { Work } from './WorkInfoEditor';
+import { adminFetch } from '@/lib/admin-fetch';
 
 type WorkMedia = {
     id: number;
@@ -42,7 +43,7 @@ export default function WorkMediaManager({
             setIsLoading(true);
             onError('');
 
-            const response = await fetch(
+            const response = await adminFetch(
                 `/api/admin/work-media/work/${work.id}`,
                 {
                     cache: 'no-store',
@@ -74,7 +75,7 @@ export default function WorkMediaManager({
                 formData.append('file', file);
 
                 // 1. Upload file to Cloudinary through protected proxy
-                const uploadResponse = await fetch(
+                const uploadResponse = await adminFetch(
                     '/api/admin/upload/media',
                     {
                         method: 'POST',
@@ -90,7 +91,7 @@ export default function WorkMediaManager({
                     await uploadResponse.json();
 
                 // 2. Save media record to database
-                const mediaResponse = await fetch(
+                const mediaResponse = await adminFetch(
                     '/api/admin/work-media',
                     {
                         method: 'POST',
@@ -127,7 +128,7 @@ export default function WorkMediaManager({
         try {
             onError('');
 
-            const response = await fetch(
+            const response = await adminFetch(
                 `/api/admin/works/${work.id}`,
                 {
                     method: 'PATCH',
@@ -169,7 +170,7 @@ export default function WorkMediaManager({
                         mediaItem.id !== item.id,
                 );
 
-                const workResponse = await fetch(
+                const workResponse = await adminFetch(
                     `/api/admin/works/${work.id}`,
                     {
                         method: 'PATCH',
@@ -193,7 +194,7 @@ export default function WorkMediaManager({
             }
 
             // Delete file from Cloudinary
-            const cloudinaryResponse = await fetch(
+            const cloudinaryResponse = await adminFetch(
                 '/api/admin/upload/media',
                 {
                     method: 'DELETE',
@@ -214,7 +215,7 @@ export default function WorkMediaManager({
             }
 
             // Delete WorkMedia record from database
-            const databaseResponse = await fetch(
+            const databaseResponse = await adminFetch(
                 `/api/admin/work-media/${item.id}`,
                 {
                     method: 'DELETE',
@@ -254,8 +255,8 @@ export default function WorkMediaManager({
 
                 <label
                     className={`inline-flex items-center justify-center rounded-xl bg-neutral-950 px-4 py-2.5 text-sm font-medium text-white transition ${isUploading
-                            ? 'cursor-not-allowed opacity-50'
-                            : 'cursor-pointer hover:bg-neutral-800'
+                        ? 'cursor-not-allowed opacity-50'
+                        : 'cursor-pointer hover:bg-neutral-800'
                         }`}
                 >
                     {isUploading

@@ -1,5 +1,6 @@
 'use client';
 
+import { adminFetch } from '@/lib/admin-fetch';
 import type { Work } from './WorkInfoEditor';
 
 
@@ -18,7 +19,7 @@ export default function WorkPublishToggle({
         try {
             onError('');
 
-            const response = await fetch(
+            const response = await adminFetch(
                 `/api/admin/works/${work.id}`,
                 {
                     method: 'PATCH',

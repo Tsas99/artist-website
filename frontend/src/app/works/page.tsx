@@ -42,15 +42,38 @@ export default async function WorksPage() {
         ) : (
           <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {works.map((work) => (
-              <article key={work.id} className="group">
-                <Link href={`/works/${work.slug}`} className="block">
-                  <div className="aspect-[4/3] overflow-hidden bg-neutral-100">
+              <article
+                key={work.id}
+                className="group"
+              >
+                <Link
+                  href={`/works/${work.slug}`}
+                  className="block"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
                     {work.imageUrl ? (
-                      <img
-                        src={work.imageUrl}
-                        alt={work.title}
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
-                      />
+                      <>
+                        <img
+                          src={work.imageUrl}
+                          alt={work.title}
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+                        />
+
+                        {/* Desktop hover overlay */}
+                        <div className="absolute inset-0 hidden items-end bg-black/0 p-5 transition duration-300 group-hover:bg-black/35 sm:flex">
+                          <div className="translate-y-2 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                            <h2 className="text-lg font-medium text-white">
+                              {work.title}
+                            </h2>
+
+                            {work.mediums.length > 0 && (
+                              <p className="mt-1 text-sm text-white/75">
+                                {work.mediums.join(', ')}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </>
                     ) : (
                       <div className="flex h-full items-center justify-center text-sm text-neutral-400">
                         No image
@@ -58,8 +81,9 @@ export default async function WorksPage() {
                     )}
                   </div>
 
-                  <div className="mt-4">
-                    <h2 className="text-lg font-medium text-neutral-950">
+                  {/* Mobile only */}
+                  <div className="mt-3 sm:hidden">
+                    <h2 className="text-base font-medium text-neutral-950">
                       {work.title}
                     </h2>
 
