@@ -56,3 +56,23 @@ model Admin {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+model About {
+  id                   Int      @id @default(autoincrement())
+  artistStatement      String
+  profileImageUrl      String?
+  profileImagePublicId String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model CVEntry {
+  id        Int      @id @default(autoincrement())
+  year      String
+  title     String
+  details   String?
+  category  String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

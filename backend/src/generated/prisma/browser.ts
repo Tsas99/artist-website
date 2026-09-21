@@ -37,3 +37,13 @@ export type WorkMedia = Prisma.WorkMediaModel
  * 
  */
 export type Admin = Prisma.AdminModel
+/**
+ * Model About
+ * 
+ */
+export type About = Prisma.AboutModel
+/**
+ * Model CVEntry
+ * 
+ */
+export type CVEntry = Prisma.CVEntryModel

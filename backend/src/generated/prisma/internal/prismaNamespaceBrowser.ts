@@ -54,7 +54,9 @@ export const ModelName = {
   Artist: 'Artist',
   Work: 'Work',
   WorkMedia: 'WorkMedia',
-  Admin: 'Admin'
+  Admin: 'Admin',
+  About: 'About',
+  CVEntry: 'CVEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -129,6 +131,32 @@ export const AdminScalarFieldEnum = {
 } as const
 
 export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
+
+
+export const AboutScalarFieldEnum = {
+  id: 'id',
+  artistStatement: 'artistStatement',
+  profileImageUrl: 'profileImageUrl',
+  profileImagePublicId: 'profileImagePublicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AboutScalarFieldEnum = (typeof AboutScalarFieldEnum)[keyof typeof AboutScalarFieldEnum]
+
+
+export const CVEntryScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  title: 'title',
+  details: 'details',
+  category: 'category',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CVEntryScalarFieldEnum = (typeof CVEntryScalarFieldEnum)[keyof typeof CVEntryScalarFieldEnum]
 
 
 export const SortOrder = {

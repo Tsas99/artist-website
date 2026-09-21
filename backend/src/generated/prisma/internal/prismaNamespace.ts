@@ -387,7 +387,9 @@ export const ModelName = {
   Artist: 'Artist',
   Work: 'Work',
   WorkMedia: 'WorkMedia',
-  Admin: 'Admin'
+  Admin: 'Admin',
+  About: 'About',
+  CVEntry: 'CVEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "artist" | "work" | "workMedia" | "admin"
+    modelProps: "artist" | "work" | "workMedia" | "admin" | "about" | "cVEntry"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +705,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    About: {
+      payload: Prisma.$AboutPayload<ExtArgs>
+      fields: Prisma.AboutFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AboutFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AboutFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload>
+        }
+        findFirst: {
+          args: Prisma.AboutFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AboutFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload>
+        }
+        findMany: {
+          args: Prisma.AboutFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload>[]
+        }
+        create: {
+          args: Prisma.AboutCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload>
+        }
+        createMany: {
+          args: Prisma.AboutCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AboutCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload>[]
+        }
+        delete: {
+          args: Prisma.AboutDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload>
+        }
+        update: {
+          args: Prisma.AboutUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload>
+        }
+        deleteMany: {
+          args: Prisma.AboutDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AboutUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AboutUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload>[]
+        }
+        upsert: {
+          args: Prisma.AboutUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AboutPayload>
+        }
+        aggregate: {
+          args: Prisma.AboutAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAbout>
+        }
+        groupBy: {
+          args: Prisma.AboutGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AboutGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AboutCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AboutCountAggregateOutputType> | number
+        }
+      }
+    }
+    CVEntry: {
+      payload: Prisma.$CVEntryPayload<ExtArgs>
+      fields: Prisma.CVEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CVEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CVEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.CVEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CVEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload>
+        }
+        findMany: {
+          args: Prisma.CVEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload>[]
+        }
+        create: {
+          args: Prisma.CVEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload>
+        }
+        createMany: {
+          args: Prisma.CVEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CVEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.CVEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload>
+        }
+        update: {
+          args: Prisma.CVEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CVEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CVEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CVEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.CVEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CVEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.CVEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCVEntry>
+        }
+        groupBy: {
+          args: Prisma.CVEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CVEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CVEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CVEntryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -798,6 +948,32 @@ export const AdminScalarFieldEnum = {
 } as const
 
 export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
+
+
+export const AboutScalarFieldEnum = {
+  id: 'id',
+  artistStatement: 'artistStatement',
+  profileImageUrl: 'profileImageUrl',
+  profileImagePublicId: 'profileImagePublicId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AboutScalarFieldEnum = (typeof AboutScalarFieldEnum)[keyof typeof AboutScalarFieldEnum]
+
+
+export const CVEntryScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  title: 'title',
+  details: 'details',
+  category: 'category',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CVEntryScalarFieldEnum = (typeof CVEntryScalarFieldEnum)[keyof typeof CVEntryScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1006,6 +1182,8 @@ export type GlobalOmitConfig = {
   work?: Prisma.WorkOmit
   workMedia?: Prisma.WorkMediaOmit
   admin?: Prisma.AdminOmit
+  about?: Prisma.AboutOmit
+  cVEntry?: Prisma.CVEntryOmit
 }
 
 /* Types for Logging */
