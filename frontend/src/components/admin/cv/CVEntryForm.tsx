@@ -5,7 +5,6 @@ export type CVFormData = {
     title: string;
     details: string;
     category: string;
-    sortOrder: string;
 };
 
 export const CV_CATEGORIES = [
@@ -18,20 +17,20 @@ export const CV_CATEGORIES = [
         label: 'Biennale',
     },
     {
-        value: 'solo_exhibition',
-        label: 'Solo Exhibition',
-    },
-    {
-        value: 'selected_exhibition',
-        label: 'Selected Exhibition',
+        value: 'award',
+        label: 'Award',
     },
     {
         value: 'artist_residency',
         label: 'Artist Residency',
     },
     {
-        value: 'award',
-        label: 'Award',
+        value: 'solo_exhibition',
+        label: 'Solo Exhibition',
+    },
+    {
+        value: 'selected_exhibition',
+        label: 'Selected Exhibition',
     },
     {
         value: 'project',
@@ -108,6 +107,7 @@ export default function CVEntryForm({
                             )
                         }
                         placeholder="2026 or 2024–2025"
+                        required
                         className="w-full border border-neutral-300 px-3 py-2.5 text-sm outline-none transition focus:border-neutral-950"
                     />
                 </div>
@@ -163,17 +163,24 @@ export default function CVEntryForm({
                             )
                         }
                         placeholder="Exhibition, residency, award, institution..."
+                        required
                         className="w-full border border-neutral-300 px-3 py-2.5 text-sm outline-none transition focus:border-neutral-950"
                     />
                 </div>
 
                 <div className="sm:col-span-2">
-                    <label
-                        htmlFor="cv-details"
-                        className="mb-2 block text-sm text-neutral-700"
-                    >
-                        Details
-                    </label>
+                    <div className="mb-2 flex items-center gap-2">
+                        <label
+                            htmlFor="cv-details"
+                            className="block text-sm text-neutral-700"
+                        >
+                            Details
+                        </label>
+
+                        <span className="text-xs text-neutral-400">
+                            Optional
+                        </span>
+                    </div>
 
                     <textarea
                         id="cv-details"
@@ -188,32 +195,6 @@ export default function CVEntryForm({
                         placeholder="Venue, curator, city, country, programme details..."
                         className="w-full resize-y border border-neutral-300 px-3 py-2.5 text-sm leading-6 outline-none transition focus:border-neutral-950"
                     />
-                </div>
-
-                <div>
-                    <label
-                        htmlFor="cv-sort-order"
-                        className="mb-2 block text-sm text-neutral-700"
-                    >
-                        Sort Order
-                    </label>
-
-                    <input
-                        id="cv-sort-order"
-                        type="number"
-                        value={form.sortOrder}
-                        onChange={(event) =>
-                            onChange(
-                                'sortOrder',
-                                event.target.value,
-                            )
-                        }
-                        className="w-full border border-neutral-300 px-3 py-2.5 text-sm outline-none transition focus:border-neutral-950"
-                    />
-
-                    <p className="mt-2 text-xs text-neutral-400">
-                        Lower numbers appear first.
-                    </p>
                 </div>
             </div>
 

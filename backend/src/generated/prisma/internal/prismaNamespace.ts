@@ -389,7 +389,9 @@ export const ModelName = {
   WorkMedia: 'WorkMedia',
   Admin: 'Admin',
   About: 'About',
-  CVEntry: 'CVEntry'
+  CVEntry: 'CVEntry',
+  Press: 'Press',
+  PressMedia: 'PressMedia'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "artist" | "work" | "workMedia" | "admin" | "about" | "cVEntry"
+    modelProps: "artist" | "work" | "workMedia" | "admin" | "about" | "cVEntry" | "press" | "pressMedia"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +855,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Press: {
+      payload: Prisma.$PressPayload<ExtArgs>
+      fields: Prisma.PressFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PressFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PressFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload>
+        }
+        findFirst: {
+          args: Prisma.PressFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PressFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload>
+        }
+        findMany: {
+          args: Prisma.PressFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload>[]
+        }
+        create: {
+          args: Prisma.PressCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload>
+        }
+        createMany: {
+          args: Prisma.PressCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PressCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload>[]
+        }
+        delete: {
+          args: Prisma.PressDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload>
+        }
+        update: {
+          args: Prisma.PressUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload>
+        }
+        deleteMany: {
+          args: Prisma.PressDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PressUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PressUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload>[]
+        }
+        upsert: {
+          args: Prisma.PressUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressPayload>
+        }
+        aggregate: {
+          args: Prisma.PressAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePress>
+        }
+        groupBy: {
+          args: Prisma.PressGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PressGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PressCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PressCountAggregateOutputType> | number
+        }
+      }
+    }
+    PressMedia: {
+      payload: Prisma.$PressMediaPayload<ExtArgs>
+      fields: Prisma.PressMediaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PressMediaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PressMediaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload>
+        }
+        findFirst: {
+          args: Prisma.PressMediaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PressMediaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload>
+        }
+        findMany: {
+          args: Prisma.PressMediaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload>[]
+        }
+        create: {
+          args: Prisma.PressMediaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload>
+        }
+        createMany: {
+          args: Prisma.PressMediaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PressMediaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload>[]
+        }
+        delete: {
+          args: Prisma.PressMediaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload>
+        }
+        update: {
+          args: Prisma.PressMediaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload>
+        }
+        deleteMany: {
+          args: Prisma.PressMediaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PressMediaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PressMediaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload>[]
+        }
+        upsert: {
+          args: Prisma.PressMediaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PressMediaPayload>
+        }
+        aggregate: {
+          args: Prisma.PressMediaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePressMedia>
+        }
+        groupBy: {
+          args: Prisma.PressMediaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PressMediaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PressMediaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PressMediaCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -974,6 +1124,34 @@ export const CVEntryScalarFieldEnum = {
 } as const
 
 export type CVEntryScalarFieldEnum = (typeof CVEntryScalarFieldEnum)[keyof typeof CVEntryScalarFieldEnum]
+
+
+export const PressScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  details: 'details',
+  link: 'link',
+  coverUrl: 'coverUrl',
+  coverPublicId: 'coverPublicId',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PressScalarFieldEnum = (typeof PressScalarFieldEnum)[keyof typeof PressScalarFieldEnum]
+
+
+export const PressMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  publicId: 'publicId',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  pressId: 'pressId'
+} as const
+
+export type PressMediaScalarFieldEnum = (typeof PressMediaScalarFieldEnum)[keyof typeof PressMediaScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1184,6 +1362,8 @@ export type GlobalOmitConfig = {
   admin?: Prisma.AdminOmit
   about?: Prisma.AboutOmit
   cVEntry?: Prisma.CVEntryOmit
+  press?: Prisma.PressOmit
+  pressMedia?: Prisma.PressMediaOmit
 }
 
 /* Types for Logging */

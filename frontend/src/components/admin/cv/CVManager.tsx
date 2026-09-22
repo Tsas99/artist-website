@@ -17,7 +17,6 @@ type CVEntry = {
     title: string;
     details: string | null;
     category: string;
-    sortOrder: number;
 };
 
 const EMPTY_FORM: CVFormData = {
@@ -25,7 +24,6 @@ const EMPTY_FORM: CVFormData = {
     title: '',
     details: '',
     category: 'education',
-    sortOrder: '0',
 };
 
 function getCategoryLabel(
@@ -68,9 +66,10 @@ export default function CVManager() {
         try {
             setError('');
 
-            const response = await adminFetch(
-                '/api/admin/cv',
-            );
+            const response =
+                await adminFetch(
+                    '/api/admin/cv',
+                );
 
             if (!response.ok) {
                 throw new Error(
@@ -81,11 +80,19 @@ export default function CVManager() {
             const text =
                 await response.text();
 
-            const data: CVEntry[] = text
-                ? JSON.parse(text)
-                : [];
+            if (!text) {
+                setEntries([]);
+                return;
+            }
 
-            setEntries(data);
+            const data =
+                JSON.parse(text);
+
+            setEntries(
+                Array.isArray(data)
+                    ? data
+                    : [],
+            );
         } catch (err) {
             setError(
                 err instanceof Error
@@ -129,9 +136,6 @@ export default function CVManager() {
             details:
                 entry.details ?? '',
             category: entry.category,
-            sortOrder: String(
-                entry.sortOrder,
-            ),
         });
 
         setError('');
@@ -149,12 +153,16 @@ export default function CVManager() {
         event.preventDefault();
 
         if (!form.year.trim()) {
-            setError('Year is required.');
+            setError(
+                'Year is required.',
+            );
             return;
         }
 
         if (!form.title.trim()) {
-            setError('Title is required.');
+            setError(
+                'Title is required.',
+            );
             return;
         }
 
@@ -169,12 +177,8 @@ export default function CVManager() {
                 details:
                     form.details.trim() ||
                     undefined,
-                category: form.category,
-                sortOrder:
-                    Number.parseInt(
-                        form.sortOrder || '0',
-                        10,
-                    ) || 0,
+                category:
+                    form.category,
             };
 
             const isEditing =
@@ -185,18 +189,22 @@ export default function CVManager() {
                 : '/api/admin/cv';
 
             const response =
-                await adminFetch(url, {
-                    method: isEditing
-                        ? 'PATCH'
-                        : 'POST',
-                    headers: {
-                        'Content-Type':
-                            'application/json',
+                await adminFetch(
+                    url,
+                    {
+                        method: isEditing
+                            ? 'PATCH'
+                            : 'POST',
+                        headers: {
+                            'Content-Type':
+                                'application/json',
+                        },
+                        body:
+                            JSON.stringify(
+                                payload,
+                            ),
                     },
-                    body: JSON.stringify(
-                        payload,
-                    ),
-                });
+                );
 
             if (!response.ok) {
                 throw new Error(
@@ -259,9 +267,12 @@ export default function CVManager() {
             }
 
             if (
-                editingId === entry.id
+                editingId ===
+                entry.id
             ) {
-                setForm(EMPTY_FORM);
+                setForm(
+                    EMPTY_FORM,
+                );
                 setEditingId(null);
             }
 
@@ -289,19 +300,28 @@ export default function CVManager() {
                 </h1>
 
                 <p className="mt-2 text-sm text-neutral-500">
-                    Add and manage CV entries.
+                    Add and manage CV
+                    entries.
                 </p>
             </div>
 
             <CVEntryForm
                 form={form}
-                editingId={editingId}
+                editingId={
+                    editingId
+                }
                 saving={saving}
                 error={error}
                 message={message}
-                onChange={updateForm}
-                onSubmit={handleSubmit}
-                onCancelEdit={resetForm}
+                onChange={
+                    updateForm
+                }
+                onSubmit={
+                    handleSubmit
+                }
+                onCancelEdit={
+                    resetForm
+                }
             />
 
             <section>
@@ -316,20 +336,27 @@ export default function CVManager() {
                 ) : entries.length ===
                     0 ? (
                     <p className="text-sm text-neutral-500">
-                        No CV entries yet.
+                        No CV entries
+                        yet.
                     </p>
                 ) : (
                     <div className="space-y-3">
                         {entries.map(
-                            (entry) => (
+                            (
+                                entry,
+                            ) => (
                                 <article
-                                    key={entry.id}
+                                    key={
+                                        entry.id
+                                    }
                                     className="flex flex-col gap-4 border-b border-neutral-200 py-5 sm:flex-row sm:items-start sm:justify-between"
                                 >
                                     <div className="min-w-0">
                                         <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                                             <span className="text-sm font-medium text-neutral-950">
-                                                {entry.year}
+                                                {
+                                                    entry.year
+                                                }
                                             </span>
 
                                             <span className="text-xs uppercase tracking-wider text-neutral-400">
@@ -340,7 +367,9 @@ export default function CVManager() {
                                         </div>
 
                                         <h3 className="text-sm font-medium text-neutral-900">
-                                            {entry.title}
+                                            {
+                                                entry.title
+                                            }
                                         </h3>
 
                                         {entry.details && (

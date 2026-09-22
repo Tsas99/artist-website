@@ -12,6 +12,8 @@ const ALLOWED_PREFIXES = [
   'upload',
   'about',
   'cv',
+  'press',
+  'press-media',
 ];
 
 async function proxyRequest(

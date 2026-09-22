@@ -47,3 +47,13 @@ export type About = Prisma.AboutModel
  * 
  */
 export type CVEntry = Prisma.CVEntryModel
+/**
+ * Model Press
+ * 
+ */
+export type Press = Prisma.PressModel
+/**
+ * Model PressMedia
+ * 
+ */
+export type PressMedia = Prisma.PressMediaModel

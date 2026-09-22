@@ -76,3 +76,32 @@ model CVEntry {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Press {
+  id            Int          @id @default(autoincrement())
+  name          String
+  slug          String       @unique
+  details       String?
+  link          String?
+
+  coverUrl      String?
+  coverPublicId String?
+
+  isPublished   Boolean      @default(true)
+
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  media         PressMedia[]
+}
+
+model PressMedia {
+  id        Int      @id @default(autoincrement())
+  url       String
+  publicId  String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  pressId Int
+  press   Press @relation(fields: [pressId], references: [id], onDelete: Cascade)
+}
