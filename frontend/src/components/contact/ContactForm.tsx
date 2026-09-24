@@ -1,6 +1,9 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import {
+    FormEvent,
+    useState,
+} from 'react';
 
 type FormStatus =
     | 'idle'
@@ -11,16 +14,93 @@ type FormStatus =
 export default function ContactForm() {
     const [status, setStatus] =
         useState<FormStatus>('idle');
+    const [errorMessage, setErrorMessage] =
+        useState('');
 
     async function handleSubmit(
+
         event: FormEvent<HTMLFormElement>,
     ) {
         event.preventDefault();
 
         setStatus('sending');
+        setErrorMessage('');
+        const form = event.currentTarget;
+        const formData = new FormData(form);
 
-        // Email backend-ийг дараагийн алхамд холбоно.
-        setStatus('idle');
+        const payload = {
+            name: String(
+                formData.get('name') ?? '',
+            ).trim(),
+
+            email: String(
+                formData.get('email') ?? '',
+            ).trim(),
+
+            subject: String(
+                formData.get('subject') ?? '',
+            ).trim(),
+
+            message: String(
+                formData.get('message') ?? '',
+            ).trim(),
+
+            website: String(
+                formData.get('website') ?? '',
+            ).trim(),
+        };
+
+        try {
+            const response = await fetch(
+                '/api/contact',
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type':
+                            'application/json',
+                    },
+
+                    body: JSON.stringify(payload),
+                },
+            );
+
+            if (!response.ok) {
+                if (response.status === 429) {
+                    setStatus('error');
+                    setErrorMessage(
+                        'Too many messages. Please try again later.',
+                    );
+                    return;
+                }
+
+                if (response.status === 400) {
+                    setStatus('error');
+                    setErrorMessage(
+                        'Please check your information and try again.',
+                    );
+                    return;
+                }
+
+                throw new Error(
+                    'Failed to send message.',
+                );
+            }
+
+            setStatus('success');
+            form.reset();
+
+        } catch (error) {
+            console.error(
+                'Contact form error:',
+                error,
+            );
+
+            setStatus('error');
+            setErrorMessage(
+                'Something went wrong. Please try again.',
+            );
+        }
     }
 
     return (
@@ -28,14 +108,33 @@ export default function ContactForm() {
             onSubmit={handleSubmit}
             className="w-full"
         >
+            <div
+                className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
+                aria-hidden="true"
+            >
+                <label htmlFor="website">
+                    Website
+                </label>
+
+                <input
+                    id="website"
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                />
+            </div>
             <div className="border-b border-neutral-400 focus-within:border-neutral-950">
                 <input
                     type="text"
                     name="name"
                     required
+                    minLength={2}
+                    maxLength={100}
                     autoComplete="name"
                     placeholder="Name *"
-                    className="w-full bg-transparent px-0 pb-4 pt-2 text-sm text-neutral-950 outline-none placeholder:text-neutral-950"
+                    disabled={status === 'sending'}
+                    className="w-full bg-transparent px-0 pb-4 pt-2 text-sm text-neutral-950 outline-none placeholder:text-neutral-950 disabled:opacity-50"
                 />
             </div>
 
@@ -44,9 +143,11 @@ export default function ContactForm() {
                     type="email"
                     name="email"
                     required
+                    maxLength={254}
                     autoComplete="email"
                     placeholder="Email *"
-                    className="w-full bg-transparent px-0 pb-4 pt-2 text-sm text-neutral-950 outline-none placeholder:text-neutral-950"
+                    disabled={status === 'sending'}
+                    className="w-full bg-transparent px-0 pb-4 pt-2 text-sm text-neutral-950 outline-none placeholder:text-neutral-950 disabled:opacity-50"
                 />
             </div>
 
@@ -54,8 +155,10 @@ export default function ContactForm() {
                 <input
                     type="text"
                     name="subject"
+                    maxLength={150}
                     placeholder="Subject"
-                    className="w-full bg-transparent px-0 pb-4 pt-2 text-sm text-neutral-950 outline-none placeholder:text-neutral-950"
+                    disabled={status === 'sending'}
+                    className="w-full bg-transparent px-0 pb-4 pt-2 text-sm text-neutral-950 outline-none placeholder:text-neutral-950 disabled:opacity-50"
                 />
             </div>
 
@@ -63,9 +166,12 @@ export default function ContactForm() {
                 <textarea
                     name="message"
                     required
-                    rows={7}
+                    rows={5}
+                    minLength={10}
+                    maxLength={5000}
                     placeholder="Message *"
-                    className="block min-h-[180px] w-full resize-none bg-transparent px-0 pb-4 pt-2 text-sm leading-6 text-neutral-950 outline-none placeholder:text-neutral-950 sm:min-h-[220px]"
+                    disabled={status === 'sending'}
+                    className="block min-h-[180px] w-full resize-none bg-transparent px-0 pb-4 pt-2 text-sm leading-6 text-neutral-950 outline-none placeholder:text-neutral-950 disabled:opacity-50 sm:min-h-[220px]"
                 />
             </div>
 
@@ -76,13 +182,16 @@ export default function ContactForm() {
                 >
                     {status === 'success' && (
                         <span className="text-neutral-600">
-                            Message sent.
+                            Message sent. Thank you.
                         </span>
                     )}
 
                     {status === 'error' && (
-                        <span className="text-neutral-600">
-                            Something went wrong.
+                        <span
+                            role="alert"
+                            className="text-neutral-600"
+                        >
+                            {errorMessage}
                         </span>
                     )}
                 </div>

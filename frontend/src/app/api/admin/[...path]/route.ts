@@ -14,6 +14,8 @@ const ALLOWED_PREFIXES = [
   'cv',
   'press',
   'press-media',
+  'home-media',
+  'news',
 ];
 
 async function proxyRequest(

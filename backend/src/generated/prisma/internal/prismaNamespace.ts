@@ -391,7 +391,9 @@ export const ModelName = {
   About: 'About',
   CVEntry: 'CVEntry',
   Press: 'Press',
-  PressMedia: 'PressMedia'
+  PressMedia: 'PressMedia',
+  HomeMedia: 'HomeMedia',
+  News: 'News'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "artist" | "work" | "workMedia" | "admin" | "about" | "cVEntry" | "press" | "pressMedia"
+    modelProps: "artist" | "work" | "workMedia" | "admin" | "about" | "cVEntry" | "press" | "pressMedia" | "homeMedia" | "news"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1003,6 +1005,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    HomeMedia: {
+      payload: Prisma.$HomeMediaPayload<ExtArgs>
+      fields: Prisma.HomeMediaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HomeMediaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HomeMediaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload>
+        }
+        findFirst: {
+          args: Prisma.HomeMediaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HomeMediaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload>
+        }
+        findMany: {
+          args: Prisma.HomeMediaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload>[]
+        }
+        create: {
+          args: Prisma.HomeMediaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload>
+        }
+        createMany: {
+          args: Prisma.HomeMediaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HomeMediaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload>[]
+        }
+        delete: {
+          args: Prisma.HomeMediaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload>
+        }
+        update: {
+          args: Prisma.HomeMediaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload>
+        }
+        deleteMany: {
+          args: Prisma.HomeMediaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HomeMediaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HomeMediaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload>[]
+        }
+        upsert: {
+          args: Prisma.HomeMediaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeMediaPayload>
+        }
+        aggregate: {
+          args: Prisma.HomeMediaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHomeMedia>
+        }
+        groupBy: {
+          args: Prisma.HomeMediaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HomeMediaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HomeMediaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HomeMediaCountAggregateOutputType> | number
+        }
+      }
+    }
+    News: {
+      payload: Prisma.$NewsPayload<ExtArgs>
+      fields: Prisma.NewsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NewsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NewsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        findFirst: {
+          args: Prisma.NewsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NewsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        findMany: {
+          args: Prisma.NewsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>[]
+        }
+        create: {
+          args: Prisma.NewsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        createMany: {
+          args: Prisma.NewsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NewsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>[]
+        }
+        delete: {
+          args: Prisma.NewsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        update: {
+          args: Prisma.NewsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        deleteMany: {
+          args: Prisma.NewsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NewsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NewsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>[]
+        }
+        upsert: {
+          args: Prisma.NewsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        aggregate: {
+          args: Prisma.NewsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNews>
+        }
+        groupBy: {
+          args: Prisma.NewsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NewsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1152,6 +1302,36 @@ export const PressMediaScalarFieldEnum = {
 } as const
 
 export type PressMediaScalarFieldEnum = (typeof PressMediaScalarFieldEnum)[keyof typeof PressMediaScalarFieldEnum]
+
+
+export const HomeMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  publicId: 'publicId',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt'
+} as const
+
+export type HomeMediaScalarFieldEnum = (typeof HomeMediaScalarFieldEnum)[keyof typeof HomeMediaScalarFieldEnum]
+
+
+export const NewsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  category: 'category',
+  date: 'date',
+  location: 'location',
+  description: 'description',
+  posterUrl: 'posterUrl',
+  posterPublicId: 'posterPublicId',
+  externalLink: 'externalLink',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1364,6 +1544,8 @@ export type GlobalOmitConfig = {
   cVEntry?: Prisma.CVEntryOmit
   press?: Prisma.PressOmit
   pressMedia?: Prisma.PressMediaOmit
+  homeMedia?: Prisma.HomeMediaOmit
+  news?: Prisma.NewsOmit
 }
 
 /* Types for Logging */

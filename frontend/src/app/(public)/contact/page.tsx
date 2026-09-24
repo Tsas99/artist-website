@@ -6,11 +6,11 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 gap-16 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-20 xl:gap-28">
                 {/* LEFT — Contact information */}
                 <section>
-                    <h1 className="max-w-[220px] text-3xl font-normal leading-[1.15] tracking-tight text-neutral-950 sm:text-4xl">
+                    {/* <h1 className="max-w-[220px] text-3xl font-normal leading-[1.15] tracking-tight text-neutral-950 sm:text-4xl">
                         Open to
                         <br />
                         cooperation.
-                    </h1>
+                    </h1> */}
 
                     <div className="mt-12 space-y-8 text-sm sm:mt-14">
                         {/* Email */}
@@ -29,9 +29,7 @@ export default function ContactPage() {
 
                         {/* Social */}
                         <div>
-                            <p className="mb-3 text-neutral-400">
-                                Social
-                            </p>
+
 
                             <div className="flex flex-col items-start gap-3">
                                 {/* Instagram */}

@@ -58,7 +58,9 @@ export const ModelName = {
   About: 'About',
   CVEntry: 'CVEntry',
   Press: 'Press',
-  PressMedia: 'PressMedia'
+  PressMedia: 'PressMedia',
+  HomeMedia: 'HomeMedia',
+  News: 'News'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -187,6 +189,36 @@ export const PressMediaScalarFieldEnum = {
 } as const
 
 export type PressMediaScalarFieldEnum = (typeof PressMediaScalarFieldEnum)[keyof typeof PressMediaScalarFieldEnum]
+
+
+export const HomeMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  publicId: 'publicId',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt'
+} as const
+
+export type HomeMediaScalarFieldEnum = (typeof HomeMediaScalarFieldEnum)[keyof typeof HomeMediaScalarFieldEnum]
+
+
+export const NewsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  category: 'category',
+  date: 'date',
+  location: 'location',
+  description: 'description',
+  posterUrl: 'posterUrl',
+  posterPublicId: 'posterPublicId',
+  externalLink: 'externalLink',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
 
 
 export const SortOrder = {

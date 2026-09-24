@@ -105,3 +105,26 @@ model PressMedia {
   pressId Int
   press   Press @relation(fields: [pressId], references: [id], onDelete: Cascade)
 }
+
+model HomeMedia {
+  id        Int      @id @default(autoincrement())
+  url       String
+  publicId  String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+model News {
+  id             Int      @id @default(autoincrement())
+  title          String
+  slug           String   @unique
+  category       String?
+  date           String?
+  location       String?
+  description    String?
+  posterUrl      String?
+  posterPublicId String?
+  externalLink   String?
+  isPublished    Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

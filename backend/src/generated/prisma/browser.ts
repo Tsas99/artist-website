@@ -57,3 +57,13 @@ export type Press = Prisma.PressModel
  * 
  */
 export type PressMedia = Prisma.PressMediaModel
+/**
+ * Model HomeMedia
+ * 
+ */
+export type HomeMedia = Prisma.HomeMediaModel
+/**
+ * Model News
+ * 
+ */
+export type News = Prisma.NewsModel
