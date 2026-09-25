@@ -10,6 +10,18 @@ import {
 import { adminFetch } from '@/lib/admin-fetch';
 import type { NewsItem } from '@/components/admin/news/types';
 
+function getDomain(url: string) {
+    try {
+        return new URL(url)
+            .hostname
+            .replace(/^www\./, '');
+    } catch {
+        return url;
+    }
+}
+
+
+
 export default function AdminNewsPage() {
     const [items, setItems] =
         useState<NewsItem[]>([]);
@@ -160,8 +172,9 @@ export default function AdminNewsPage() {
                             </div>
 
                             <div className="min-w-0">
+                                {/* Title + status */}
                                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                                    <p className="truncate text-sm font-medium">
+                                    <p className="truncate text-sm font-medium text-neutral-950">
                                         {item.title}
                                     </p>
 
@@ -172,6 +185,14 @@ export default function AdminNewsPage() {
                                     </span>
                                 </div>
 
+                                {/* Category */}
+                                {item.category && (
+                                    <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-neutral-500">
+                                        {item.category}
+                                    </p>
+                                )}
+
+                                {/* Date + location */}
                                 {(item.date ||
                                     item.location) && (
                                         <p className="mt-1 text-xs text-neutral-500">
@@ -183,6 +204,25 @@ export default function AdminNewsPage() {
                                                 .join(' · ')}
                                         </p>
                                     )}
+
+                                {/* Description */}
+                                {item.description && (
+                                    <p className="mt-2 max-w-2xl line-clamp-2 text-xs leading-5 text-neutral-500">
+                                        {item.description}
+                                    </p>
+                                )}
+
+                                {/* External link */}
+                                {item.externalLink && (
+                                    <a
+                                        href={item.externalLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="mt-2 inline-block text-xs text-neutral-500 underline underline-offset-4 transition-colors hover:text-neutral-950"
+                                    >
+                                        {getDomain(item.externalLink)}
+                                    </a>
+                                )}
                             </div>
 
                             <div className="flex items-center gap-4">

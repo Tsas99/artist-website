@@ -7,9 +7,11 @@ import { useState } from 'react';
 const navigation = [
     { name: 'HOME', href: '/' },
     { name: 'PROJECTS', href: '/works' },
+    { name: 'NEWS', href: '/news' },
     { name: 'ABOUT', href: '/about' },
     { name: 'PRESS', href: '/press' },
     { name: 'CONTACT', href: '/contact' },
+
 ];
 
 export default function PublicHeader() {

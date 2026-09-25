@@ -7,31 +7,63 @@ import {
 import { useRouter } from 'next/navigation';
 
 import { adminFetch } from '@/lib/admin-fetch';
+import type { NewsItem } from './types';
 
-function createSlug(value: string) {
-    return value
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '');
-}
+type Props = {
+    news: NewsItem;
+};
 
-export default function NewsForm() {
+export default function NewsEditForm({
+    news,
+}: Props) {
     const router = useRouter();
 
     const [posterUrl, setPosterUrl] =
-        useState('');
+        useState(news.posterUrl ?? '');
+
     const [
         posterPublicId,
         setPosterPublicId,
-    ] = useState('');
+    ] = useState(
+        news.posterPublicId ?? '',
+    );
+
+    const [
+        newPosterUploaded,
+        setNewPosterUploaded,
+    ] = useState(false);
 
     const [uploading, setUploading] =
         useState(false);
+
     const [saving, setSaving] =
         useState(false);
+
     const [error, setError] =
         useState('');
+
+    async function deleteUploadedPoster(
+        publicId: string,
+    ) {
+        if (!publicId) {
+            return;
+        }
+
+        await adminFetch(
+            '/api/admin/upload/media',
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type':
+                        'application/json',
+                },
+                body: JSON.stringify({
+                    publicId,
+                    type: 'image',
+                }),
+            },
+        );
+    }
 
     async function handlePosterUpload(
         file: File,
@@ -67,22 +99,11 @@ export default function NewsForm() {
                 await response.json();
 
             if (
-                uploaded.type !== 'image'
+                uploaded.type !==
+                'image'
             ) {
-                await adminFetch(
-                    '/api/admin/upload/media',
-                    {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type':
-                                'application/json',
-                        },
-                        body: JSON.stringify({
-                            publicId:
-                                uploaded.publicId,
-                            type: uploaded.type,
-                        }),
-                    },
+                await deleteUploadedPoster(
+                    uploaded.publicId,
                 );
 
                 throw new Error(
@@ -90,12 +111,38 @@ export default function NewsForm() {
                 );
             }
 
-            setPosterUrl(uploaded.url);
+            /*
+             * If the user already uploaded a
+             * replacement during this edit
+             * session, remove that temporary
+             * replacement before using the
+             * newest one.
+             */
+            if (
+                newPosterUploaded &&
+                posterPublicId &&
+                posterPublicId !==
+                news.posterPublicId
+            ) {
+                await deleteUploadedPoster(
+                    posterPublicId,
+                );
+            }
+
+            setPosterUrl(
+                uploaded.url,
+            );
+
             setPosterPublicId(
                 uploaded.publicId,
             );
+
+            setNewPosterUploaded(
+                true,
+            );
         } catch (error) {
             console.error(error);
+
             setError(
                 'Unable to upload poster.',
             );
@@ -126,64 +173,88 @@ export default function NewsForm() {
             return;
         }
 
-        setSaving(true);
-        setError('');
-
         const payload = {
             title,
-            slug: createSlug(title),
+
+            /*
+             * Keep the existing slug.
+             * Changing the title should not
+             * unexpectedly break an existing
+             * public URL.
+             */
+            slug: news.slug,
+
             category:
                 String(
                     formData.get(
                         'category',
                     ) ?? '',
-                ).trim() || undefined,
+                ).trim() ||
+                undefined,
 
-            date: String(
-                formData.get('date') ?? '',
-            ).trim() || undefined,
+            date:
+                String(
+                    formData.get(
+                        'date',
+                    ) ?? '',
+                ).trim() ||
+                undefined,
+
             location:
                 String(
                     formData.get(
                         'location',
                     ) ?? '',
-                ).trim() || undefined,
+                ).trim() ||
+                undefined,
+
             description:
                 String(
                     formData.get(
                         'description',
                     ) ?? '',
-                ).trim() || undefined,
+                ).trim() ||
+                undefined,
+
             posterUrl:
-                posterUrl || undefined,
+                posterUrl ||
+                undefined,
+
             posterPublicId:
                 posterPublicId ||
                 undefined,
+
             externalLink:
                 String(
                     formData.get(
                         'externalLink',
                     ) ?? '',
-                ).trim() || undefined,
+                ).trim() ||
+                undefined,
+
             isPublished:
                 formData.get(
                     'isPublished',
                 ) === 'on',
         };
 
+        setSaving(true);
+        setError('');
+
         try {
             const response =
                 await adminFetch(
-                    '/api/admin/news',
+                    `/api/admin/news/${news.id}`,
                     {
-                        method: 'POST',
+                        method: 'PATCH',
                         headers: {
                             'Content-Type':
                                 'application/json',
                         },
-                        body: JSON.stringify(
-                            payload,
-                        ),
+                        body:
+                            JSON.stringify(
+                                payload,
+                            ),
                     },
                 );
 
@@ -193,25 +264,79 @@ export default function NewsForm() {
 
                 setError(
                     `Status ${response.status}: ${responseText ||
-                    response.statusText ||
-                    'Unknown error'
+                    'Unable to update news.'
                     }`,
                 );
 
                 return;
             }
 
-            router.push('/admin/news');
+            /*
+             * DB now points to the new poster,
+             * so it is safe to delete the old
+             * Cloudinary asset.
+             */
+            if (
+                newPosterUploaded &&
+                news.posterPublicId &&
+                news.posterPublicId !==
+                posterPublicId
+            ) {
+                try {
+                    await deleteUploadedPoster(
+                        news.posterPublicId,
+                    );
+                } catch (error) {
+                    console.error(
+                        'Old poster cleanup failed:',
+                        error,
+                    );
+                }
+            }
+
+            router.push(
+                '/admin/news',
+            );
+
             router.refresh();
         } catch (error) {
             console.error(error);
 
             setError(
-                'Unable to create news.',
+                'Unable to update news.',
             );
         } finally {
             setSaving(false);
         }
+    }
+
+    async function handleCancel() {
+        /*
+         * A new poster may already be on
+         * Cloudinary even though the DB has
+         * not been updated. Clean it up.
+         */
+        if (
+            newPosterUploaded &&
+            posterPublicId &&
+            posterPublicId !==
+            news.posterPublicId
+        ) {
+            try {
+                await deleteUploadedPoster(
+                    posterPublicId,
+                );
+            } catch (error) {
+                console.error(
+                    'Temporary poster cleanup failed:',
+                    error,
+                );
+            }
+        }
+
+        router.push(
+            '/admin/news',
+        );
     }
 
     return (
@@ -224,7 +349,7 @@ export default function NewsForm() {
                     Poster
                 </label>
 
-                {posterUrl && (
+                {posterUrl ? (
                     <div className="mb-4">
                         <img
                             src={posterUrl}
@@ -232,10 +357,14 @@ export default function NewsForm() {
                             className="max-h-[420px] max-w-full object-contain"
                         />
                     </div>
+                ) : (
+                    <p className="mb-4 text-xs text-neutral-400">
+                        No poster
+                    </p>
                 )}
 
                 <label
-                    className={`inline-flex cursor-pointer items-center border border-neutral-300 px-4 py-2 text-xs uppercase tracking-[0.12em] transition-colors hover:border-neutral-950 ${uploading
+                    className={`inline-flex cursor-pointer items-center border border-neutral-300 px-4 py-2 text-xs uppercase tracking-[0.12em] transition-colors hover:border-neutral-950 ${uploading || saving
                             ? 'pointer-events-none opacity-40'
                             : ''
                         }`}
@@ -249,11 +378,15 @@ export default function NewsForm() {
                     <input
                         type="file"
                         accept="image/jpeg,image/png,image/webp"
-                        disabled={uploading}
+                        disabled={
+                            uploading ||
+                            saving
+                        }
                         className="hidden"
                         onChange={(event) => {
                             const file =
-                                event.target.files?.[0];
+                                event.target
+                                    .files?.[0];
 
                             if (file) {
                                 void handlePosterUpload(
@@ -261,7 +394,8 @@ export default function NewsForm() {
                                 );
                             }
 
-                            event.target.value = '';
+                            event.target.value =
+                                '';
                         }}
                     />
                 </label>
@@ -270,18 +404,30 @@ export default function NewsForm() {
             <Field
                 label="Title *"
                 name="title"
+                defaultValue={
+                    news.title
+                }
                 required
                 maxLength={200}
             />
+
             <Field
                 label="Category"
                 name="category"
+                defaultValue={
+                    news.category ??
+                    ''
+                }
                 placeholder="Solo Exhibition"
                 maxLength={100}
             />
+
             <Field
                 label="Date"
                 name="date"
+                defaultValue={
+                    news.date ?? ''
+                }
                 placeholder="17–18 September 2027"
                 maxLength={100}
             />
@@ -289,6 +435,10 @@ export default function NewsForm() {
             <Field
                 label="Location"
                 name="location"
+                defaultValue={
+                    news.location ??
+                    ''
+                }
                 placeholder="Tokyo, Japan"
                 maxLength={200}
             />
@@ -299,13 +449,20 @@ export default function NewsForm() {
                     className="mb-2 block text-xs uppercase tracking-[0.12em] text-neutral-500"
                 >
                     Description
+                    (optional)
                 </label>
 
                 <textarea
                     id="description"
                     name="description"
                     rows={8}
-                    maxLength={10000}
+                    maxLength={
+                        10000
+                    }
+                    defaultValue={
+                        news.description ??
+                        ''
+                    }
                     className="w-full border border-neutral-300 p-3 text-sm outline-none transition-colors focus:border-neutral-950"
                 />
             </div>
@@ -314,6 +471,10 @@ export default function NewsForm() {
                 label="External Link"
                 name="externalLink"
                 type="url"
+                defaultValue={
+                    news.externalLink ??
+                    ''
+                }
                 placeholder="https://..."
             />
 
@@ -321,8 +482,11 @@ export default function NewsForm() {
                 <input
                     type="checkbox"
                     name="isPublished"
-                    defaultChecked
+                    defaultChecked={
+                        news.isPublished
+                    }
                 />
+
                 Published
             </label>
 
@@ -332,27 +496,30 @@ export default function NewsForm() {
                 </p>
             )}
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-5">
                 <button
                     type="submit"
                     disabled={
-                        saving || uploading
+                        saving ||
+                        uploading
                     }
                     className="bg-neutral-950 px-6 py-3 text-sm text-white disabled:opacity-40"
                 >
                     {saving
                         ? 'Saving...'
-                        : 'Create News'}
+                        : 'Save Changes'}
                 </button>
 
                 <button
                     type="button"
-                    onClick={() =>
-                        router.push(
-                            '/admin/news',
-                        )
+                    disabled={
+                        saving ||
+                        uploading
                     }
-                    className="text-sm text-neutral-500"
+                    onClick={() =>
+                        void handleCancel()
+                    }
+                    className="text-sm text-neutral-500 transition-colors hover:text-neutral-950 disabled:opacity-40"
                 >
                     Cancel
                 </button>
@@ -368,6 +535,7 @@ type FieldProps = {
     placeholder?: string;
     required?: boolean;
     maxLength?: number;
+    defaultValue?: string;
 };
 
 function Field({
@@ -377,6 +545,7 @@ function Field({
     placeholder,
     required,
     maxLength,
+    defaultValue,
 }: FieldProps) {
     return (
         <div>
@@ -391,9 +560,18 @@ function Field({
                 id={name}
                 name={name}
                 type={type}
-                required={required}
-                maxLength={maxLength}
-                placeholder={placeholder}
+                required={
+                    required
+                }
+                maxLength={
+                    maxLength
+                }
+                placeholder={
+                    placeholder
+                }
+                defaultValue={
+                    defaultValue
+                }
                 className="w-full border-b border-neutral-300 py-2 text-sm outline-none transition-colors focus:border-neutral-950"
             />
         </div>
