@@ -125,16 +125,14 @@ export default async function CVPage() {
     return (
         <main className="mx-auto max-w-5xl px-6 py-10 sm:px-8 sm:py-12 lg:px-10 lg:py-14">
             <header className="mb-10">
-                <h1 className="text-[11px] font-medium uppercase tracking-[0.15em] text-neutral-950">
+                <h1 className="text-[14px] font-medium uppercase tracking-[0.15em] text-neutral-950">
                     CV
                 </h1>
 
-                <p className="mt-3 text-xl font-medium tracking-tight text-neutral-950 sm:text-2xl">
-                    Tsagaantsooj Erdenechimeg
-                </p>
+
             </header>
 
-            <div className="space-y-9">
+            <div className="space-y-9 ">
                 {SECTIONS.map(
                     (section) => {
                         const sectionEntries =

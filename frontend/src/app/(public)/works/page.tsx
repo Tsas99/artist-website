@@ -29,11 +29,6 @@ export default async function WorksPage() {
   return (
     <main className="min-h-screen bg-white">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-        <header className="mb-10 sm:mb-14">
-          <h1 className="text-4xl font-medium tracking-tight text-neutral-950 sm:text-5xl">
-            Projects
-          </h1>
-        </header>
 
         {works.length === 0 ? (
           <p className="text-sm text-neutral-500">
@@ -62,12 +57,12 @@ export default async function WorksPage() {
                         {/* Desktop hover overlay */}
                         <div className="absolute inset-0 hidden items-end bg-black/0 p-5 transition duration-300 group-hover:bg-black/35 sm:flex">
                           <div className="translate-y-2 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                            <h2 className="text-lg font-medium text-white">
+                            <h2 className="text-lg font-display text-white">
                               {work.title}
                             </h2>
 
                             {work.mediums.length > 0 && (
-                              <p className="mt-1 text-sm text-white/75">
+                              <p className="mt-1 text-sm font-display  text-white/75">
                                 {work.mediums.join(', ')}
                               </p>
                             )}

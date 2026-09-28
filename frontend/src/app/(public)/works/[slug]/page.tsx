@@ -26,7 +26,7 @@ type Work = {
   place: string | null;
   material: string | null;
   dimensions: string | null;
-  year: number | null;
+  year: string | null;
 
   isPublished: boolean;
 
@@ -92,27 +92,18 @@ export default async function WorkDetailPage({
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-        <header className="mb-10 max-w-4xl sm:mb-14">
-          <h1 className="text-4xl font-medium tracking-tight text-neutral-950 sm:text-5xl lg:text-6xl">
+      <div className="mx-auto max-w-7xl  px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        {/* <header className="mb-10 max-w-4xl sm:mb-14">
+          <h1 className="text-4xl font-medium tracking-tight text-neutral-950 sm:text-4xl lg:text-5xl">
             {work.title}
           </h1>
 
-          {(work.year ||
-            work.mediums.length > 0) && (
-              <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-neutral-500">
-                {work.year && (
-                  <span>{work.year}</span>
-                )}
-
-                {work.mediums.length > 0 && (
-                  <span>
-                    {work.mediums.join(', ')}
-                  </span>
-                )}
-              </div>
-            )}
-        </header>
+          {work.mediums.length > 0 && (
+            <div className="mt-4 text-bold text-neutral-950">
+              <span>{work.mediums.join(', ')}</span>
+            </div>
+          )}
+        </header> */}
 
         {work.imageUrl && (
           <div className="mb-12 overflow-hidden sm:mb-16">
@@ -123,9 +114,21 @@ export default async function WorkDetailPage({
             />
           </div>
         )}
+        <h1 className="text-4xl font-medium font-display tracking-tight text-neutral-950 sm:text-4xl lg:text-5xl">
+          {work.title}
+        </h1>
+
 
         <div className="grid grid-cols-1 gap-10 border-t border-neutral-200 pt-10 lg:grid-cols-[280px_1fr] lg:gap-16">
           <aside className="space-y-6 text-sm">
+            {work.mediums.length > 0 && (
+              <div className="mt-4 text-bold text-neutral-950">
+                <p className="text-xs uppercase tracking-wider text-neutral-400">
+                  Medium
+                </p>
+                <span>{work.mediums.join(', ')}</span>
+              </div>
+            )}
             {work.eventName && (
               <div>
                 <p className="text-xs uppercase tracking-wider text-neutral-400">
@@ -138,6 +141,7 @@ export default async function WorkDetailPage({
               </div>
             )}
 
+
             {work.theme && (
               <div>
                 <p className="text-xs uppercase tracking-wider text-neutral-400">
@@ -146,6 +150,16 @@ export default async function WorkDetailPage({
 
                 <p className="mt-1 text-neutral-900">
                   {work.theme}
+                </p>
+              </div>
+            )}
+            {work.year && (
+              <div>
+                <p className="text-xs uppercase tracking-wider text-neutral-400">
+                  Date
+                </p>
+                <p className="text-sm text-neutral-500">
+                  {work.year}
                 </p>
               </div>
             )}

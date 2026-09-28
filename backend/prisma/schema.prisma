@@ -25,7 +25,7 @@ model Work {
   imageUrl    String?
   imageUrls   String[]    @default([])
   place       String?
-  year        Int?
+  year        String?
   material    String?
   dimensions  String?
   mediums     String[]    @default([])

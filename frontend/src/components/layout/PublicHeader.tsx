@@ -27,15 +27,15 @@ export default function PublicHeader() {
     }
 
     return (
-        <header className="relative z-50 bg-white">
+        <header className="font-public-nav relative z-50 bg-white">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-20 items-center justify-between">
                     <Link
                         href="/"
-                        className="text-sm font-medium tracking-[0.14em] text-neutral-950"
+                        className="text-[24px] font-bold tracking-[0.12em] text-neutral-950"
                         onClick={() => setMenuOpen(false)}
                     >
-                        TSAGAANTSOOJ
+                        Tsagaantsooj.E
                     </Link>
 
                     {/* Desktop navigation */}
@@ -50,9 +50,9 @@ export default function PublicHeader() {
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    className={`text-xs tracking-[0.08em] transition ${active
-                                        ? 'text-neutral-950'
-                                        : 'text-neutral-500 hover:text-neutral-950'
+                                    className={`text-[12px] font-medium tracking-[0.1em] transition ${active
+                                        ? 'text-neutral-500'
+                                        : 'text-neutral-950 hover:text-neutral-950'
                                         }`}
                                 >
                                     {item.name}

@@ -237,8 +237,8 @@ export default function NewWorkPage() {
             dimensions:
               dimensions.trim() || undefined,
 
-            year:
-              year ? Number(year) : undefined,
+
+            year: year.trim() || undefined,
 
             eventName:
               eventName.trim() || undefined,
@@ -407,13 +407,14 @@ export default function NewWorkPage() {
                 <input
                   id="year"
                   name="year"
-                  type="number"
+                  type="text"
+
                   value={year}
                   onChange={(event) =>
                     setYear(event.target.value)
                   }
                   className={inputClass}
-                  placeholder="2026"
+                  placeholder="e.g. June 2026"
                 />
               </div>
 

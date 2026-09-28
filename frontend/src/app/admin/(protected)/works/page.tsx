@@ -7,7 +7,7 @@ type Work = {
   title: string;
   slug: string;
   imageUrl: string | null;
-  year: number | null;
+  year: string | null;
   isPublished: boolean;
 };
 
@@ -114,17 +114,18 @@ export default async function AdminWorksPage() {
 
                   <div className="flex flex-wrap items-center gap-2 sm:justify-end">
                     <Link
-                      href={`/works/${work.slug}`}
+                      href={`/admin/works/${work.id}`}
+
                       className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-300 px-3 text-sm font-medium leading-none text-neutral-700 transition hover:bg-neutral-50"
                     >
                       View
                     </Link>
 
                     <Link
-                      href={`/admin/works/${work.id}`}
+                      href={`/admin/works/${work.id}/edit`}
                       className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-300 px-3 text-sm font-medium leading-none text-neutral-900 transition hover:bg-neutral-50"
                     >
-                      Manage
+                      Edit
                     </Link>
 
                     <DeleteWork

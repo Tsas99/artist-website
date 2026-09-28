@@ -17,7 +17,7 @@ export type Work = {
     place: string | null;
     material: string | null;
     dimensions: string | null;
-    year: number | null;
+    year: string | null;
     isPublished: boolean;
 };
 
@@ -58,7 +58,7 @@ export default function WorkInfoEditor({
             { field: 'title', label: 'Title' },
             { field: 'slug', label: 'Slug' },
             { field: 'mediums', label: 'Medium' },
-            { field: 'year', label: 'Year' },
+            { field: 'year', label: 'Date' },
             { field: 'eventName', label: 'Event name' },
             { field: 'theme', label: 'Theme' },
             { field: 'place', label: 'Place' },
@@ -79,11 +79,6 @@ export default function WorkInfoEditor({
             return;
         }
 
-        if (field === 'year') {
-            setEditValue(work.year ? String(work.year) : '');
-            return;
-        }
-
         setEditValue(work[field] ?? '');
     }
 
@@ -99,10 +94,6 @@ export default function WorkInfoEditor({
                 : 'Not added';
         }
 
-        if (field === 'year') {
-            return work.year ? String(work.year) : 'Not added';
-        }
-
         return work[field] || 'Not added';
     }
 
@@ -111,26 +102,13 @@ export default function WorkInfoEditor({
         onError('');
 
         try {
-            let value: string | number | string[] | null;
+            let value: string | string[] | null;
 
             if (field === 'mediums') {
                 value = editValue
                     .split(',')
                     .map((item) => item.trim())
                     .filter(Boolean);
-            } else if (field === 'year') {
-                if (!editValue.trim()) {
-                    value = null;
-                } else {
-                    const year = Number(editValue);
-
-                    if (!Number.isInteger(year)) {
-                        onError('Year must be a valid whole number.');
-                        return;
-                    }
-
-                    value = year;
-                }
             } else {
                 value = editValue.trim() || null;
             }
@@ -149,6 +127,14 @@ export default function WorkInfoEditor({
             );
 
             if (!response.ok) {
+                const errorData = await response.json().catch(() => null);
+
+                console.error(
+                    'Update failed:',
+                    response.status,
+                    errorData,
+                );
+
                 throw new Error('Failed to update field');
             }
 
@@ -197,14 +183,15 @@ export default function WorkInfoEditor({
                                             />
                                         ) : (
                                             <input
-                                                type={
-                                                    field === 'year'
-                                                        ? 'number'
-                                                        : 'text'
-                                                }
+                                                type="text"
                                                 value={editValue}
                                                 onChange={(event) =>
                                                     setEditValue(event.target.value)
+                                                }
+                                                placeholder={
+                                                    field === 'year'
+                                                        ? 'e.g. June 2026'
+                                                        : undefined
                                                 }
                                                 className="w-full rounded-xl border border-neutral-300 px-4 py-3 text-sm outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900/10"
                                             />

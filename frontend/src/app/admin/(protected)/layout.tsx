@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import LogoutButton from '@/components/admin/LogoutButton';
+import AdminNavigation from '@/components/admin/AdminNavigation';
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL ??
@@ -49,13 +50,7 @@ export default async function ProtectedAdminLayout({
     return (
         <>
             <header className="border-b border-neutral-200 bg-white">
-                <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-                    <span className="text-sm font-semibold text-neutral-950">
-                        Artist Admin
-                    </span>
-
-                    <LogoutButton />
-                </div>
+                <AdminNavigation />
             </header>
 
             {children}

@@ -45,10 +45,6 @@ export default async function AboutPage() {
 
     return (
         <main className="mx-auto max-w-7xl px-6 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
-            <h1 className="mb-12 text-sm font-medium uppercase tracking-[0.15em] text-neutral-950">
-                About
-            </h1>
-
             <div className="grid gap-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16 lg:gap-24">
                 <div>
                     {about?.profileImageUrl && (
@@ -61,9 +57,7 @@ export default async function AboutPage() {
                 </div>
 
                 <div className="md:pt-1">
-                    <h2 className="text-2xl font-medium tracking-tight text-neutral-950 sm:text-3xl">
-                        Tsagaantsooj Erdenechimeg
-                    </h2>
+
 
                     <div className="mt-10">
                         <h3 className="mb-5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-500">

@@ -28,12 +28,10 @@ export type AggregateWork = {
 
 export type WorkAvgAggregateOutputType = {
   id: number | null
-  year: number | null
 }
 
 export type WorkSumAggregateOutputType = {
   id: number | null
-  year: number | null
 }
 
 export type WorkMinAggregateOutputType = {
@@ -43,7 +41,7 @@ export type WorkMinAggregateOutputType = {
   description: string | null
   imageUrl: string | null
   place: string | null
-  year: number | null
+  year: string | null
   material: string | null
   dimensions: string | null
   eventName: string | null
@@ -60,7 +58,7 @@ export type WorkMaxAggregateOutputType = {
   description: string | null
   imageUrl: string | null
   place: string | null
-  year: number | null
+  year: string | null
   material: string | null
   dimensions: string | null
   eventName: string | null
@@ -93,12 +91,10 @@ export type WorkCountAggregateOutputType = {
 
 export type WorkAvgAggregateInputType = {
   id?: true
-  year?: true
 }
 
 export type WorkSumAggregateInputType = {
   id?: true
-  year?: true
 }
 
 export type WorkMinAggregateInputType = {
@@ -249,7 +245,7 @@ export type WorkGroupByOutputType = {
   imageUrl: string | null
   imageUrls: string[]
   place: string | null
-  year: number | null
+  year: string | null
   material: string | null
   dimensions: string | null
   mediums: string[]
@@ -291,7 +287,7 @@ export type WorkWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"Work"> | string | null
   imageUrls?: Prisma.StringNullableListFilter<"Work">
   place?: Prisma.StringNullableFilter<"Work"> | string | null
-  year?: Prisma.IntNullableFilter<"Work"> | number | null
+  year?: Prisma.StringNullableFilter<"Work"> | string | null
   material?: Prisma.StringNullableFilter<"Work"> | string | null
   dimensions?: Prisma.StringNullableFilter<"Work"> | string | null
   mediums?: Prisma.StringNullableListFilter<"Work">
@@ -334,7 +330,7 @@ export type WorkWhereUniqueInput = Prisma.AtLeast<{
   imageUrl?: Prisma.StringNullableFilter<"Work"> | string | null
   imageUrls?: Prisma.StringNullableListFilter<"Work">
   place?: Prisma.StringNullableFilter<"Work"> | string | null
-  year?: Prisma.IntNullableFilter<"Work"> | number | null
+  year?: Prisma.StringNullableFilter<"Work"> | string | null
   material?: Prisma.StringNullableFilter<"Work"> | string | null
   dimensions?: Prisma.StringNullableFilter<"Work"> | string | null
   mediums?: Prisma.StringNullableListFilter<"Work">
@@ -381,7 +377,7 @@ export type WorkScalarWhereWithAggregatesInput = {
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   imageUrls?: Prisma.StringNullableListFilter<"Work">
   place?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
-  year?: Prisma.IntNullableWithAggregatesFilter<"Work"> | number | null
+  year?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   material?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   dimensions?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   mediums?: Prisma.StringNullableListFilter<"Work">
@@ -399,7 +395,7 @@ export type WorkCreateInput = {
   imageUrl?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
-  year?: number | null
+  year?: string | null
   material?: string | null
   dimensions?: string | null
   mediums?: Prisma.WorkCreatemediumsInput | string[]
@@ -419,7 +415,7 @@ export type WorkUncheckedCreateInput = {
   imageUrl?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
-  year?: number | null
+  year?: string | null
   material?: string | null
   dimensions?: string | null
   mediums?: Prisma.WorkCreatemediumsInput | string[]
@@ -438,7 +434,7 @@ export type WorkUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mediums?: Prisma.WorkUpdatemediumsInput | string[]
@@ -458,7 +454,7 @@ export type WorkUncheckedUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mediums?: Prisma.WorkUpdatemediumsInput | string[]
@@ -478,7 +474,7 @@ export type WorkCreateManyInput = {
   imageUrl?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
-  year?: number | null
+  year?: string | null
   material?: string | null
   dimensions?: string | null
   mediums?: Prisma.WorkCreatemediumsInput | string[]
@@ -496,7 +492,7 @@ export type WorkUpdateManyMutationInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mediums?: Prisma.WorkUpdatemediumsInput | string[]
@@ -515,7 +511,7 @@ export type WorkUncheckedUpdateManyInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mediums?: Prisma.WorkUpdatemediumsInput | string[]
@@ -555,7 +551,6 @@ export type WorkCountOrderByAggregateInput = {
 
 export type WorkAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  year?: Prisma.SortOrder
 }
 
 export type WorkMaxOrderByAggregateInput = {
@@ -594,7 +589,6 @@ export type WorkMinOrderByAggregateInput = {
 
 export type WorkSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  year?: Prisma.SortOrder
 }
 
 export type WorkScalarRelationFilter = {
@@ -613,14 +607,6 @@ export type WorkCreatemediumsInput = {
 export type WorkUpdateimageUrlsInput = {
   set?: string[]
   push?: string | string[]
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type WorkUpdatemediumsInput = {
@@ -653,7 +639,7 @@ export type WorkCreateWithoutMediaInput = {
   imageUrl?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
-  year?: number | null
+  year?: string | null
   material?: string | null
   dimensions?: string | null
   mediums?: Prisma.WorkCreatemediumsInput | string[]
@@ -672,7 +658,7 @@ export type WorkUncheckedCreateWithoutMediaInput = {
   imageUrl?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
-  year?: number | null
+  year?: string | null
   material?: string | null
   dimensions?: string | null
   mediums?: Prisma.WorkCreatemediumsInput | string[]
@@ -706,7 +692,7 @@ export type WorkUpdateWithoutMediaInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mediums?: Prisma.WorkUpdatemediumsInput | string[]
@@ -725,7 +711,7 @@ export type WorkUncheckedUpdateWithoutMediaInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mediums?: Prisma.WorkUpdatemediumsInput | string[]
@@ -866,7 +852,7 @@ export type $WorkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     imageUrl: string | null
     imageUrls: string[]
     place: string | null
-    year: number | null
+    year: string | null
     material: string | null
     dimensions: string | null
     mediums: string[]
@@ -1306,7 +1292,7 @@ export interface WorkFieldRefs {
   readonly imageUrl: Prisma.FieldRef<"Work", 'String'>
   readonly imageUrls: Prisma.FieldRef<"Work", 'String[]'>
   readonly place: Prisma.FieldRef<"Work", 'String'>
-  readonly year: Prisma.FieldRef<"Work", 'Int'>
+  readonly year: Prisma.FieldRef<"Work", 'String'>
   readonly material: Prisma.FieldRef<"Work", 'String'>
   readonly dimensions: Prisma.FieldRef<"Work", 'String'>
   readonly mediums: Prisma.FieldRef<"Work", 'String[]'>

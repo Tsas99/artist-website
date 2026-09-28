@@ -50,9 +50,6 @@ export default async function PressPage() {
     return (
         <main className="mx-auto max-w-7xl px-6 pb-20 pt-10 sm:px-8 sm:pt-14">
             <div className="mb-10">
-                <h1 className="text-2xl font-medium tracking-tight text-neutral-950">
-                    Press
-                </h1>
             </div>
 
             <PressGrid

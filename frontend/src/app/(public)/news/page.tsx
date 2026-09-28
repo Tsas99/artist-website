@@ -61,10 +61,6 @@ export default async function NewsPage() {
 
     return (
         <main className="mx-auto w-full max-w-7xl px-6 py-10 md:px-8 md:py-14">
-            <h1 className="mb-10 text-xs uppercase tracking-[0.16em] text-neutral-950">
-                News
-            </h1>
-
             {news.length === 0 ? (
                 <p className="text-sm text-neutral-950">
                     No news yet.
