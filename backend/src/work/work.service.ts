@@ -22,8 +22,21 @@ export class WorkService {
 
     try {
       return await this.prisma.$transaction(async (tx) => {
+        const lastWork = await tx.work.findFirst({
+          orderBy:{
+            sortOrder:'desc',
+          },
+          select: {
+            sortOrder: true,
+          },
+        });
         const work = await tx.work.create({
-          data: workData,
+          data: {
+            ...workData,
+            sortOrder:
+            (lastWork?.sortOrder ?? -1) +1,
+          },
+
         });
 
         if (media?.length) {
@@ -66,19 +79,24 @@ export class WorkService {
   }
 
   findAll() {
-    return this.prisma.work.findMany({
-      orderBy: {
+  return this.prisma.work.findMany({
+    orderBy: [
+      {
+        sortOrder: 'asc',
+      },
+      {
         createdAt: 'desc',
       },
-      include: {
-        media: {
-          orderBy: {
-            sortOrder: 'asc',
-          },
+    ],
+    include: {
+      media: {
+        orderBy: {
+          sortOrder: 'asc',
         },
       },
-    });
-  }
+    },
+  });
+}
 
   async findOne(id: number) {
     const work = await this.prisma.work.findUnique({
@@ -162,41 +180,97 @@ export class WorkService {
       throw error;
     }
   }
+  async reorder(ids: number[]) {
+  const works = await this.prisma.work.findMany({
+    where: {
+      id: {
+        in: ids,
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
 
-  async remove(id: number) {
-    const work = await this.prisma.work.findUnique({
+  if (works.length !== ids.length) {
+    throw new NotFoundException(
+      'One or more works were not found.',
+    );
+  }
+
+  await this.prisma.$transaction(
+    ids.map((id, index) =>
+      this.prisma.work.update({
         where: {
-            id,
+          id,
         },
-        include: {
-            media: true,
+        data: {
+          sortOrder: index,
         },
-    });
+      }),
+    ),
+  );
 
-    if (!work) {
-        throw new NotFoundException(
-            'Work not found.',
-        );
+  return this.findAll();
+}
+
+ async remove(id: number) {
+  const work = await this.prisma.work.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      media: true,
+    },
+  });
+
+  if (!work) {
+    throw new NotFoundException(
+      'Work not found.',
+    );
+  }
+
+  const cloudinaryMedia = new Map<
+    string,
+    'image' | 'video'
+  >();
+
+  
+  if (work.imagePublicId) {
+    cloudinaryMedia.set(
+      work.imagePublicId,
+      'image',
+    );
+  }
+
+
+  for (const media of work.media) {
+    if (
+      media.type !== 'image' &&
+      media.type !== 'video'
+    ) {
+      continue;
     }
 
-    for (const media of work.media) {
-        if (
-            media.type !== 'image' &&
-            media.type !== 'video'
-        ) {
-            continue;
-        }
+    cloudinaryMedia.set(
+      media.publicId,
+      media.type,
+    );
+  }
 
-        await this.uploadService.deleteMedia(
-            media.publicId,
-            media.type,
-        );
-    }
 
-    return this.prisma.work.delete({
-        where: {
-            id,
-        },
-    });
+  for (const [publicId, type] of cloudinaryMedia) {
+    await this.uploadService.deleteMedia(
+      publicId,
+      type,
+    );
+  }
+
+
+  return this.prisma.work.delete({
+    where: {
+      id,
+    },
+  });
 }
 }

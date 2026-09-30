@@ -1,4 +1,5 @@
-import DeleteWork from '@/components/admin/DeleteWork';
+
+import WorksOrderList from '@/components/admin/WorkOrderList';
 import { API_URL } from '@/lib/api';
 import Link from 'next/link';
 
@@ -66,77 +67,7 @@ export default async function AdminWorksPage() {
             </Link>
           </div>
         ) : (
-          <div className="space-y-3">
-            {works.map((work) => (
-              <article
-                key={work.id}
-                className="rounded-2xl border border-neutral-200 bg-white p-4 sm:p-5"
-              >
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div className="aspect-[4/3] w-full shrink-0 overflow-hidden rounded-xl bg-neutral-100 sm:h-24 sm:w-32">
-                    {work.imageUrl ? (
-                      <img
-                        src={work.imageUrl}
-                        alt={work.title}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center text-xs text-neutral-400">
-                        No image
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h2 className="text-base font-medium text-neutral-950 sm:text-lg">
-                        {work.title}
-                      </h2>
-
-                      <span
-                        className={`rounded-full px-2.5 py-1 text-xs font-medium ${work.isPublished
-                          ? 'bg-green-50 text-green-700'
-                          : 'bg-neutral-100 text-neutral-500'
-                          }`}
-                      >
-                        {work.isPublished ? 'Published' : 'Draft'}
-                      </span>
-                    </div>
-
-                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-neutral-500">
-                      {work.year && <span>{work.year}</span>}
-
-                      <span className="truncate">
-                        /works/{work.slug}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-2 sm:justify-end">
-                    <Link
-                      href={`/admin/works/${work.id}`}
-
-                      className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-300 px-3 text-sm font-medium leading-none text-neutral-700 transition hover:bg-neutral-50"
-                    >
-                      View
-                    </Link>
-
-                    <Link
-                      href={`/admin/works/${work.id}/edit`}
-                      className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-300 px-3 text-sm font-medium leading-none text-neutral-900 transition hover:bg-neutral-50"
-                    >
-                      Edit
-                    </Link>
-
-                    <DeleteWork
-                      workId={work.id}
-                      title={work.title}
-                    />
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <WorksOrderList initialWorks={works} />
         )}
       </div>
     </main>

@@ -56,6 +56,10 @@ export class CreateWorkDto {
   imageUrl?: string;
 
   @IsOptional()
+  @IsString()
+  imagePublicId?: string;  
+
+  @IsOptional()
   @IsArray()
   @IsUrl({}, { each: true })
   imageUrls?: string[];

@@ -14,6 +14,7 @@ import { WorkService } from './work.service';
 import { CreateWorkDto } from './dto/create-work.dto';
 import { UpdateWorkDto } from './dto/update-work.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ReorderWorksDto } from './dto/reorder-works.dto';
 
 @Controller('works')
 export class WorkController {
@@ -40,6 +41,14 @@ export class WorkController {
     return this.workService.findOne(id);
   }
 
+  @Patch('reorder')
+  @UseGuards(JwtAuthGuard)
+  reorder(@Body() reorderWorksDto: ReorderWorksDto) {
+  return this.workService.reorder(
+    reorderWorksDto.ids,
+  );
+}
+
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   update(
@@ -48,6 +57,8 @@ export class WorkController {
   ) {
     return this.workService.update(id, updateWorkDto);
   }
+
+
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)

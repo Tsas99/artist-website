@@ -60,28 +60,28 @@ export class UploadService {
     }
 
     const IMAGE_MAX_SIZE =
-      15 * 1024 * 1024;
+       10 * 1024 * 1024;
 
     const VIDEO_MAX_SIZE =
-      100 * 1024 * 1024;
+       100 * 1024 * 1024;
 
     if (
       isImage &&
-      file.size > IMAGE_MAX_SIZE
+     file.size > IMAGE_MAX_SIZE
     ) {
-      throw new BadRequestException(
-        'Image must be smaller than 15 MB.',
-      );
-    }
+     throw new BadRequestException(
+    'Image must be smaller than 10 MB.',
+    );
+  }
 
-    if (
-      isVideo &&
-      file.size > VIDEO_MAX_SIZE
-    ) {
-      throw new BadRequestException(
-        'Video must be smaller than 100 MB.',
-      );
-    }
+if (
+  isVideo &&
+  file.size > VIDEO_MAX_SIZE
+) {
+  throw new BadRequestException(
+    'Video must be smaller than 100 MB.',
+  );
+}
 
     const type: 'image' | 'video' =
       isVideo ? 'video' : 'image';

@@ -205,6 +205,11 @@ export default function NewWorkPage() {
       setError('Please choose a cover photo.');
       return;
     }
+    const coverMedia = media.find(
+      (item) =>
+        item.type === 'image' &&
+        item.url === coverUrl,
+    );
 
     setIsSubmitting(true);
     setError('');
@@ -227,6 +232,9 @@ export default function NewWorkPage() {
 
             imageUrl:
               coverUrl || undefined,
+
+            imagePublicId:
+              coverMedia?.publicId || undefined,
 
             place:
               place.trim() || undefined,
@@ -265,19 +273,34 @@ export default function NewWorkPage() {
       );
 
       if (!response.ok) {
+        const responseText = await response.text();
+
+        console.error(
+          'CREATE WORK FAILED',
+          {
+            status: response.status,
+            statusText: response.statusText,
+            body: responseText,
+          },
+        );
+
         let message =
-          'Work could not be added.';
+          `Work could not be added. (${response.status})`;
 
         try {
-          const data = await response.json();
+          const data = JSON.parse(responseText);
 
-          if (
+          if (Array.isArray(data.message)) {
+            message = data.message.join(', ');
+          } else if (
             typeof data.message === 'string'
           ) {
             message = data.message;
           }
         } catch {
-
+          if (responseText) {
+            message = responseText;
+          }
         }
 
         if (response.status === 409) {

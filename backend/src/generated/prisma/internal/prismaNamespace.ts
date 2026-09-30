@@ -1210,6 +1210,7 @@ export const WorkScalarFieldEnum = {
   slug: 'slug',
   description: 'description',
   imageUrl: 'imageUrl',
+  imagePublicId: 'imagePublicId',
   imageUrls: 'imageUrls',
   place: 'place',
   year: 'year',
@@ -1219,6 +1220,7 @@ export const WorkScalarFieldEnum = {
   eventName: 'eventName',
   theme: 'theme',
   isPublished: 'isPublished',
+  sortOrder: 'sortOrder',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

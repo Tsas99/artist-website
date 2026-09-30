@@ -28,10 +28,12 @@ export type AggregateWork = {
 
 export type WorkAvgAggregateOutputType = {
   id: number | null
+  sortOrder: number | null
 }
 
 export type WorkSumAggregateOutputType = {
   id: number | null
+  sortOrder: number | null
 }
 
 export type WorkMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type WorkMinAggregateOutputType = {
   slug: string | null
   description: string | null
   imageUrl: string | null
+  imagePublicId: string | null
   place: string | null
   year: string | null
   material: string | null
@@ -47,6 +50,7 @@ export type WorkMinAggregateOutputType = {
   eventName: string | null
   theme: string | null
   isPublished: boolean | null
+  sortOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -57,6 +61,7 @@ export type WorkMaxAggregateOutputType = {
   slug: string | null
   description: string | null
   imageUrl: string | null
+  imagePublicId: string | null
   place: string | null
   year: string | null
   material: string | null
@@ -64,6 +69,7 @@ export type WorkMaxAggregateOutputType = {
   eventName: string | null
   theme: string | null
   isPublished: boolean | null
+  sortOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -74,6 +80,7 @@ export type WorkCountAggregateOutputType = {
   slug: number
   description: number
   imageUrl: number
+  imagePublicId: number
   imageUrls: number
   place: number
   year: number
@@ -83,6 +90,7 @@ export type WorkCountAggregateOutputType = {
   eventName: number
   theme: number
   isPublished: number
+  sortOrder: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -91,10 +99,12 @@ export type WorkCountAggregateOutputType = {
 
 export type WorkAvgAggregateInputType = {
   id?: true
+  sortOrder?: true
 }
 
 export type WorkSumAggregateInputType = {
   id?: true
+  sortOrder?: true
 }
 
 export type WorkMinAggregateInputType = {
@@ -103,6 +113,7 @@ export type WorkMinAggregateInputType = {
   slug?: true
   description?: true
   imageUrl?: true
+  imagePublicId?: true
   place?: true
   year?: true
   material?: true
@@ -110,6 +121,7 @@ export type WorkMinAggregateInputType = {
   eventName?: true
   theme?: true
   isPublished?: true
+  sortOrder?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -120,6 +132,7 @@ export type WorkMaxAggregateInputType = {
   slug?: true
   description?: true
   imageUrl?: true
+  imagePublicId?: true
   place?: true
   year?: true
   material?: true
@@ -127,6 +140,7 @@ export type WorkMaxAggregateInputType = {
   eventName?: true
   theme?: true
   isPublished?: true
+  sortOrder?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -137,6 +151,7 @@ export type WorkCountAggregateInputType = {
   slug?: true
   description?: true
   imageUrl?: true
+  imagePublicId?: true
   imageUrls?: true
   place?: true
   year?: true
@@ -146,6 +161,7 @@ export type WorkCountAggregateInputType = {
   eventName?: true
   theme?: true
   isPublished?: true
+  sortOrder?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -243,6 +259,7 @@ export type WorkGroupByOutputType = {
   slug: string
   description: string | null
   imageUrl: string | null
+  imagePublicId: string | null
   imageUrls: string[]
   place: string | null
   year: string | null
@@ -252,6 +269,7 @@ export type WorkGroupByOutputType = {
   eventName: string | null
   theme: string | null
   isPublished: boolean
+  sortOrder: number
   createdAt: Date
   updatedAt: Date
   _count: WorkCountAggregateOutputType | null
@@ -285,6 +303,7 @@ export type WorkWhereInput = {
   slug?: Prisma.StringFilter<"Work"> | string
   description?: Prisma.StringNullableFilter<"Work"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Work"> | string | null
+  imagePublicId?: Prisma.StringNullableFilter<"Work"> | string | null
   imageUrls?: Prisma.StringNullableListFilter<"Work">
   place?: Prisma.StringNullableFilter<"Work"> | string | null
   year?: Prisma.StringNullableFilter<"Work"> | string | null
@@ -294,6 +313,7 @@ export type WorkWhereInput = {
   eventName?: Prisma.StringNullableFilter<"Work"> | string | null
   theme?: Prisma.StringNullableFilter<"Work"> | string | null
   isPublished?: Prisma.BoolFilter<"Work"> | boolean
+  sortOrder?: Prisma.IntFilter<"Work"> | number
   createdAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   media?: Prisma.WorkMediaListRelationFilter
@@ -305,6 +325,7 @@ export type WorkOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrls?: Prisma.SortOrder
   place?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -314,6 +335,7 @@ export type WorkOrderByWithRelationInput = {
   eventName?: Prisma.SortOrderInput | Prisma.SortOrder
   theme?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   media?: Prisma.WorkMediaOrderByRelationAggregateInput
@@ -328,6 +350,7 @@ export type WorkWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Work"> | string
   description?: Prisma.StringNullableFilter<"Work"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Work"> | string | null
+  imagePublicId?: Prisma.StringNullableFilter<"Work"> | string | null
   imageUrls?: Prisma.StringNullableListFilter<"Work">
   place?: Prisma.StringNullableFilter<"Work"> | string | null
   year?: Prisma.StringNullableFilter<"Work"> | string | null
@@ -337,6 +360,7 @@ export type WorkWhereUniqueInput = Prisma.AtLeast<{
   eventName?: Prisma.StringNullableFilter<"Work"> | string | null
   theme?: Prisma.StringNullableFilter<"Work"> | string | null
   isPublished?: Prisma.BoolFilter<"Work"> | boolean
+  sortOrder?: Prisma.IntFilter<"Work"> | number
   createdAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   media?: Prisma.WorkMediaListRelationFilter
@@ -348,6 +372,7 @@ export type WorkOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrls?: Prisma.SortOrder
   place?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -357,6 +382,7 @@ export type WorkOrderByWithAggregationInput = {
   eventName?: Prisma.SortOrderInput | Prisma.SortOrder
   theme?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.WorkCountOrderByAggregateInput
@@ -375,6 +401,7 @@ export type WorkScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"Work"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
+  imagePublicId?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   imageUrls?: Prisma.StringNullableListFilter<"Work">
   place?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   year?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
@@ -384,6 +411,7 @@ export type WorkScalarWhereWithAggregatesInput = {
   eventName?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   theme?: Prisma.StringNullableWithAggregatesFilter<"Work"> | string | null
   isPublished?: Prisma.BoolWithAggregatesFilter<"Work"> | boolean
+  sortOrder?: Prisma.IntWithAggregatesFilter<"Work"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Work"> | Date | string
 }
@@ -393,6 +421,7 @@ export type WorkCreateInput = {
   slug: string
   description?: string | null
   imageUrl?: string | null
+  imagePublicId?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
   year?: string | null
@@ -402,6 +431,7 @@ export type WorkCreateInput = {
   eventName?: string | null
   theme?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   media?: Prisma.WorkMediaCreateNestedManyWithoutWorkInput
@@ -413,6 +443,7 @@ export type WorkUncheckedCreateInput = {
   slug: string
   description?: string | null
   imageUrl?: string | null
+  imagePublicId?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
   year?: string | null
@@ -422,6 +453,7 @@ export type WorkUncheckedCreateInput = {
   eventName?: string | null
   theme?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   media?: Prisma.WorkMediaUncheckedCreateNestedManyWithoutWorkInput
@@ -432,6 +464,7 @@ export type WorkUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -441,6 +474,7 @@ export type WorkUpdateInput = {
   eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   media?: Prisma.WorkMediaUpdateManyWithoutWorkNestedInput
@@ -452,6 +486,7 @@ export type WorkUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -461,6 +496,7 @@ export type WorkUncheckedUpdateInput = {
   eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   media?: Prisma.WorkMediaUncheckedUpdateManyWithoutWorkNestedInput
@@ -472,6 +508,7 @@ export type WorkCreateManyInput = {
   slug: string
   description?: string | null
   imageUrl?: string | null
+  imagePublicId?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
   year?: string | null
@@ -481,6 +518,7 @@ export type WorkCreateManyInput = {
   eventName?: string | null
   theme?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -490,6 +528,7 @@ export type WorkUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -499,6 +538,7 @@ export type WorkUpdateManyMutationInput = {
   eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -509,6 +549,7 @@ export type WorkUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -518,6 +559,7 @@ export type WorkUncheckedUpdateManyInput = {
   eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -536,6 +578,7 @@ export type WorkCountOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrder
   imageUrls?: Prisma.SortOrder
   place?: Prisma.SortOrder
   year?: Prisma.SortOrder
@@ -545,12 +588,14 @@ export type WorkCountOrderByAggregateInput = {
   eventName?: Prisma.SortOrder
   theme?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type WorkAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
 }
 
 export type WorkMaxOrderByAggregateInput = {
@@ -559,6 +604,7 @@ export type WorkMaxOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   year?: Prisma.SortOrder
   material?: Prisma.SortOrder
@@ -566,6 +612,7 @@ export type WorkMaxOrderByAggregateInput = {
   eventName?: Prisma.SortOrder
   theme?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -576,6 +623,7 @@ export type WorkMinOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   year?: Prisma.SortOrder
   material?: Prisma.SortOrder
@@ -583,12 +631,14 @@ export type WorkMinOrderByAggregateInput = {
   eventName?: Prisma.SortOrder
   theme?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type WorkSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
 }
 
 export type WorkScalarRelationFilter = {
@@ -637,6 +687,7 @@ export type WorkCreateWithoutMediaInput = {
   slug: string
   description?: string | null
   imageUrl?: string | null
+  imagePublicId?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
   year?: string | null
@@ -646,6 +697,7 @@ export type WorkCreateWithoutMediaInput = {
   eventName?: string | null
   theme?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -656,6 +708,7 @@ export type WorkUncheckedCreateWithoutMediaInput = {
   slug: string
   description?: string | null
   imageUrl?: string | null
+  imagePublicId?: string | null
   imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
   place?: string | null
   year?: string | null
@@ -665,6 +718,7 @@ export type WorkUncheckedCreateWithoutMediaInput = {
   eventName?: string | null
   theme?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -690,6 +744,7 @@ export type WorkUpdateWithoutMediaInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -699,6 +754,7 @@ export type WorkUpdateWithoutMediaInput = {
   eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -709,6 +765,7 @@ export type WorkUncheckedUpdateWithoutMediaInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -718,6 +775,7 @@ export type WorkUncheckedUpdateWithoutMediaInput = {
   eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -759,6 +817,7 @@ export type WorkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   slug?: boolean
   description?: boolean
   imageUrl?: boolean
+  imagePublicId?: boolean
   imageUrls?: boolean
   place?: boolean
   year?: boolean
@@ -768,6 +827,7 @@ export type WorkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   eventName?: boolean
   theme?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   media?: boolean | Prisma.Work$mediaArgs<ExtArgs>
@@ -780,6 +840,7 @@ export type WorkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   slug?: boolean
   description?: boolean
   imageUrl?: boolean
+  imagePublicId?: boolean
   imageUrls?: boolean
   place?: boolean
   year?: boolean
@@ -789,6 +850,7 @@ export type WorkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   eventName?: boolean
   theme?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["work"]>
@@ -799,6 +861,7 @@ export type WorkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   slug?: boolean
   description?: boolean
   imageUrl?: boolean
+  imagePublicId?: boolean
   imageUrls?: boolean
   place?: boolean
   year?: boolean
@@ -808,6 +871,7 @@ export type WorkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   eventName?: boolean
   theme?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["work"]>
@@ -818,6 +882,7 @@ export type WorkSelectScalar = {
   slug?: boolean
   description?: boolean
   imageUrl?: boolean
+  imagePublicId?: boolean
   imageUrls?: boolean
   place?: boolean
   year?: boolean
@@ -827,11 +892,12 @@ export type WorkSelectScalar = {
   eventName?: boolean
   theme?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type WorkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "imageUrl" | "imageUrls" | "place" | "year" | "material" | "dimensions" | "mediums" | "eventName" | "theme" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["work"]>
+export type WorkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "imageUrl" | "imagePublicId" | "imageUrls" | "place" | "year" | "material" | "dimensions" | "mediums" | "eventName" | "theme" | "isPublished" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["work"]>
 export type WorkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   media?: boolean | Prisma.Work$mediaArgs<ExtArgs>
   _count?: boolean | Prisma.WorkCountOutputTypeDefaultArgs<ExtArgs>
@@ -850,6 +916,7 @@ export type $WorkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     slug: string
     description: string | null
     imageUrl: string | null
+    imagePublicId: string | null
     imageUrls: string[]
     place: string | null
     year: string | null
@@ -859,6 +926,7 @@ export type $WorkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     eventName: string | null
     theme: string | null
     isPublished: boolean
+    sortOrder: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["work"]>
@@ -1290,6 +1358,7 @@ export interface WorkFieldRefs {
   readonly slug: Prisma.FieldRef<"Work", 'String'>
   readonly description: Prisma.FieldRef<"Work", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Work", 'String'>
+  readonly imagePublicId: Prisma.FieldRef<"Work", 'String'>
   readonly imageUrls: Prisma.FieldRef<"Work", 'String[]'>
   readonly place: Prisma.FieldRef<"Work", 'String'>
   readonly year: Prisma.FieldRef<"Work", 'String'>
@@ -1299,6 +1368,7 @@ export interface WorkFieldRefs {
   readonly eventName: Prisma.FieldRef<"Work", 'String'>
   readonly theme: Prisma.FieldRef<"Work", 'String'>
   readonly isPublished: Prisma.FieldRef<"Work", 'Boolean'>
+  readonly sortOrder: Prisma.FieldRef<"Work", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Work", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Work", 'DateTime'>
 }
