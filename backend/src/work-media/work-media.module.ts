@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
+
 import { WorkMediaService } from './work-media.service';
 import { WorkMediaController } from './work-media.controller';
+
 import { PrismaModule } from '../prisma/prisma.module';
 import { AuthModule } from '../auth/auth.module';
+import { UploadModule } from '../upload/upload.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule],
+  imports: [
+    PrismaModule,
+    AuthModule,
+    UploadModule,
+  ],
   controllers: [WorkMediaController],
   providers: [WorkMediaService],
 })

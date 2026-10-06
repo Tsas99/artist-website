@@ -8,12 +8,22 @@ import {
   Patch,
   Post,
   UseGuards,
+  UploadedFile,
+UseInterceptors,
+
 } from '@nestjs/common';
 
 import { WorkMediaService } from './work-media.service';
 import { CreateWorkMediaDto } from './dto/create-work-media.dto';
 import { UpdateWorkMediaDto } from './dto/update-work-media.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import {
+  FileInterceptor,
+} from '@nestjs/platform-express';
+
+import type {
+  UploadedMediaFile,
+} from '../upload/upload.service';
 
 @Controller('work-media')
 @UseGuards(JwtAuthGuard)
@@ -21,6 +31,24 @@ export class WorkMediaController {
   constructor(
     private readonly workMediaService: WorkMediaService,
   ) {}
+
+  @Post('upload')
+@UseInterceptors(
+  FileInterceptor('file', {
+    limits: {
+      fileSize: 100 * 1024 * 1024,
+    },
+  }),
+)
+uploadAndCreate(
+  @Body('workId', ParseIntPipe) workId: number,
+  @UploadedFile() file?: UploadedMediaFile,
+) {
+  return this.workMediaService.uploadAndCreate(
+    workId,
+    file!,
+  );
+}
 
   @Post()
   create(

@@ -13,60 +13,67 @@ import { UploadService } from '../upload/upload.service';
 
 @Injectable()
 export class WorkService {
-  constructor(private readonly prisma: PrismaService,
-              private readonly uploadService: UploadService
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly uploadService: UploadService,
   ) {}
 
   async create(createWorkDto: CreateWorkDto) {
     const { media, ...workData } = createWorkDto;
 
     try {
-      return await this.prisma.$transaction(async (tx) => {
-        const lastWork = await tx.work.findFirst({
-          orderBy:{
-            sortOrder:'desc',
-          },
-          select: {
-            sortOrder: true,
-          },
-        });
-        const work = await tx.work.create({
-          data: {
-            ...workData,
-            sortOrder:
-            (lastWork?.sortOrder ?? -1) +1,
-          },
-
-        });
-
-        if (media?.length) {
-          await tx.workMedia.createMany({
-            data: media.map((item, index) => ({
-              url: item.url,
-              publicId: item.publicId,
-              type: item.type,
-              sortOrder: item.sortOrder ?? index,
-              workId: work.id,
-            })),
+      return await this.prisma.$transaction(
+        async (tx) => {
+          // Add a new project to the end
+          // of the manually ordered list.
+          const lastWork = await tx.work.findFirst({
+            orderBy: {
+              sortOrder: 'desc',
+            },
+            select: {
+              sortOrder: true,
+            },
           });
-        }
 
-        return tx.work.findUnique({
-          where: {
-            id: work.id,
-          },
-          include: {
-            media: {
-              orderBy: {
-                sortOrder: 'asc',
+          const work = await tx.work.create({
+            data: {
+              ...workData,
+              sortOrder:
+                (lastWork?.sortOrder ?? -1) + 1,
+            },
+          });
+
+          if (media?.length) {
+            await tx.workMedia.createMany({
+              data: media.map((item, index) => ({
+                url: item.url,
+                publicId: item.publicId,
+                type: item.type,
+                sortOrder:
+                  item.sortOrder ?? index,
+                workId: work.id,
+              })),
+            });
+          }
+
+          return tx.work.findUnique({
+            where: {
+              id: work.id,
+            },
+            include: {
+              media: {
+                orderBy: {
+                  sortOrder: 'asc',
+                },
               },
             },
-          },
-        });
-      });
+          });
+        },
+      );
     } catch (error) {
       if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error instanceof
+          Prisma.PrismaClientKnownRequestError &&
         error.code === 'P2002'
       ) {
         throw new ConflictException(
@@ -79,30 +86,15 @@ export class WorkService {
   }
 
   findAll() {
-  return this.prisma.work.findMany({
-    orderBy: [
-      {
-        sortOrder: 'asc',
-      },
-      {
-        createdAt: 'desc',
-      },
-    ],
-    include: {
-      media: {
-        orderBy: {
+    return this.prisma.work.findMany({
+      orderBy: [
+        {
           sortOrder: 'asc',
         },
-      },
-    },
-  });
-}
-
-  async findOne(id: number) {
-    const work = await this.prisma.work.findUnique({
-      where: {
-        id,
-      },
+        {
+          createdAt: 'desc',
+        },
+      ],
       include: {
         media: {
           orderBy: {
@@ -111,30 +103,51 @@ export class WorkService {
         },
       },
     });
+  }
+
+  async findOne(id: number) {
+    const work =
+      await this.prisma.work.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          media: {
+            orderBy: {
+              sortOrder: 'asc',
+            },
+          },
+        },
+      });
 
     if (!work) {
-      throw new NotFoundException('Work not found.');
+      throw new NotFoundException(
+        'Work not found.',
+      );
     }
 
     return work;
   }
 
   async findBySlug(slug: string) {
-    const work = await this.prisma.work.findUnique({
-      where: {
-        slug,
-      },
-      include: {
-        media: {
-          orderBy: {
-            sortOrder: 'asc',
+    const work =
+      await this.prisma.work.findUnique({
+        where: {
+          slug,
+        },
+        include: {
+          media: {
+            orderBy: {
+              sortOrder: 'asc',
+            },
           },
         },
-      },
-    });
+      });
 
     if (!work) {
-      throw new NotFoundException('Work not found.');
+      throw new NotFoundException(
+        'Work not found.',
+      );
     }
 
     return work;
@@ -144,7 +157,10 @@ export class WorkService {
     id: number,
     updateWorkDto: UpdateWorkDto,
   ) {
-    const { media, ...workData } = updateWorkDto;
+    const {
+      media: _media,
+      ...workData
+    } = updateWorkDto;
 
     try {
       return await this.prisma.work.update({
@@ -162,7 +178,8 @@ export class WorkService {
       });
     } catch (error) {
       if (
-        error instanceof Prisma.PrismaClientKnownRequestError
+        error instanceof
+        Prisma.PrismaClientKnownRequestError
       ) {
         if (error.code === 'P2002') {
           throw new ConflictException(
@@ -180,97 +197,104 @@ export class WorkService {
       throw error;
     }
   }
-  async reorder(ids: number[]) {
-  const works = await this.prisma.work.findMany({
-    where: {
-      id: {
-        in: ids,
-      },
-    },
-    select: {
-      id: true,
-    },
-  });
 
-  if (works.length !== ids.length) {
-    throw new NotFoundException(
-      'One or more works were not found.',
+  async reorder(ids: number[]) {
+    const works =
+      await this.prisma.work.findMany({
+        where: {
+          id: {
+            in: ids,
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
+
+    if (works.length !== ids.length) {
+      throw new NotFoundException(
+        'One or more works were not found.',
+      );
+    }
+
+    await this.prisma.$transaction(
+      ids.map((id, index) =>
+        this.prisma.work.update({
+          where: {
+            id,
+          },
+          data: {
+            sortOrder: index,
+          },
+        }),
+      ),
     );
+
+    return this.findAll();
   }
 
-  await this.prisma.$transaction(
-    ids.map((id, index) =>
-      this.prisma.work.update({
+  async remove(id: number) {
+    const work =
+      await this.prisma.work.findUnique({
         where: {
           id,
         },
-        data: {
-          sortOrder: index,
+        include: {
+          media: true,
         },
-      }),
-    ),
-  );
+      });
 
-  return this.findAll();
-}
-
- async remove(id: number) {
-  const work = await this.prisma.work.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      media: true,
-    },
-  });
-
-  if (!work) {
-    throw new NotFoundException(
-      'Work not found.',
-    );
-  }
-
-  const cloudinaryMedia = new Map<
-    string,
-    'image' | 'video'
-  >();
-
-  
-  if (work.imagePublicId) {
-    cloudinaryMedia.set(
-      work.imagePublicId,
-      'image',
-    );
-  }
-
-
-  for (const media of work.media) {
-    if (
-      media.type !== 'image' &&
-      media.type !== 'video'
-    ) {
-      continue;
+    if (!work) {
+      throw new NotFoundException(
+        'Work not found.',
+      );
     }
 
-    cloudinaryMedia.set(
-      media.publicId,
-      media.type,
-    );
-  }
 
+    const cloudinaryMedia = new Map<
+      string,
+      'image' | 'video'
+    >();
 
-  for (const [publicId, type] of cloudinaryMedia) {
-    await this.uploadService.deleteMedia(
+    // Cover image
+    if (work.imagePublicId) {
+      cloudinaryMedia.set(
+        work.imagePublicId,
+        'image',
+      );
+    }
+
+    // Gallery images and videos
+    for (const media of work.media) {
+      if (
+        media.type !== 'image' &&
+        media.type !== 'video'
+      ) {
+        continue;
+      }
+
+      cloudinaryMedia.set(
+        media.publicId,
+        media.type,
+      );
+    }
+
+    // Delete every unique Cloudinary asset.
+    for (const [
       publicId,
       type,
-    );
+    ] of cloudinaryMedia) {
+      await this.uploadService.deleteMedia(
+        publicId,
+        type,
+      );
+    }
+
+
+    return this.prisma.work.delete({
+      where: {
+        id,
+      },
+    });
   }
-
-
-  return this.prisma.work.delete({
-    where: {
-      id,
-    },
-  });
-}
 }

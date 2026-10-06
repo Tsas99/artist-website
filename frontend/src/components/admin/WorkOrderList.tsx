@@ -140,8 +140,8 @@ export default function WorksOrderList({
 
                                 <span
                                     className={`rounded-full px-2.5 py-1 text-xs font-medium ${work.isPublished
-                                            ? 'bg-green-50 text-green-700'
-                                            : 'bg-neutral-100 text-neutral-500'
+                                        ? 'bg-green-50 text-green-700'
+                                        : 'bg-neutral-100 text-neutral-500'
                                         }`}
                                 >
                                     {work.isPublished
@@ -180,6 +180,14 @@ export default function WorksOrderList({
                             <DeleteWork
                                 workId={work.id}
                                 title={work.title}
+                                onDeleted={(deletedWorkId) => {
+                                    setWorks((currentWorks) =>
+                                        currentWorks.filter(
+                                            (item) =>
+                                                item.id !== deletedWorkId,
+                                        ),
+                                    );
+                                }}
                             />
                         </div>
                     </div>

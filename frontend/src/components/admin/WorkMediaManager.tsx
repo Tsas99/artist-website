@@ -13,11 +13,7 @@ type WorkMedia = {
     workId: number;
 };
 
-type UploadedMedia = {
-    url: string;
-    publicId: string;
-    type: 'image' | 'video';
-};
+
 
 type Props = {
     work: Work;
@@ -64,67 +60,64 @@ export default function WorkMediaManager({
             setIsLoading(false);
         }
     }
-
     async function handleMediaUpload(files: FileList) {
+        if (isUploading) return;
+
         setIsUploading(true);
         onError('');
+
+        let successfulUploads = 0;
 
         try {
             for (const file of Array.from(files)) {
                 const formData = new FormData();
-                formData.append('file', file);
 
-                // 1. Upload file to Cloudinary through protected proxy
-                const uploadResponse = await adminFetch(
-                    '/api/admin/upload/media',
+                formData.append('file', file);
+                formData.append('workId', String(work.id));
+
+                // Backend handles:
+                // Sharp optimization
+                // Cloudinary upload
+                // PostgreSQL save
+                // Cleanup if database save fails
+                const response = await adminFetch(
+                    '/api/admin/work-media/upload',
                     {
                         method: 'POST',
                         body: formData,
                     },
                 );
 
-                if (!uploadResponse.ok) {
-                    throw new Error('Media upload failed');
-                }
+                if (!response.ok) {
+                    const errorText = await response.text();
 
-                const uploaded: UploadedMedia =
-                    await uploadResponse.json();
-
-                // 2. Save media record to database
-                const mediaResponse = await adminFetch(
-                    '/api/admin/work-media',
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            url: uploaded.url,
-                            publicId: uploaded.publicId,
-                            type: uploaded.type,
-                            sortOrder: media.length,
-                            workId: work.id,
-                        }),
-                    },
-                );
-
-                if (!mediaResponse.ok) {
                     throw new Error(
-                        'Media could not be saved to database',
+                        `Media upload failed: ${errorText}`,
                     );
                 }
-            }
 
-            await loadMedia();
+                successfulUploads++;
+            }
         } catch (error) {
-            console.error(error);
-            onError('Media could not be uploaded.');
+            console.error('Media upload failed:', error);
+
+            onError(
+                error instanceof Error
+                    ? error.message
+                    : 'Media could not be uploaded.',
+            );
         } finally {
-            setIsUploading(false);
+            try {
+                // Refresh the gallery even when an earlier
+                // file succeeded but a later file failed.
+                await loadMedia();
+            } finally {
+                setIsUploading(false);
+            }
         }
     }
 
-    async function setCoverImage(url: string) {
+    async function setCoverImage(item: WorkMedia) {
         try {
             onError('');
 
@@ -136,21 +129,35 @@ export default function WorkMediaManager({
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        imageUrl: url,
+                        imageUrl: item.url,
+                        imagePublicId: item.publicId,
                     }),
                 },
             );
 
             if (!response.ok) {
-                throw new Error('Failed to change cover image');
+                const responseText = await response.text();
+
+                console.error(
+                    'Cover update failed:',
+                    responseText,
+                );
+
+                throw new Error(
+                    'Failed to change cover image',
+                );
             }
 
-            const updatedWork: Work = await response.json();
+            const updatedWork: Work =
+                await response.json();
 
             onWorkChange(updatedWork);
         } catch (error) {
             console.error(error);
-            onError('Cover image could not be changed.');
+
+            onError(
+                'Cover image could not be changed.',
+            );
         }
     }
 
@@ -158,86 +165,62 @@ export default function WorkMediaManager({
         try {
             onError('');
 
-            // If current cover is being deleted,
-            // choose another image as cover first.
-            if (
-                item.type === 'image' &&
-                work.imageUrl === item.url
-            ) {
-                const otherImage = media.find(
-                    (mediaItem) =>
-                        mediaItem.type === 'image' &&
-                        mediaItem.id !== item.id,
-                );
-
-                const workResponse = await adminFetch(
-                    `/api/admin/works/${work.id}`,
-                    {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            imageUrl: otherImage?.url ?? null,
-                        }),
-                    },
-                );
-
-                if (!workResponse.ok) {
-                    throw new Error('Failed to update cover');
-                }
-
-                const updatedWork: Work =
-                    await workResponse.json();
-
-                onWorkChange(updatedWork);
-            }
-
-            // Delete file from Cloudinary
-            const cloudinaryResponse = await adminFetch(
-                '/api/admin/upload/media',
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        publicId: item.publicId,
-                        type: item.type,
-                    }),
-                },
-            );
-
-            if (!cloudinaryResponse.ok) {
-                throw new Error(
-                    'Failed to delete Cloudinary media',
-                );
-            }
-
-            // Delete WorkMedia record from database
-            const databaseResponse = await adminFetch(
+            const response = await adminFetch(
                 `/api/admin/work-media/${item.id}`,
                 {
                     method: 'DELETE',
                 },
             );
 
-            if (!databaseResponse.ok) {
+            if (!response.ok) {
+                const responseText = await response.text();
+
+                console.error(
+                    'Media deletion failed:',
+                    responseText,
+                );
+
                 throw new Error(
-                    'Failed to delete media from database',
+                    'Failed to remove media',
                 );
             }
 
+            // Backend updates the cover if necessary.
+            // Refresh the Work information.
+            const workResponse = await adminFetch(
+                `/api/admin/works/${work.id}`,
+                {
+                    cache: 'no-store',
+                },
+            );
+
+            if (!workResponse.ok) {
+                throw new Error(
+                    'Failed to refresh work',
+                );
+            }
+
+            const updatedWork: Work =
+                await workResponse.json();
+
+            onWorkChange(updatedWork);
+
+            // Remove the deleted item from the gallery.
             setMedia((current) =>
                 current.filter(
-                    (mediaItem) => mediaItem.id !== item.id,
+                    (mediaItem) =>
+                        mediaItem.id !== item.id,
                 ),
             );
         } catch (error) {
             console.error(error);
-            onError('Media could not be removed.');
+
+            onError(
+                'Media could not be removed.',
+            );
         }
     }
+
 
     return (
         <section className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-7">
@@ -337,7 +320,7 @@ export default function WorkMediaManager({
                                                     type="button"
                                                     onClick={() =>
                                                         setCoverImage(
-                                                            item.url,
+                                                            item
                                                         )
                                                     }
                                                     className="min-h-11 w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-neutral-50"

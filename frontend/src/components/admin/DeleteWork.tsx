@@ -1,25 +1,32 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { adminFetch } from '@/lib/admin-fetch';
 
 type DeleteWorkProps = {
     workId: number;
     title: string;
+    onDeleted?: (workId: number) => void;
 };
 
 export default function DeleteWork({
     workId,
     title,
+    onDeleted,
 }: DeleteWorkProps) {
-    const router = useRouter();
+    const [showConfirm, setShowConfirm] =
+        useState(false);
 
-    const [showConfirm, setShowConfirm] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
+    const [isDeleting, setIsDeleting] =
+        useState(false);
+
     const [error, setError] = useState('');
 
     async function deleteWork() {
+        if (isDeleting) {
+            return;
+        }
+
         try {
             setIsDeleting(true);
             setError('');
@@ -32,17 +39,28 @@ export default function DeleteWork({
             );
 
             if (!response.ok) {
-                const errorData = await response.text();
-                console.error('Delete failed:', errorData);
+                const errorData =
+                    await response.text();
 
-                throw new Error('Failed to delete work');
+                console.error(
+                    'Delete failed:',
+                    errorData,
+                );
+
+                throw new Error(
+                    'Failed to delete work',
+                );
             }
 
-            router.push('/admin/works');
-            router.refresh();
+            setShowConfirm(false);
+
+            onDeleted?.(workId);
         } catch (err) {
             console.error(err);
-            setError('Work could not be deleted.');
+
+            setError(
+                'Work could not be deleted.',
+            );
         } finally {
             setIsDeleting(false);
         }
@@ -53,7 +71,9 @@ export default function DeleteWork({
             <div className="flex h-9 items-center">
                 <button
                     type="button"
-                    onClick={() => setShowConfirm(true)}
+                    onClick={() =>
+                        setShowConfirm(true)
+                    }
                     className="inline-flex h-9 items-center justify-center rounded-lg border border-red-200 px-3 text-sm font-medium leading-none text-red-600 transition hover:bg-red-50"
                 >
                     Delete
@@ -72,18 +92,22 @@ export default function DeleteWork({
                 >
                     <div
                         className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
-                        onClick={(event) => event.stopPropagation()}
+                        onClick={(event) =>
+                            event.stopPropagation()
+                        }
                     >
                         <h2 className="text-lg font-semibold text-neutral-950">
                             Delete work?
                         </h2>
 
                         <p className="mt-3 text-sm leading-6 text-neutral-600">
-                            Are you sure you want to permanently delete{' '}
+                            Are you sure you want to
+                            permanently delete{' '}
                             <span className="font-medium text-neutral-900">
                                 &ldquo;{title}&rdquo;
                             </span>
-                            ? This action cannot be undone.
+                            ? This action cannot be
+                            undone.
                         </p>
 
                         {error && (
@@ -111,7 +135,9 @@ export default function DeleteWork({
                                 disabled={isDeleting}
                                 className="rounded-xl bg-red-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
                             >
-                                {isDeleting ? 'Deleting...' : 'Yes, delete work'}
+                                {isDeleting
+                                    ? 'Deleting...'
+                                    : 'Yes, delete work'}
                             </button>
                         </div>
                     </div>
