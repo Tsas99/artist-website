@@ -15,6 +15,10 @@ const navigation = [
         href: '/admin/works',
     },
     {
+        label: 'EXHIBITIONS',
+        href: '/admin/exhibitions',
+    },
+    {
         label: 'NEWS',
         href: '/admin/news',
     },

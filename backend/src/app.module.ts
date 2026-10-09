@@ -16,6 +16,8 @@ import { ContactModule } from './contact/contact.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { HomeMediaModule } from './home-media/home-media.module';
 import { NewsModule } from './news/news.moudule';
+import { ExhibitionModule } from './exhibtion/exhibition.module';
+import { ExhibitionMediaModule } from './exhibition-media/exhibition-media.module';
 
 
 @Module({
@@ -24,7 +26,7 @@ import { NewsModule } from './news/news.moudule';
       isGlobal: true,
     }),
   
-    PrismaModule, ArtistModule, WorkModule, UploadModule, WorkMediaModule, AuthModule, AboutModule, CvEntryModule, PressModule, PressMediaModule, ContactModule, HomeMediaModule, NewsModule,
+    PrismaModule, ArtistModule, WorkModule, UploadModule, WorkMediaModule, AuthModule, AboutModule, CvEntryModule, PressModule, PressMediaModule, ContactModule, HomeMediaModule, NewsModule, ExhibitionModule, ExhibitionMediaModule,
     
     ThrottlerModule.forRoot({
          throttlers: [

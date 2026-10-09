@@ -41,6 +41,8 @@ async function main() {
       pressMedia,
       homeMedia,
       news,
+      exhibitions,
+      exhibitionMedia,
     ] = await Promise.all([
       prisma.work.findMany({
         select: {
@@ -82,6 +84,18 @@ async function main() {
       prisma.news.findMany({
         select: {
           posterPublicId: true,
+        },
+      }),
+
+      prisma.exhibition.findMany({
+        select:{
+          coverPublicId: true,
+        },
+      }),
+
+      prisma.exhibitionMedia.findMany({
+        select:{
+          publicId:true,
         },
       }),
     ]);
@@ -126,6 +140,14 @@ async function main() {
 
     news.forEach((item) => {
       addPublicId(item.posterPublicId);
+    });
+
+    exhibitions.forEach((item) => {
+      addPublicId(item.coverPublicId);
+    });
+
+    exhibitionMedia.forEach((item) => {
+      addPublicId(item.publicId);
     });
 
     // =====================================================

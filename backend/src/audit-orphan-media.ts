@@ -41,6 +41,8 @@ async function main() {
       pressMedia,
       homeMedia,
       news,
+      exhibitions,
+      exhibitionMedia,
     ] = await Promise.all([
       prisma.work.findMany({
         select: {
@@ -84,6 +86,19 @@ async function main() {
           posterPublicId: true,
         },
       }),
+      prisma.exhibition.findMany({
+        select:{
+          id: true,
+          coverPublicId:true,
+        },
+      }),
+      prisma.exhibitionMedia.findMany({
+        select:{
+          id: true,
+          exhibitionId: true,
+          publicId: true,
+        }
+      })
     ]);
 
     // =====================================================
@@ -127,6 +142,14 @@ async function main() {
     news.forEach((item) => {
       addPublicId(item.posterPublicId);
     });
+
+    exhibitions.forEach((item) => {
+      addPublicId(item.coverPublicId);
+    });
+
+    exhibitionMedia.forEach((item) => {
+      addPublicId(item.publicId);
+    })
 
     // =====================================================
     // 3. PROTECT LEGACY Work.imageUrls
@@ -318,7 +341,30 @@ for (const publicId of missingFromCloudinary) {
       });
     }
   });
+
+  exhibitions.forEach((item) =>{
+    if (item.coverPublicId === publicId) {
+      brokenReferenceDetails.push({
+        publicId,
+        source:'Exhibition.coverPublicId',
+        recordId: item.id,
+      });
+    }
+  });
+
+  exhibitionMedia.forEach((item) => {
+    if (item.publicId === publicId) {
+      brokenReferenceDetails.push({
+        publicId,
+        source:'ExhibitionMedia.publicId',
+        recordId: item.id,
+        relatedId: item.exhibitionId,
+      });
+    }
+  });
+
 }
+
 
     // =====================================================
     // 8. REPORT
@@ -426,9 +472,15 @@ if (brokenReferenceDetails.length > 0) {
       console.log(`   Source: ${item.source}`);
       console.log(`   Record ID: ${item.recordId}`);
 
-      if (item.relatedId !== undefined) {
-        console.log(`   Work ID: ${item.relatedId}`);
-      }
+     if (item.relatedId !== undefined) {
+  if (item.source === 'WorkMedia.publicId') {
+    console.log(`   Work ID: ${item.relatedId}`);
+  } else if (item.source === 'PressMedia.publicId') {
+    console.log(`   Press ID: ${item.relatedId}`);
+  } else if (item.source === 'ExhibitionMedia.publicId') {
+    console.log(`   Exhibition ID: ${item.relatedId}`);
+  }
+}
 
       console.log('');
     },

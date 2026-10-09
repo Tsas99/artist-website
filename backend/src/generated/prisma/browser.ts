@@ -67,3 +67,13 @@ export type HomeMedia = Prisma.HomeMediaModel
  * 
  */
 export type News = Prisma.NewsModel
+/**
+ * Model Exhibition
+ * 
+ */
+export type Exhibition = Prisma.ExhibitionModel
+/**
+ * Model ExhibitionMedia
+ * 
+ */
+export type ExhibitionMedia = Prisma.ExhibitionMediaModel
