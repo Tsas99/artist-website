@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { adminFetch } from '@/lib/admin-fetch';
 
+
 export default function NewExhibitionPage() {
     const router = useRouter();
 

@@ -9,6 +9,8 @@ const API_URL =
 const ALLOWED_PREFIXES = [
   'works',
   'work-media',
+    'exhibitions',
+  'exhibition-media',
   'upload',
   'about',
   'cv',
