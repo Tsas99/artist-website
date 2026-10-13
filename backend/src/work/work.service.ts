@@ -11,6 +11,9 @@ import { CreateWorkDto } from './dto/create-work.dto';
 import { UpdateWorkDto } from './dto/update-work.dto';
 import { UploadService } from '../upload/upload.service';
 
+import { CreateWorkLinkDto } from './dto/create-work-link.dto';
+import { UpdateWorkLinkDto } from './dto/update-work-link.dto';
+
 @Injectable()
 export class WorkService {
   constructor(
@@ -101,6 +104,11 @@ export class WorkService {
             sortOrder: 'asc',
           },
         },
+        links: {
+          orderBy: {
+            sortOrder:'asc',
+          },
+        },
       },
     });
   }
@@ -117,6 +125,11 @@ export class WorkService {
               sortOrder: 'asc',
             },
           },
+          links: {
+          orderBy: {
+            sortOrder:'asc',
+          },
+        },
         },
       });
 
@@ -141,6 +154,11 @@ export class WorkService {
               sortOrder: 'asc',
             },
           },
+          links: {
+          orderBy: {
+            sortOrder:'asc',
+          },
+        },
         },
       });
 
@@ -174,6 +192,11 @@ export class WorkService {
               sortOrder: 'asc',
             },
           },
+          links: {
+          orderBy: {
+            sortOrder:'asc',
+          },
+        },
         },
       });
     } catch (error) {
@@ -297,4 +320,71 @@ export class WorkService {
       },
     });
   }
+  
+  async addLink(
+    workId: number,
+    dto: CreateWorkLinkDto,
+  ) {
+    await this.findOne(workId);
+
+    const lastLink = await this.prisma.workLink.findFirst({
+      where: { workId },
+      orderBy: { sortOrder: 'desc' },
+      select: { sortOrder: true },
+    });
+
+    return this.prisma.workLink.create({
+      data: {
+        label: dto.label,
+        url: dto.url,
+        workId,
+        sortOrder:
+          dto.sortOrder ??
+          (lastLink?.sortOrder ?? -1) + 1,
+      },
+    });
+  }
+
+  async updateLink(
+    workId: number,
+    linkId: number,
+    dto: UpdateWorkLinkDto,
+  ) {
+    const link = await this.prisma.workLink.findFirst({
+      where: {
+        id: linkId,
+        workId,
+      },
+    });
+
+    if (!link) {
+      throw new NotFoundException('Work link not found.');
+    }
+
+    return this.prisma.workLink.update({
+      where: { id: linkId },
+      data: dto,
+    });
+  }
+
+  async removeLink(
+    workId: number,
+    linkId: number,
+  ) {
+    const link = await this.prisma.workLink.findFirst({
+      where: {
+        id: linkId,
+        workId,
+      },
+    });
+
+    if (!link) {
+      throw new NotFoundException('Work link not found.');
+    }
+
+    return this.prisma.workLink.delete({
+      where: { id: linkId },
+    });
+  }
+
 }

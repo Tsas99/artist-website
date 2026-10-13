@@ -1,4 +1,5 @@
-import Link from 'next/link';
+
+import WorkCard from '@/components/WorkCard';
 
 type Work = {
   id: number;
@@ -10,9 +11,10 @@ type Work = {
 };
 
 async function getWorks(): Promise<Work[]> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/works`, {
-    cache: 'no-store',
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/works`,
+    { cache: 'no-store' },
+  );
 
   if (!response.ok) {
     throw new Error('Failed to fetch works');
@@ -29,7 +31,6 @@ export default async function WorksPage() {
   return (
     <main className="min-h-screen bg-white">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-
         {works.length === 0 ? (
           <p className="text-sm text-neutral-500">
             No published works yet.
@@ -37,59 +38,7 @@ export default async function WorksPage() {
         ) : (
           <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {works.map((work) => (
-              <article
-                key={work.id}
-                className="group"
-              >
-                <Link
-                  href={`/works/${work.slug}`}
-                  className="block"
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
-                    {work.imageUrl ? (
-                      <>
-                        <img
-                          src={work.imageUrl}
-                          alt={work.title}
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
-                        />
-
-                        {/* Desktop hover overlay */}
-                        <div className="absolute inset-0 hidden items-end bg-black/0 p-5 transition duration-300 group-hover:bg-black/35 sm:flex">
-                          <div className="translate-y-2 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                            <h2 className="text-lg font-display text-white">
-                              {work.title}
-                            </h2>
-
-                            {work.mediums.length > 0 && (
-                              <p className="mt-1 text-sm font-display  text-white/75">
-                                {work.mediums.join(', ')}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="flex h-full items-center justify-center text-sm text-neutral-400">
-                        No image
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Mobile only */}
-                  <div className="mt-3 sm:hidden">
-                    <h2 className="text-base font-medium text-neutral-950">
-                      {work.title}
-                    </h2>
-
-                    {work.mediums.length > 0 && (
-                      <p className="mt-1 text-sm text-neutral-500">
-                        {work.mediums.join(', ')}
-                      </p>
-                    )}
-                  </div>
-                </Link>
-              </article>
+              <WorkCard key={work.id} work={work} />
             ))}
           </div>
         )}

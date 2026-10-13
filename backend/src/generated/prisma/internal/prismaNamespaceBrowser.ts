@@ -54,6 +54,7 @@ export const ModelName = {
   Artist: 'Artist',
   Work: 'Work',
   WorkMedia: 'WorkMedia',
+  WorkLink: 'WorkLink',
   Admin: 'Admin',
   About: 'About',
   CVEntry: 'CVEntry',
@@ -128,6 +129,17 @@ export const WorkMediaScalarFieldEnum = {
 } as const
 
 export type WorkMediaScalarFieldEnum = (typeof WorkMediaScalarFieldEnum)[keyof typeof WorkMediaScalarFieldEnum]
+
+
+export const WorkLinkScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  url: 'url',
+  sortOrder: 'sortOrder',
+  workId: 'workId'
+} as const
+
+export type WorkLinkScalarFieldEnum = (typeof WorkLinkScalarFieldEnum)[keyof typeof WorkLinkScalarFieldEnum]
 
 
 export const AdminScalarFieldEnum = {

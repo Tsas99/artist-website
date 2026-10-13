@@ -33,6 +33,11 @@ export type Work = Prisma.WorkModel
  */
 export type WorkMedia = Prisma.WorkMediaModel
 /**
+ * Model WorkLink
+ * 
+ */
+export type WorkLink = Prisma.WorkLinkModel
+/**
  * Model Admin
  * 
  */

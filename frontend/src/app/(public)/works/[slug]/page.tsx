@@ -8,6 +8,7 @@ type WorkMedia = {
   type: 'image' | 'video';
   sortOrder: number;
   workId: number;
+
 };
 
 type Work = {
@@ -31,6 +32,15 @@ type Work = {
   isPublished: boolean;
 
   media: WorkMedia[];
+  links: WorkLink[];
+};
+
+type WorkLink = {
+  id: number;
+  label: string;
+  url: string;
+  sortOrder: number;
+  workId: number;
 };
 
 
@@ -119,87 +129,112 @@ export default async function WorkDetailPage({
         </h1>
 
 
-        <div className="grid grid-cols-1 gap-10 border-t border-neutral-200 pt-10 lg:grid-cols-[280px_1fr] lg:gap-16">
+        <div className="grid grid-cols-1 gap-10 border-t border-neutral-200 pt-10 lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-16">
+
           <aside className="space-y-6 text-sm">
             {work.mediums.length > 0 && (
-              <div className="mt-4 text-bold text-neutral-950">
-                <p className="text-xs uppercase tracking-wider text-neutral-400">
+              <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-x-4">
+                <span className="text-xs uppercase tracking-wider text-neutral-400">
                   Medium
-                </p>
-                <span>{work.mediums.join(', ')}</span>
+                </span>
+                <span className="text-neutral-900">
+                  {work.mediums.join(', ')}
+                </span>
               </div>
             )}
+
             {work.eventName && (
-              <div>
-                <p className="text-xs uppercase tracking-wider text-neutral-400">
+              <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-x-4">
+                <span className="text-xs uppercase tracking-wider text-neutral-400">
                   Event
-                </p>
-
-                <p className="mt-1 text-neutral-900">
+                </span>
+                <span className="text-neutral-900">
                   {work.eventName}
-                </p>
+                </span>
               </div>
             )}
-
 
             {work.theme && (
-              <div>
-                <p className="text-xs uppercase tracking-wider text-neutral-400">
+              <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-x-4">
+                <span className="text-xs uppercase tracking-wider text-neutral-400">
                   Theme
-                </p>
-
-                <p className="mt-1 text-neutral-900">
+                </span>
+                <span className="text-neutral-900">
                   {work.theme}
-                </p>
+                </span>
               </div>
             )}
+
             {work.year && (
-              <div>
-                <p className="text-xs uppercase tracking-wider text-neutral-400">
+              <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-x-4">
+                <span className="text-xs uppercase tracking-wider text-neutral-400">
                   Date
-                </p>
-                <p className="text-sm text-neutral-500">
+                </span>
+                <span className="text-neutral-900">
                   {work.year}
-                </p>
+                </span>
               </div>
             )}
 
             {work.place && (
-              <div>
-                <p className="text-xs uppercase tracking-wider text-neutral-400">
+              <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-x-4">
+                <span className="text-xs uppercase tracking-wider text-neutral-400">
                   Place
-                </p>
-
-                <p className="mt-1 text-neutral-900">
+                </span>
+                <span className="min-w-0 break-words text-neutral-900">
                   {work.place}
-                </p>
+                </span>
               </div>
             )}
 
             {work.material && (
-              <div>
-                <p className="text-xs uppercase tracking-wider text-neutral-400">
+              <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-x-4">
+                <span className="text-xs uppercase tracking-wider text-neutral-400">
                   Material
-                </p>
-
-                <p className="mt-1 text-neutral-900">
+                </span>
+                <span className="min-w-0 break-words text-neutral-900">
                   {work.material}
-                </p>
+                </span>
               </div>
             )}
 
             {work.dimensions && (
-              <div>
-                <p className="text-xs uppercase tracking-wider text-neutral-400">
+              <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-x-4">
+                <span className="text-xs uppercase tracking-wider text-neutral-400">
                   Dimensions
-                </p>
-
-                <p className="mt-1 text-neutral-900">
+                </span>
+                <span className="min-w-0 break-words text-neutral-900">
                   {work.dimensions}
-                </p>
+                </span>
               </div>
             )}
+
+            {work.links?.length > 0 && (
+              <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-x-4">
+                <span className="text-xs uppercase tracking-wider text-neutral-400">
+                  Links
+                </span>
+
+                <div className="min-w-0 space-y-2">
+                  {[...work.links]
+                    .sort((a, b) => a.sortOrder - b.sortOrder)
+                    .map((link) => (
+                      <a
+                        key={link.id}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-fit max-w-full break-words text-sm text-neutral-900 underline underline-offset-4 transition hover:text-neutral-500"
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                </div>
+              </div>
+            )}
+
           </aside>
+
 
           <section>
             {work.description && (

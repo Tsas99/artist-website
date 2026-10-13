@@ -26,7 +26,7 @@ import { ExhibitionMediaModule } from './exhibition-media/exhibition-media.modul
       isGlobal: true,
     }),
   
-    PrismaModule, ArtistModule, WorkModule, UploadModule, WorkMediaModule, AuthModule, AboutModule, CvEntryModule, PressModule, PressMediaModule, ContactModule, HomeMediaModule, NewsModule, ExhibitionModule, ExhibitionMediaModule,
+    PrismaModule, ArtistModule, WorkModule, UploadModule, WorkMediaModule, AuthModule, AboutModule, CvEntryModule, PressModule, PressMediaModule, ContactModule, HomeMediaModule, NewsModule, ExhibitionModule, ExhibitionMediaModule, 
     
     ThrottlerModule.forRoot({
          throttlers: [

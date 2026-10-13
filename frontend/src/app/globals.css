@@ -33,3 +33,44 @@ body {
 .font-display {
   font-family: var(--font-cormorant), Georgia, serif;
 }
+
+
+/* Public Exhibitions list */
+
+.exhibition-list-item {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  column-gap: 32px;
+  align-items: start;
+}
+
+.exhibition-list-cover {
+  width: 250px;
+  min-width: 0;
+}
+
+.exhibition-list-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.exhibition-list-info {
+  min-width: 0;
+  width: 100%;
+  padding-top: 4px;
+}
+
+/* Mobile */
+@media (max-width: 639px) {
+  .exhibition-list-item {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 20px;
+  }
+
+  .exhibition-list-cover {
+    width: 100%;
+    max-width: 100%;
+  }
+}

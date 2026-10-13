@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -9,8 +10,22 @@ import WorkInfoEditor, {
 
 import WorkMediaManager from '@/components/admin/WorkMediaManager';
 import WorkPublishToggle from '@/components/admin/WorkPublishToggle';
-import DeleteWork from '@/components/admin/DeleteWork';
+
+
 import { API_URL } from '@/lib/api';
+import WorkLinksManager from '@/components/admin/WorkLinkManager';
+
+type WorkLink = {
+  id: number;
+  label: string;
+  url: string;
+  sortOrder: number;
+  workId: number;
+};
+
+type WorkWithLinks = Work & {
+  links?: WorkLink[];
+};
 
 export default function AdminWorkDetailPage() {
   const params = useParams();
@@ -18,7 +33,7 @@ export default function AdminWorkDetailPage() {
 
   const id = params?.id as string;
 
-  const [work, setWork] = useState<Work | null>(null);
+  const [work, setWork] = useState<WorkWithLinks | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -38,8 +53,7 @@ export default function AdminWorkDetailPage() {
           throw new Error('Failed to load work');
         }
 
-        const data: Work = await response.json();
-
+        const data: WorkWithLinks = await response.json();
         setWork(data);
       } catch (error) {
         console.error(error);
@@ -112,23 +126,26 @@ export default function AdminWorkDetailPage() {
         )}
 
         <div className="space-y-8">
-
-
           <WorkInfoEditor
             work={work}
             onWorkChange={setWork}
             onError={setError}
           />
+
+          <WorkLinksManager
+            key={work.id}
+            workId={work.id}
+            initialLinks={work.links ?? []}
+            onError={setError}
+          />
+
           <WorkMediaManager
             work={work}
             onWorkChange={setWork}
             onError={setError}
           />
         </div>
-
       </div>
     </main>
   );
 }
-
-

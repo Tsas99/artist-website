@@ -387,6 +387,7 @@ export const ModelName = {
   Artist: 'Artist',
   Work: 'Work',
   WorkMedia: 'WorkMedia',
+  WorkLink: 'WorkLink',
   Admin: 'Admin',
   About: 'About',
   CVEntry: 'CVEntry',
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "artist" | "work" | "workMedia" | "admin" | "about" | "cVEntry" | "press" | "pressMedia" | "homeMedia" | "news" | "exhibition" | "exhibitionMedia"
+    modelProps: "artist" | "work" | "workMedia" | "workLink" | "admin" | "about" | "cVEntry" | "press" | "pressMedia" | "homeMedia" | "news" | "exhibition" | "exhibitionMedia"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -634,6 +635,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WorkMediaCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WorkMediaCountAggregateOutputType> | number
+        }
+      }
+    }
+    WorkLink: {
+      payload: Prisma.$WorkLinkPayload<ExtArgs>
+      fields: Prisma.WorkLinkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WorkLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WorkLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload>
+        }
+        findFirst: {
+          args: Prisma.WorkLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WorkLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload>
+        }
+        findMany: {
+          args: Prisma.WorkLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload>[]
+        }
+        create: {
+          args: Prisma.WorkLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload>
+        }
+        createMany: {
+          args: Prisma.WorkLinkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WorkLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload>[]
+        }
+        delete: {
+          args: Prisma.WorkLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload>
+        }
+        update: {
+          args: Prisma.WorkLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload>
+        }
+        deleteMany: {
+          args: Prisma.WorkLinkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WorkLinkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WorkLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload>[]
+        }
+        upsert: {
+          args: Prisma.WorkLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkLinkPayload>
+        }
+        aggregate: {
+          args: Prisma.WorkLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorkLink>
+        }
+        groupBy: {
+          args: Prisma.WorkLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkLinkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WorkLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkLinkCountAggregateOutputType> | number
         }
       }
     }
@@ -1391,6 +1466,17 @@ export const WorkMediaScalarFieldEnum = {
 export type WorkMediaScalarFieldEnum = (typeof WorkMediaScalarFieldEnum)[keyof typeof WorkMediaScalarFieldEnum]
 
 
+export const WorkLinkScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  url: 'url',
+  sortOrder: 'sortOrder',
+  workId: 'workId'
+} as const
+
+export type WorkLinkScalarFieldEnum = (typeof WorkLinkScalarFieldEnum)[keyof typeof WorkLinkScalarFieldEnum]
+
+
 export const AdminScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -1724,6 +1810,7 @@ export type GlobalOmitConfig = {
   artist?: Prisma.ArtistOmit
   work?: Prisma.WorkOmit
   workMedia?: Prisma.WorkMediaOmit
+  workLink?: Prisma.WorkLinkOmit
   admin?: Prisma.AdminOmit
   about?: Prisma.AboutOmit
   cVEntry?: Prisma.CVEntryOmit

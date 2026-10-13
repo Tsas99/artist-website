@@ -118,35 +118,20 @@ export default async function ExhibitionsPage() {
                             return (
                                 <article
                                     key={exhibition.id}
-                                    className={`py-6 ${index === 0 ? 'pt-0' : ''
-                                        } ${index !== exhibitions.length - 1
-                                            ? 'border-b border-neutral-200'
-                                            : ''
-                                        }`}
+                                    className={`py-8 ${index === 0 ? 'pt-0' : ''}`}
                                 >
+
+
                                     <Link
                                         href={`/exhibitions/${exhibition.slug}`}
-                                        className="group flex items-start gap-5 sm:gap-8"
+                                        className="exhibition-list-item group"
                                     >
-
                                         {/* Exhibition cover */}
-                                        <div
-                                            className="shrink-0"
-                                            style={{
-                                                width: 250,
-                                                maxWidth: 250,
-                                            }}
-                                        >
+                                        <div className="exhibition-list-cover">
                                             {exhibition.coverUrl ? (
                                                 <img
                                                     src={exhibition.coverUrl}
                                                     alt={exhibition.name}
-                                                    className="block h-auto object-contain"
-                                                    style={{
-                                                        width: '100%',
-                                                        maxWidth: 250,
-                                                        height: 'auto',
-                                                    }}
                                                 />
                                             ) : (
                                                 <p className="text-xs text-neutral-400">
@@ -155,10 +140,9 @@ export default async function ExhibitionsPage() {
                                             )}
                                         </div>
 
-
                                         {/* Exhibition information */}
-                                        <div className="min-w-0 flex-1 py-1 ">
-                                            <h2 className="font-display text-lg leading-snug text-neutral-950 transition-colors group-hover:text-neutral-950 sm:text-xl">
+                                        <div className="exhibition-list-info">
+                                            <h2 className="font-display text-lg leading-snug text-neutral-950 sm:text-xl">
                                                 {exhibition.name}
                                             </h2>
 
@@ -180,11 +164,13 @@ export default async function ExhibitionsPage() {
                                                 </p>
                                             )}
 
-                                            <span className="mt-5 inline-flex items-center gap-2 border-b border-neutral-400 pb-1 text-[11px] font-medium tracking-[0.1em] text-neutral-600 transition-colors duration-300 group-hover:border-neutral-750 group-hover:text-neutral-950">
-                                                View Exhibition
+                                            <span className="mt-5 inline-flex border-b border-neutral-300 pb-1 text-[11px] font-medium tracking-[0.1em] text-neutral-500 transition-colors duration-300 group-hover:border-neutral-950 group-hover:text-neutral-950">
+                                                View more
                                             </span>
                                         </div>
                                     </Link>
+
+
                                 </article>
                             );
                         })}

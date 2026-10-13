@@ -37,6 +37,7 @@ model Work {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   media       WorkMedia[]
+  links       WorkLink[]
 }
 
 model WorkMedia {
@@ -50,6 +51,20 @@ model WorkMedia {
   workId Int
   work   Work @relation(fields: [workId], references: [id], onDelete: Cascade)
 }
+
+
+model WorkLink {
+  id        Int    @id @default(autoincrement())
+  label     String
+  url       String
+  sortOrder Int    @default(0)
+
+  workId    Int
+  work      Work   @relation(fields: [workId], references: [id], onDelete: Cascade)
+
+  @@index([workId])
+}
+
 
 model Admin {
   id           Int      @id @default(autoincrement())

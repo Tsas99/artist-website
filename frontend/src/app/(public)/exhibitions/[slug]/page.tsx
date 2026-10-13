@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ExhibitionGallery from '@/components/ExhibitionGallery';
+import CuratorialText from '@/components/CuratorialText';
 
 type ExhibitionMedia = {
     id: number;
@@ -175,19 +176,18 @@ export default async function ExhibitionDetailPage({
                         </section>
                     )}
 
+
                     {/* Curatorial Text */}
                     {exhibition.curatorialText && (
                         <section
-                            className="max-w-2xl"
                             style={{
                                 marginTop: exhibition.coverUrl ? '48px' : '0px',
                             }}
                         >
-                            <div className="whitespace-pre-line text-sm leading-7 text-neutral-700 sm:text-base sm:leading-8">
-                                {exhibition.curatorialText}
-                            </div>
+                            <CuratorialText text={exhibition.curatorialText} />
                         </section>
                     )}
+
 
                     {/* Exhibition Gallery */}
                     {exhibition.media?.length > 0 && (

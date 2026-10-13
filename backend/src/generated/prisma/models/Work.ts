@@ -317,6 +317,7 @@ export type WorkWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   media?: Prisma.WorkMediaListRelationFilter
+  links?: Prisma.WorkLinkListRelationFilter
 }
 
 export type WorkOrderByWithRelationInput = {
@@ -339,6 +340,7 @@ export type WorkOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   media?: Prisma.WorkMediaOrderByRelationAggregateInput
+  links?: Prisma.WorkLinkOrderByRelationAggregateInput
 }
 
 export type WorkWhereUniqueInput = Prisma.AtLeast<{
@@ -364,6 +366,7 @@ export type WorkWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Work"> | Date | string
   media?: Prisma.WorkMediaListRelationFilter
+  links?: Prisma.WorkLinkListRelationFilter
 }, "id" | "slug">
 
 export type WorkOrderByWithAggregationInput = {
@@ -435,6 +438,7 @@ export type WorkCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   media?: Prisma.WorkMediaCreateNestedManyWithoutWorkInput
+  links?: Prisma.WorkLinkCreateNestedManyWithoutWorkInput
 }
 
 export type WorkUncheckedCreateInput = {
@@ -457,6 +461,7 @@ export type WorkUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   media?: Prisma.WorkMediaUncheckedCreateNestedManyWithoutWorkInput
+  links?: Prisma.WorkLinkUncheckedCreateNestedManyWithoutWorkInput
 }
 
 export type WorkUpdateInput = {
@@ -478,6 +483,7 @@ export type WorkUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   media?: Prisma.WorkMediaUpdateManyWithoutWorkNestedInput
+  links?: Prisma.WorkLinkUpdateManyWithoutWorkNestedInput
 }
 
 export type WorkUncheckedUpdateInput = {
@@ -500,6 +506,7 @@ export type WorkUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   media?: Prisma.WorkMediaUncheckedUpdateManyWithoutWorkNestedInput
+  links?: Prisma.WorkLinkUncheckedUpdateManyWithoutWorkNestedInput
 }
 
 export type WorkCreateManyInput = {
@@ -682,6 +689,20 @@ export type WorkUpdateOneRequiredWithoutMediaNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.WorkUpdateToOneWithWhereWithoutMediaInput, Prisma.WorkUpdateWithoutMediaInput>, Prisma.WorkUncheckedUpdateWithoutMediaInput>
 }
 
+export type WorkCreateNestedOneWithoutLinksInput = {
+  create?: Prisma.XOR<Prisma.WorkCreateWithoutLinksInput, Prisma.WorkUncheckedCreateWithoutLinksInput>
+  connectOrCreate?: Prisma.WorkCreateOrConnectWithoutLinksInput
+  connect?: Prisma.WorkWhereUniqueInput
+}
+
+export type WorkUpdateOneRequiredWithoutLinksNestedInput = {
+  create?: Prisma.XOR<Prisma.WorkCreateWithoutLinksInput, Prisma.WorkUncheckedCreateWithoutLinksInput>
+  connectOrCreate?: Prisma.WorkCreateOrConnectWithoutLinksInput
+  upsert?: Prisma.WorkUpsertWithoutLinksInput
+  connect?: Prisma.WorkWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WorkUpdateToOneWithWhereWithoutLinksInput, Prisma.WorkUpdateWithoutLinksInput>, Prisma.WorkUncheckedUpdateWithoutLinksInput>
+}
+
 export type WorkCreateWithoutMediaInput = {
   title: string
   slug: string
@@ -700,6 +721,7 @@ export type WorkCreateWithoutMediaInput = {
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  links?: Prisma.WorkLinkCreateNestedManyWithoutWorkInput
 }
 
 export type WorkUncheckedCreateWithoutMediaInput = {
@@ -721,6 +743,7 @@ export type WorkUncheckedCreateWithoutMediaInput = {
   sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  links?: Prisma.WorkLinkUncheckedCreateNestedManyWithoutWorkInput
 }
 
 export type WorkCreateOrConnectWithoutMediaInput = {
@@ -757,6 +780,7 @@ export type WorkUpdateWithoutMediaInput = {
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  links?: Prisma.WorkLinkUpdateManyWithoutWorkNestedInput
 }
 
 export type WorkUncheckedUpdateWithoutMediaInput = {
@@ -778,6 +802,109 @@ export type WorkUncheckedUpdateWithoutMediaInput = {
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  links?: Prisma.WorkLinkUncheckedUpdateManyWithoutWorkNestedInput
+}
+
+export type WorkCreateWithoutLinksInput = {
+  title: string
+  slug: string
+  description?: string | null
+  imageUrl?: string | null
+  imagePublicId?: string | null
+  imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
+  place?: string | null
+  year?: string | null
+  material?: string | null
+  dimensions?: string | null
+  mediums?: Prisma.WorkCreatemediumsInput | string[]
+  eventName?: string | null
+  theme?: string | null
+  isPublished?: boolean
+  sortOrder?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  media?: Prisma.WorkMediaCreateNestedManyWithoutWorkInput
+}
+
+export type WorkUncheckedCreateWithoutLinksInput = {
+  id?: number
+  title: string
+  slug: string
+  description?: string | null
+  imageUrl?: string | null
+  imagePublicId?: string | null
+  imageUrls?: Prisma.WorkCreateimageUrlsInput | string[]
+  place?: string | null
+  year?: string | null
+  material?: string | null
+  dimensions?: string | null
+  mediums?: Prisma.WorkCreatemediumsInput | string[]
+  eventName?: string | null
+  theme?: string | null
+  isPublished?: boolean
+  sortOrder?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  media?: Prisma.WorkMediaUncheckedCreateNestedManyWithoutWorkInput
+}
+
+export type WorkCreateOrConnectWithoutLinksInput = {
+  where: Prisma.WorkWhereUniqueInput
+  create: Prisma.XOR<Prisma.WorkCreateWithoutLinksInput, Prisma.WorkUncheckedCreateWithoutLinksInput>
+}
+
+export type WorkUpsertWithoutLinksInput = {
+  update: Prisma.XOR<Prisma.WorkUpdateWithoutLinksInput, Prisma.WorkUncheckedUpdateWithoutLinksInput>
+  create: Prisma.XOR<Prisma.WorkCreateWithoutLinksInput, Prisma.WorkUncheckedCreateWithoutLinksInput>
+  where?: Prisma.WorkWhereInput
+}
+
+export type WorkUpdateToOneWithWhereWithoutLinksInput = {
+  where?: Prisma.WorkWhereInput
+  data: Prisma.XOR<Prisma.WorkUpdateWithoutLinksInput, Prisma.WorkUncheckedUpdateWithoutLinksInput>
+}
+
+export type WorkUpdateWithoutLinksInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediums?: Prisma.WorkUpdatemediumsInput | string[]
+  eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  media?: Prisma.WorkMediaUpdateManyWithoutWorkNestedInput
+}
+
+export type WorkUncheckedUpdateWithoutLinksInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrls?: Prisma.WorkUpdateimageUrlsInput | string[]
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  year?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediums?: Prisma.WorkUpdatemediumsInput | string[]
+  eventName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  media?: Prisma.WorkMediaUncheckedUpdateManyWithoutWorkNestedInput
 }
 
 
@@ -787,10 +914,12 @@ export type WorkUncheckedUpdateWithoutMediaInput = {
 
 export type WorkCountOutputType = {
   media: number
+  links: number
 }
 
 export type WorkCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   media?: boolean | WorkCountOutputTypeCountMediaArgs
+  links?: boolean | WorkCountOutputTypeCountLinksArgs
 }
 
 /**
@@ -808,6 +937,13 @@ export type WorkCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type WorkCountOutputTypeCountMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.WorkMediaWhereInput
+}
+
+/**
+ * WorkCountOutputType without action
+ */
+export type WorkCountOutputTypeCountLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkLinkWhereInput
 }
 
 
@@ -831,6 +967,7 @@ export type WorkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   media?: boolean | Prisma.Work$mediaArgs<ExtArgs>
+  links?: boolean | Prisma.Work$linksArgs<ExtArgs>
   _count?: boolean | Prisma.WorkCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["work"]>
 
@@ -900,6 +1037,7 @@ export type WorkSelectScalar = {
 export type WorkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "imageUrl" | "imagePublicId" | "imageUrls" | "place" | "year" | "material" | "dimensions" | "mediums" | "eventName" | "theme" | "isPublished" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["work"]>
 export type WorkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   media?: boolean | Prisma.Work$mediaArgs<ExtArgs>
+  links?: boolean | Prisma.Work$linksArgs<ExtArgs>
   _count?: boolean | Prisma.WorkCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WorkIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -909,6 +1047,7 @@ export type $WorkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Work"
   objects: {
     media: Prisma.$WorkMediaPayload<ExtArgs>[]
+    links: Prisma.$WorkLinkPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1324,6 +1463,7 @@ readonly fields: WorkFieldRefs;
 export interface Prisma__WorkClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   media<T extends Prisma.Work$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Work$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  links<T extends Prisma.Work$linksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Work$linksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1785,6 +1925,30 @@ export type Work$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.WorkMediaScalarFieldEnum | Prisma.WorkMediaScalarFieldEnum[]
+}
+
+/**
+ * Work.links
+ */
+export type Work$linksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkLink
+   */
+  select?: Prisma.WorkLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkLink
+   */
+  omit?: Prisma.WorkLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkLinkInclude<ExtArgs> | null
+  where?: Prisma.WorkLinkWhereInput
+  orderBy?: Prisma.WorkLinkOrderByWithRelationInput | Prisma.WorkLinkOrderByWithRelationInput[]
+  cursor?: Prisma.WorkLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorkLinkScalarFieldEnum | Prisma.WorkLinkScalarFieldEnum[]
 }
 
 /**
