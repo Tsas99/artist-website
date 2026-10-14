@@ -1,20 +1,70 @@
+
+import {
+  IsArray,
+  IsBoolean,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUrl,
+  Min,
+  ValidateNested,
+} from 'class-validator';
+
+import { Type } from 'class-transformer';
+
 export type CreatePressMediaInput = {
-    url : string;
-    publicId : string; 
-    sortOrder? : number;
+  url: string;
+  publicId: string;
+  sortOrder?: number;
+};
+
+class PressMediaDto {
+  @IsString()
+  url!: string;
+
+  @IsString()
+  publicId!: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  sortOrder?: number;
 }
 
 export class CreatePressDto {
-    name!: string;
-    slug!: string;
+  @IsString()
+  name!: string;
 
-    details?: string;
-    link?: string; 
+  @IsString()
+  slug!: string;
 
-    coverUrl?: string;
-    coverPublicId? : string;
+  @IsOptional()
+  @IsString()
+  details?: string;
 
-    isPublished?: boolean;
+  @IsOptional()
+  @IsString()
+  linkTitle?: string;
 
-    media?: CreatePressMediaInput[];
+  @IsOptional()
+  @IsString()
+  link?: string;
+
+  @IsOptional()
+  @IsString()
+  coverUrl?: string;
+
+  @IsOptional()
+  @IsString()
+  coverPublicId?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  isPublished?: boolean;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => PressMediaDto)
+  media?: PressMediaDto[];
 }

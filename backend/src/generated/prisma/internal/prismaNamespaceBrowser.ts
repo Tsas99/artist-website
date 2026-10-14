@@ -184,10 +184,12 @@ export const PressScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   details: 'details',
+  linkTitle: 'linkTitle',
   link: 'link',
   coverUrl: 'coverUrl',
   coverPublicId: 'coverPublicId',
   isPublished: 'isPublished',
+  sortOrder: 'sortOrder',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -242,6 +244,8 @@ export const ExhibitionScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   curatorialText: 'curatorialText',
+  linkTitle: 'linkTitle',
+  link: 'link',
   coverUrl: 'coverUrl',
   coverPublicId: 'coverPublicId',
   venue: 'venue',

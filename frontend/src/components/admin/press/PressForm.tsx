@@ -21,6 +21,7 @@ const EMPTY_FORM: PressFormData = {
     details: '',
     link: '',
     isPublished: true,
+    linkTitle: '',
 };
 
 function createSlug(value: string) {
@@ -184,6 +185,8 @@ export default function PressForm() {
                 details:
                     form.details.trim() ||
                     undefined,
+
+                linkTitle: form.linkTitle.trim() || undefined,
 
                 link:
                     form.link.trim() ||
@@ -415,6 +418,32 @@ export default function PressForm() {
                         </span>
                     </label>
 
+                    <div className="sm:col-span-2">
+                        <label
+                            htmlFor="press-link-title"
+                            className="mb-2 block text-sm text-neutral-700"
+                        >
+                            Link Title
+                        </label>
+
+                        <input
+                            id="press-link-title"
+                            type="text"
+                            value={form.linkTitle}
+                            onChange={(event) =>
+                                updateForm('linkTitle', event.target.value)
+                            }
+                            placeholder="Read interview"
+                            className="w-full border border-neutral-300 px-3 py-2.5 text-sm outline-none transition focus:border-neutral-950"
+                        />
+                    </div>
+
+                    <label
+                        htmlFor="press-link-title"
+                        className="mb-2 block text-sm text-neutral-700 mt-2"
+                    >
+                        Link URL
+                    </label>
                     <input
                         id="press-link"
                         type="url"

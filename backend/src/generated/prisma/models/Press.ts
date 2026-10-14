@@ -28,10 +28,12 @@ export type AggregatePress = {
 
 export type PressAvgAggregateOutputType = {
   id: number | null
+  sortOrder: number | null
 }
 
 export type PressSumAggregateOutputType = {
   id: number | null
+  sortOrder: number | null
 }
 
 export type PressMinAggregateOutputType = {
@@ -39,10 +41,12 @@ export type PressMinAggregateOutputType = {
   name: string | null
   slug: string | null
   details: string | null
+  linkTitle: string | null
   link: string | null
   coverUrl: string | null
   coverPublicId: string | null
   isPublished: boolean | null
+  sortOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,10 +56,12 @@ export type PressMaxAggregateOutputType = {
   name: string | null
   slug: string | null
   details: string | null
+  linkTitle: string | null
   link: string | null
   coverUrl: string | null
   coverPublicId: string | null
   isPublished: boolean | null
+  sortOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,10 +71,12 @@ export type PressCountAggregateOutputType = {
   name: number
   slug: number
   details: number
+  linkTitle: number
   link: number
   coverUrl: number
   coverPublicId: number
   isPublished: number
+  sortOrder: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -77,10 +85,12 @@ export type PressCountAggregateOutputType = {
 
 export type PressAvgAggregateInputType = {
   id?: true
+  sortOrder?: true
 }
 
 export type PressSumAggregateInputType = {
   id?: true
+  sortOrder?: true
 }
 
 export type PressMinAggregateInputType = {
@@ -88,10 +98,12 @@ export type PressMinAggregateInputType = {
   name?: true
   slug?: true
   details?: true
+  linkTitle?: true
   link?: true
   coverUrl?: true
   coverPublicId?: true
   isPublished?: true
+  sortOrder?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -101,10 +113,12 @@ export type PressMaxAggregateInputType = {
   name?: true
   slug?: true
   details?: true
+  linkTitle?: true
   link?: true
   coverUrl?: true
   coverPublicId?: true
   isPublished?: true
+  sortOrder?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -114,10 +128,12 @@ export type PressCountAggregateInputType = {
   name?: true
   slug?: true
   details?: true
+  linkTitle?: true
   link?: true
   coverUrl?: true
   coverPublicId?: true
   isPublished?: true
+  sortOrder?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -214,10 +230,12 @@ export type PressGroupByOutputType = {
   name: string
   slug: string
   details: string | null
+  linkTitle: string | null
   link: string | null
   coverUrl: string | null
   coverPublicId: string | null
   isPublished: boolean
+  sortOrder: number
   createdAt: Date
   updatedAt: Date
   _count: PressCountAggregateOutputType | null
@@ -250,10 +268,12 @@ export type PressWhereInput = {
   name?: Prisma.StringFilter<"Press"> | string
   slug?: Prisma.StringFilter<"Press"> | string
   details?: Prisma.StringNullableFilter<"Press"> | string | null
+  linkTitle?: Prisma.StringNullableFilter<"Press"> | string | null
   link?: Prisma.StringNullableFilter<"Press"> | string | null
   coverUrl?: Prisma.StringNullableFilter<"Press"> | string | null
   coverPublicId?: Prisma.StringNullableFilter<"Press"> | string | null
   isPublished?: Prisma.BoolFilter<"Press"> | boolean
+  sortOrder?: Prisma.IntFilter<"Press"> | number
   createdAt?: Prisma.DateTimeFilter<"Press"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Press"> | Date | string
   media?: Prisma.PressMediaListRelationFilter
@@ -264,10 +284,12 @@ export type PressOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   details?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   link?: Prisma.SortOrderInput | Prisma.SortOrder
   coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   coverPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   media?: Prisma.PressMediaOrderByRelationAggregateInput
@@ -281,10 +303,12 @@ export type PressWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PressWhereInput | Prisma.PressWhereInput[]
   name?: Prisma.StringFilter<"Press"> | string
   details?: Prisma.StringNullableFilter<"Press"> | string | null
+  linkTitle?: Prisma.StringNullableFilter<"Press"> | string | null
   link?: Prisma.StringNullableFilter<"Press"> | string | null
   coverUrl?: Prisma.StringNullableFilter<"Press"> | string | null
   coverPublicId?: Prisma.StringNullableFilter<"Press"> | string | null
   isPublished?: Prisma.BoolFilter<"Press"> | boolean
+  sortOrder?: Prisma.IntFilter<"Press"> | number
   createdAt?: Prisma.DateTimeFilter<"Press"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Press"> | Date | string
   media?: Prisma.PressMediaListRelationFilter
@@ -295,10 +319,12 @@ export type PressOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   details?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   link?: Prisma.SortOrderInput | Prisma.SortOrder
   coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   coverPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PressCountOrderByAggregateInput
@@ -316,10 +342,12 @@ export type PressScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Press"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Press"> | string
   details?: Prisma.StringNullableWithAggregatesFilter<"Press"> | string | null
+  linkTitle?: Prisma.StringNullableWithAggregatesFilter<"Press"> | string | null
   link?: Prisma.StringNullableWithAggregatesFilter<"Press"> | string | null
   coverUrl?: Prisma.StringNullableWithAggregatesFilter<"Press"> | string | null
   coverPublicId?: Prisma.StringNullableWithAggregatesFilter<"Press"> | string | null
   isPublished?: Prisma.BoolWithAggregatesFilter<"Press"> | boolean
+  sortOrder?: Prisma.IntWithAggregatesFilter<"Press"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Press"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Press"> | Date | string
 }
@@ -328,10 +356,12 @@ export type PressCreateInput = {
   name: string
   slug: string
   details?: string | null
+  linkTitle?: string | null
   link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   media?: Prisma.PressMediaCreateNestedManyWithoutPressInput
@@ -342,10 +372,12 @@ export type PressUncheckedCreateInput = {
   name: string
   slug: string
   details?: string | null
+  linkTitle?: string | null
   link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   media?: Prisma.PressMediaUncheckedCreateNestedManyWithoutPressInput
@@ -355,10 +387,12 @@ export type PressUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   media?: Prisma.PressMediaUpdateManyWithoutPressNestedInput
@@ -369,10 +403,12 @@ export type PressUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   media?: Prisma.PressMediaUncheckedUpdateManyWithoutPressNestedInput
@@ -383,10 +419,12 @@ export type PressCreateManyInput = {
   name: string
   slug: string
   details?: string | null
+  linkTitle?: string | null
   link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -395,10 +433,12 @@ export type PressUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -408,10 +448,12 @@ export type PressUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -421,16 +463,19 @@ export type PressCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   details?: Prisma.SortOrder
+  linkTitle?: Prisma.SortOrder
   link?: Prisma.SortOrder
   coverUrl?: Prisma.SortOrder
   coverPublicId?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type PressAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
 }
 
 export type PressMaxOrderByAggregateInput = {
@@ -438,10 +483,12 @@ export type PressMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   details?: Prisma.SortOrder
+  linkTitle?: Prisma.SortOrder
   link?: Prisma.SortOrder
   coverUrl?: Prisma.SortOrder
   coverPublicId?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -451,16 +498,19 @@ export type PressMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   details?: Prisma.SortOrder
+  linkTitle?: Prisma.SortOrder
   link?: Prisma.SortOrder
   coverUrl?: Prisma.SortOrder
   coverPublicId?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type PressSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
 }
 
 export type PressScalarRelationFilter = {
@@ -486,10 +536,12 @@ export type PressCreateWithoutMediaInput = {
   name: string
   slug: string
   details?: string | null
+  linkTitle?: string | null
   link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -499,10 +551,12 @@ export type PressUncheckedCreateWithoutMediaInput = {
   name: string
   slug: string
   details?: string | null
+  linkTitle?: string | null
   link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -527,10 +581,12 @@ export type PressUpdateWithoutMediaInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -540,10 +596,12 @@ export type PressUncheckedUpdateWithoutMediaInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -584,10 +642,12 @@ export type PressSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   name?: boolean
   slug?: boolean
   details?: boolean
+  linkTitle?: boolean
   link?: boolean
   coverUrl?: boolean
   coverPublicId?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   media?: boolean | Prisma.Press$mediaArgs<ExtArgs>
@@ -599,10 +659,12 @@ export type PressSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   slug?: boolean
   details?: boolean
+  linkTitle?: boolean
   link?: boolean
   coverUrl?: boolean
   coverPublicId?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["press"]>
@@ -612,10 +674,12 @@ export type PressSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   slug?: boolean
   details?: boolean
+  linkTitle?: boolean
   link?: boolean
   coverUrl?: boolean
   coverPublicId?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["press"]>
@@ -625,15 +689,17 @@ export type PressSelectScalar = {
   name?: boolean
   slug?: boolean
   details?: boolean
+  linkTitle?: boolean
   link?: boolean
   coverUrl?: boolean
   coverPublicId?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "details" | "link" | "coverUrl" | "coverPublicId" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["press"]>
+export type PressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "details" | "linkTitle" | "link" | "coverUrl" | "coverPublicId" | "isPublished" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["press"]>
 export type PressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   media?: boolean | Prisma.Press$mediaArgs<ExtArgs>
   _count?: boolean | Prisma.PressCountOutputTypeDefaultArgs<ExtArgs>
@@ -651,10 +717,12 @@ export type $PressPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     name: string
     slug: string
     details: string | null
+    linkTitle: string | null
     link: string | null
     coverUrl: string | null
     coverPublicId: string | null
     isPublished: boolean
+    sortOrder: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["press"]>
@@ -1085,10 +1153,12 @@ export interface PressFieldRefs {
   readonly name: Prisma.FieldRef<"Press", 'String'>
   readonly slug: Prisma.FieldRef<"Press", 'String'>
   readonly details: Prisma.FieldRef<"Press", 'String'>
+  readonly linkTitle: Prisma.FieldRef<"Press", 'String'>
   readonly link: Prisma.FieldRef<"Press", 'String'>
   readonly coverUrl: Prisma.FieldRef<"Press", 'String'>
   readonly coverPublicId: Prisma.FieldRef<"Press", 'String'>
   readonly isPublished: Prisma.FieldRef<"Press", 'Boolean'>
+  readonly sortOrder: Prisma.FieldRef<"Press", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Press", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Press", 'DateTime'>
 }

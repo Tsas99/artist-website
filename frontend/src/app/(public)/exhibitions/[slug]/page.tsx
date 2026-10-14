@@ -17,6 +17,11 @@ type Exhibition = {
     name: string;
     slug: string;
     curatorialText: string | null;
+
+    // External Link
+    linkTitle: string | null;
+    link: string | null;
+
     coverUrl: string | null;
     venue: string | null;
     location: string | null;
@@ -112,6 +117,25 @@ function formatDateRange(
     return `${format(startDate)} – ${format(endDate)}`;
 }
 
+function getExternalUrl(value: string | null): string | null {
+    if (!value?.trim()) return null;
+
+    try {
+        const url = new URL(value.trim());
+
+        if (
+            url.protocol !== 'https:' &&
+            url.protocol !== 'http:'
+        ) {
+            return null;
+        }
+
+        return url.toString();
+    } catch {
+        return null;
+    }
+}
+
 export default async function ExhibitionDetailPage({
     params,
 }: PageProps) {
@@ -126,6 +150,8 @@ export default async function ExhibitionDetailPage({
         exhibition.startDate,
         exhibition.endDate,
     );
+
+    const externalUrl = getExternalUrl(exhibition.link);
 
     return (
         <main className="min-h-screen bg-white">
@@ -159,11 +185,33 @@ export default async function ExhibitionDetailPage({
                             <p>{dateRange}</p>
                         )}
                     </div>
+                    {/* External Link */}
+                    {externalUrl && (
+                        <section
+                            className={
+                                exhibition.curatorialText ||
+                                    exhibition.coverUrl
+                                    ? 'mt-2'
+                                    : ''
+                            }
+                        >
+                            <a
+                                href={externalUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 text-sm text-neutral-700 underline underline-offset-4 transition-colors hover:text-neutral-950"
+                            >
+                                {exhibition.linkTitle?.trim() ||
+                                    'View Exhibition'}
+
+
+                            </a>
+                        </section>
+                    )}
                 </header>
 
-
-                {/* Cover, Curatorial Text and Gallery */}
-                <div className="flex flex-col mt-8">
+                {/* Cover, Curatorial Text, Link and Gallery */}
+                <div className="mt-8 flex flex-col">
 
                     {/* Cover / Poster */}
                     {exhibition.coverUrl && (
@@ -176,24 +224,32 @@ export default async function ExhibitionDetailPage({
                         </section>
                     )}
 
-
                     {/* Curatorial Text */}
                     {exhibition.curatorialText && (
                         <section
                             style={{
-                                marginTop: exhibition.coverUrl ? '48px' : '0px',
+                                marginTop: exhibition.coverUrl
+                                    ? '48px'
+                                    : '0px',
                             }}
                         >
-                            <CuratorialText text={exhibition.curatorialText} />
+                            <CuratorialText
+                                text={exhibition.curatorialText}
+                            />
                         </section>
                     )}
+
 
 
                     {/* Exhibition Gallery */}
                     {exhibition.media?.length > 0 && (
                         <section
                             style={{
-                                marginTop: exhibition.curatorialText ? '56px' : '48px',
+                                marginTop:
+                                    exhibition.curatorialText ||
+                                        externalUrl
+                                        ? '56px'
+                                        : '48px',
                             }}
                         >
                             <ExhibitionGallery

@@ -21,6 +21,8 @@ export type Exhibition = {
     startDate: string | null;
     endDate: string | null;
     curatorialText: string | null;
+    linkTitle: string | null;
+    link: string | null;
     coverUrl: string | null;
     coverPublicId: string | null;
     isPublished: boolean;
@@ -44,18 +46,33 @@ export default function ExhibitionInfoEditor({
 }: Props) {
     const [name, setName] = useState(exhibition.name);
     const [slug, setSlug] = useState(exhibition.slug);
-    const [venue, setVenue] = useState(exhibition.venue ?? '');
+
+    const [venue, setVenue] = useState(
+        exhibition.venue ?? '',
+    );
+
     const [location, setLocation] = useState(
         exhibition.location ?? '',
     );
+
     const [startDate, setStartDate] = useState(
         dateValue(exhibition.startDate),
     );
+
     const [endDate, setEndDate] = useState(
         dateValue(exhibition.endDate),
     );
-    const [curatorialText, setCuratorialText] = useState(
-        exhibition.curatorialText ?? '',
+
+    const [curatorialText, setCuratorialText] =
+        useState(exhibition.curatorialText ?? '');
+
+    // External link fields
+    const [linkTitle, setLinkTitle] = useState(
+        exhibition.linkTitle ?? '',
+    );
+
+    const [link, setLink] = useState(
+        exhibition.link ?? '',
     );
 
     const [saving, setSaving] = useState(false);
@@ -71,9 +88,34 @@ export default function ExhibitionInfoEditor({
             return;
         }
 
-        if (startDate && endDate && endDate < startDate) {
-            onError('End date cannot be before start date.');
+        if (
+            startDate &&
+            endDate &&
+            endDate < startDate
+        ) {
+            onError(
+                'End date cannot be before start date.',
+            );
             return;
+        }
+
+        // Validate external link
+        if (link.trim()) {
+            try {
+                const url = new URL(link.trim());
+
+                if (
+                    url.protocol !== 'https:' &&
+                    url.protocol !== 'http:'
+                ) {
+                    throw new Error('Invalid URL');
+                }
+            } catch {
+                onError(
+                    'Please enter a valid link URL beginning with https:// or http://.',
+                );
+                return;
+            }
         }
 
         setSaving(true);
@@ -93,19 +135,29 @@ export default function ExhibitionInfoEditor({
                         slug: slug.trim(),
                         venue: venue.trim(),
                         location: location.trim(),
+
                         startDate: startDate
                             ? `${startDate}T00:00:00.000Z`
                             : undefined,
+
                         endDate: endDate
                             ? `${endDate}T00:00:00.000Z`
                             : undefined,
-                        curatorialText: curatorialText.trim(),
+
+                        curatorialText:
+                            curatorialText.trim(),
+
+                        linkTitle: linkTitle.trim(),
+                        link: link.trim() || null,
                     }),
                 },
             );
 
             if (!response.ok) {
-                const data = await response.json().catch(() => null);
+                const data = await response
+                    .json()
+                    .catch(() => null);
+
                 const message = data?.message;
 
                 throw new Error(
@@ -117,10 +169,13 @@ export default function ExhibitionInfoEditor({
                 );
             }
 
-            const updated: Exhibition = await response.json();
+            const updated: Exhibition =
+                await response.json();
 
             onExhibitionChange(updated);
-            setSuccess('Exhibition information saved.');
+            setSuccess(
+                'Exhibition information saved.',
+            );
         } catch (error) {
             onError(
                 error instanceof Error
@@ -141,28 +196,43 @@ export default function ExhibitionInfoEditor({
                 Exhibition Information
             </h2>
 
-            <form onSubmit={handleSave} className="space-y-5">
+            <form
+                onSubmit={handleSave}
+                className="space-y-5"
+            >
                 <div>
-                    <label htmlFor="exhibition-name" className="text-sm font-medium">
+                    <label
+                        htmlFor="exhibition-name"
+                        className="text-sm font-medium"
+                    >
                         Exhibition Name *
                     </label>
+
                     <input
                         id="exhibition-name"
                         value={name}
-                        onChange={(event) => setName(event.target.value)}
+                        onChange={(event) =>
+                            setName(event.target.value)
+                        }
                         className={inputClass}
                         required
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="exhibition-slug" className="text-sm font-medium">
+                    <label
+                        htmlFor="exhibition-slug"
+                        className="text-sm font-medium"
+                    >
                         Slug *
                     </label>
+
                     <input
                         id="exhibition-slug"
                         value={slug}
-                        onChange={(event) => setSlug(event.target.value)}
+                        onChange={(event) =>
+                            setSlug(event.target.value)
+                        }
                         pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
                         className={inputClass}
                         required
@@ -171,74 +241,162 @@ export default function ExhibitionInfoEditor({
 
                 <div className="grid gap-5 md:grid-cols-2">
                     <div>
-                        <label htmlFor="exhibition-venue" className="text-sm font-medium">
+                        <label
+                            htmlFor="exhibition-venue"
+                            className="text-sm font-medium"
+                        >
                             Venue
                         </label>
+
                         <input
                             id="exhibition-venue"
                             value={venue}
-                            onChange={(event) => setVenue(event.target.value)}
+                            onChange={(event) =>
+                                setVenue(event.target.value)
+                            }
                             className={inputClass}
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="exhibition-location" className="text-sm font-medium">
+                        <label
+                            htmlFor="exhibition-location"
+                            className="text-sm font-medium"
+                        >
                             Location
                         </label>
+
                         <input
                             id="exhibition-location"
                             value={location}
-                            onChange={(event) => setLocation(event.target.value)}
+                            onChange={(event) =>
+                                setLocation(event.target.value)
+                            }
                             className={inputClass}
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="exhibition-start" className="text-sm font-medium">
+                        <label
+                            htmlFor="exhibition-start"
+                            className="text-sm font-medium"
+                        >
                             Start Date
                         </label>
+
                         <input
                             id="exhibition-start"
                             type="date"
                             value={startDate}
-                            onChange={(event) => setStartDate(event.target.value)}
+                            onChange={(event) =>
+                                setStartDate(event.target.value)
+                            }
                             className={inputClass}
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="exhibition-end" className="text-sm font-medium">
+                        <label
+                            htmlFor="exhibition-end"
+                            className="text-sm font-medium"
+                        >
                             End Date
                         </label>
+
                         <input
                             id="exhibition-end"
                             type="date"
                             value={endDate}
                             min={startDate || undefined}
-                            onChange={(event) => setEndDate(event.target.value)}
+                            onChange={(event) =>
+                                setEndDate(event.target.value)
+                            }
                             className={inputClass}
                         />
                     </div>
                 </div>
 
                 <div>
-                    <label htmlFor="exhibition-text" className="text-sm font-medium">
+                    <label
+                        htmlFor="exhibition-text"
+                        className="text-sm font-medium"
+                    >
                         Curatorial Text
                     </label>
+
                     <textarea
                         id="exhibition-text"
                         value={curatorialText}
                         onChange={(event) =>
-                            setCuratorialText(event.target.value)
+                            setCuratorialText(
+                                event.target.value,
+                            )
                         }
                         rows={10}
                         className={inputClass}
                     />
                 </div>
 
+                {/* EXTERNAL LINK */}
+                <div className="border-t border-neutral-200 pt-6">
+                    <h3 className="text-base font-medium text-neutral-950">
+                        External Link
+                    </h3>
+
+                    <p className="mt-1 text-sm text-neutral-500">
+                        Add a website, exhibition article,
+                        catalogue or other external resource.
+                    </p>
+
+                    <div className="mt-5 grid gap-5 md:grid-cols-2">
+                        <div>
+                            <label
+                                htmlFor="exhibition-link-title"
+                                className="text-sm font-medium"
+                            >
+                                Link Title
+                            </label>
+
+                            <input
+                                id="exhibition-link-title"
+                                value={linkTitle}
+                                onChange={(event) =>
+                                    setLinkTitle(
+                                        event.target.value,
+                                    )
+                                }
+                                placeholder="Official Exhibition Website"
+                                className={inputClass}
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="exhibition-link"
+                                className="text-sm font-medium"
+                            >
+                                Link URL
+                            </label>
+
+                            <input
+                                id="exhibition-link"
+                                type="url"
+                                value={link}
+                                onChange={(event) =>
+                                    setLink(event.target.value)
+                                }
+                                placeholder="https://example.com"
+                                className={inputClass}
+                            />
+                        </div>
+                    </div>
+                </div>
+
                 {success && (
-                    <p role="status" className="text-sm text-green-700">
+                    <p
+                        role="status"
+                        className="text-sm text-green-700"
+                    >
                         {success}
                     </p>
                 )}
@@ -248,7 +406,9 @@ export default function ExhibitionInfoEditor({
                     disabled={saving}
                     className="rounded-xl bg-neutral-950 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:opacity-50"
                 >
-                    {saving ? 'Saving...' : 'Save Information'}
+                    {saving
+                        ? 'Saving...'
+                        : 'Save Information'}
                 </button>
             </form>
         </section>

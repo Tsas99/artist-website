@@ -13,6 +13,13 @@ type WorkMedia = {
     type: string;
     sortOrder: number;
 };
+type WorkLink = {
+    id: number;
+    label: string;
+    url: string;
+    sortOrder: number;
+    workId: number;
+};
 
 type Work = {
     id: number;
@@ -29,6 +36,7 @@ type Work = {
     year: string | null;
     isPublished: boolean;
     media: WorkMedia[];
+    links: WorkLink[];
 };
 
 export default function AdminWorkViewPage() {
@@ -147,7 +155,7 @@ export default function AdminWorkViewPage() {
                                 target="_blank"
                                 className="inline-flex min-h-11 items-center justify-center rounded-xl border border-neutral-300 bg-white px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-100"
                             >
-                                View public ↗
+                                View public
                             </Link>
                         )}
 
@@ -225,6 +233,32 @@ export default function AdminWorkViewPage() {
                                 value={work.theme}
                             />
                         )}
+
+                        {/* Links */}
+                        {work.links && work.links.length > 0 && (
+                            <div>
+                                <p className="mb-1 text-[10px] uppercase tracking-[0.14em] text-neutral-500">
+                                    Links
+                                </p>
+
+                                <div className="space-y-2">
+                                    {[...work.links]
+                                        .sort((a, b) => a.sortOrder - b.sortOrder)
+                                        .map((link) => (
+                                            <a
+                                                key={link.id}
+                                                href={link.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="block w-fit max-w-full break-words text-sm leading-6 text-neutral-950 underline underline-offset-4 transition hover:text-neutral-500"
+                                            >
+                                                {link.label}
+                                            </a>
+                                        ))}
+                                </div>
+                            </div>
+                        )}
+
                     </div>
                 </section>
 

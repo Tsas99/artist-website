@@ -1,5 +1,4 @@
 'use client';
-
 import {
     type FormEvent,
     useRef,
@@ -38,14 +37,15 @@ export default function PressEditForm({
 }: PressEditFormProps) {
     const router = useRouter();
 
-    const [form, setForm] =
-        useState<PressFormData>({
-            name: press.name,
-            details: press.details ?? '',
-            link: press.link ?? '',
-            isPublished:
-                press.isPublished,
-        });
+
+    const [form, setForm] = useState<PressFormData>({
+        name: press.name,
+        details: press.details ?? '',
+        linkTitle: press.linkTitle ?? '',
+        link: press.link ?? '',
+        isPublished: press.isPublished,
+    });
+
 
     const [cover, setCover] =
         useState<UploadedPressImage | null>(
@@ -309,9 +309,11 @@ export default function PressEditForm({
                                 form.details.trim() ||
                                 undefined,
 
-                            link:
-                                form.link.trim() ||
-                                undefined,
+
+
+                            linkTitle: form.linkTitle.trim(),
+                            link: form.link.trim(),
+
 
                             coverUrl:
                                 cover.url,
@@ -551,6 +553,33 @@ export default function PressEditForm({
                 </div>
 
                 <div className="sm:col-span-2">
+
+                    <div className="sm:col-span-2">
+                        <label
+                            htmlFor="press-link-title"
+                            className="mb-2 block text-sm text-neutral-700"
+                        >
+                            Link Title{' '}
+                            <span className="text-neutral-400">
+                                (optional)
+                            </span>
+                        </label>
+
+                        <input
+                            id="press-link-title"
+                            type="text"
+                            value={form.linkTitle}
+                            onChange={(event) =>
+                                updateForm(
+                                    'linkTitle',
+                                    event.target.value,
+                                )
+                            }
+                            placeholder="Read interview"
+                            className="w-full border border-neutral-300 px-3 py-2.5 text-sm outline-none transition focus:border-neutral-950"
+                        />
+                    </div>
+
                     <label
                         htmlFor="press-link"
                         className="mb-2 block text-sm text-neutral-700"

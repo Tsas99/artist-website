@@ -17,6 +17,7 @@ type PressEntry = {
     name: string;
     slug: string;
     details: string | null;
+    linkTitle: string | null;
     link: string | null;
     coverUrl: string | null;
     coverPublicId: string | null;
@@ -85,6 +86,7 @@ export default async function PressDetailPage(
             <PressViewer
                 name={press.name}
                 details={press.details}
+                linkTitle={press.linkTitle}
                 link={press.link}
                 coverUrl={press.coverUrl}
                 media={press.media ?? []}

@@ -10,8 +10,6 @@ type UploadedMedia = {
   type: 'image' | 'video';
 };
 
-
-
 export default function NewWorkPage() {
   const router = useRouter();
 

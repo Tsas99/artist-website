@@ -8,6 +8,7 @@ export type PressFormData = {
     details: string;
     link: string;
     isPublished: boolean;
+    linkTitle: string;
 };
 
 export type PressMedia = {
@@ -18,17 +19,21 @@ export type PressMedia = {
     pressId: number;
 };
 
+
 export type PressEntry = {
-    id: number;
-    name: string;
-    slug: string;
-    details: string | null;
-    link: string | null;
+  id: number;
+  name: string;
+  slug: string;
 
-    coverUrl: string | null;
-    coverPublicId: string | null;
+  details: string | null;
 
-    isPublished: boolean;
+  linkTitle: string | null;
+  link: string | null;
 
-    media: PressMedia[];
+  coverUrl: string | null;
+  coverPublicId: string | null;
+
+  isPublished: boolean;
+
+  media: PressMedia[];
 };

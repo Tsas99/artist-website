@@ -1,3 +1,4 @@
+
 import {
   IsBoolean,
   IsDateString,
@@ -19,6 +20,18 @@ export class CreateExhibitionDto {
   @IsOptional()
   @IsString()
   curatorialText?: string;
+
+  // External Link
+  @IsOptional()
+  @IsString()
+  linkTitle?: string;
+
+ @IsOptional()
+ @IsUrl({
+  require_protocol: true,
+  protocols: ['http', 'https'],
+ })
+ link?: string | null;
 
   @IsOptional()
   @IsString()

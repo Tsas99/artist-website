@@ -14,6 +14,7 @@ import { PressService } from './press.service';
 import { CreatePressDto } from './dto/create-press.dto';
 import { UpdatePressDto } from './dto/update-press.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ReorderPressDto } from './dto/reorder-press.dto';
 
 @Controller('press')
 export class PressController {
@@ -56,6 +57,14 @@ export class PressController {
         );
     }
 
+    @Patch('reorder')
+    @UseGuards(JwtAuthGuard)
+    reorder(
+    @Body() body: ReorderPressDto,
+    ) {
+        return this.pressService.reorder(body.ids);
+    }
+ 
     @Patch(':id')
     @UseGuards(JwtAuthGuard)
     update(
@@ -80,4 +89,7 @@ export class PressController {
             id,
         );
     }
+    
+
+
 }

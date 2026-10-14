@@ -94,17 +94,21 @@ model CVEntry {
   updatedAt DateTime @updatedAt
 }
 
+
 model Press {
   id            Int          @id @default(autoincrement())
   name          String
   slug          String       @unique
   details       String?
+  linkTitle     String?
   link          String?
 
   coverUrl      String?
   coverPublicId String?
 
   isPublished   Boolean      @default(true)
+
+  sortOrder Int @default(0)
 
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
@@ -150,6 +154,8 @@ model Exhibition {
   name           String
   slug           String            @unique
   curatorialText String?
+  linkTitle String?
+  link      String?
   coverUrl       String?
   coverPublicId  String?
   venue          String?

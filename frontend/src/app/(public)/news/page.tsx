@@ -95,6 +95,11 @@ export default async function NewsPage() {
                                     <h2 className="text-sm font-medium leading-6">
                                         {item.title}
                                     </h2>
+                                    {item.description && (
+                                        <p className="max-w-3xl whitespace-pre-line text-sm leading-7">
+                                            {item.description}
+                                        </p>
+                                    )}
 
                                     {(item.date ||
                                         item.location) && (
@@ -108,11 +113,7 @@ export default async function NewsPage() {
                                             </p>
                                         )}
 
-                                    {item.description && (
-                                        <p className="max-w-3xl whitespace-pre-line text-sm leading-7">
-                                            {item.description}
-                                        </p>
-                                    )}
+
 
                                     {item.externalLink && (
                                         <a

@@ -41,6 +41,8 @@ export type ExhibitionMinAggregateOutputType = {
   name: string | null
   slug: string | null
   curatorialText: string | null
+  linkTitle: string | null
+  link: string | null
   coverUrl: string | null
   coverPublicId: string | null
   venue: string | null
@@ -58,6 +60,8 @@ export type ExhibitionMaxAggregateOutputType = {
   name: string | null
   slug: string | null
   curatorialText: string | null
+  linkTitle: string | null
+  link: string | null
   coverUrl: string | null
   coverPublicId: string | null
   venue: string | null
@@ -75,6 +79,8 @@ export type ExhibitionCountAggregateOutputType = {
   name: number
   slug: number
   curatorialText: number
+  linkTitle: number
+  link: number
   coverUrl: number
   coverPublicId: number
   venue: number
@@ -104,6 +110,8 @@ export type ExhibitionMinAggregateInputType = {
   name?: true
   slug?: true
   curatorialText?: true
+  linkTitle?: true
+  link?: true
   coverUrl?: true
   coverPublicId?: true
   venue?: true
@@ -121,6 +129,8 @@ export type ExhibitionMaxAggregateInputType = {
   name?: true
   slug?: true
   curatorialText?: true
+  linkTitle?: true
+  link?: true
   coverUrl?: true
   coverPublicId?: true
   venue?: true
@@ -138,6 +148,8 @@ export type ExhibitionCountAggregateInputType = {
   name?: true
   slug?: true
   curatorialText?: true
+  linkTitle?: true
+  link?: true
   coverUrl?: true
   coverPublicId?: true
   venue?: true
@@ -242,6 +254,8 @@ export type ExhibitionGroupByOutputType = {
   name: string
   slug: string
   curatorialText: string | null
+  linkTitle: string | null
+  link: string | null
   coverUrl: string | null
   coverPublicId: string | null
   venue: string | null
@@ -282,6 +296,8 @@ export type ExhibitionWhereInput = {
   name?: Prisma.StringFilter<"Exhibition"> | string
   slug?: Prisma.StringFilter<"Exhibition"> | string
   curatorialText?: Prisma.StringNullableFilter<"Exhibition"> | string | null
+  linkTitle?: Prisma.StringNullableFilter<"Exhibition"> | string | null
+  link?: Prisma.StringNullableFilter<"Exhibition"> | string | null
   coverUrl?: Prisma.StringNullableFilter<"Exhibition"> | string | null
   coverPublicId?: Prisma.StringNullableFilter<"Exhibition"> | string | null
   venue?: Prisma.StringNullableFilter<"Exhibition"> | string | null
@@ -300,6 +316,8 @@ export type ExhibitionOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   curatorialText?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  link?: Prisma.SortOrderInput | Prisma.SortOrder
   coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   coverPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   venue?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -321,6 +339,8 @@ export type ExhibitionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ExhibitionWhereInput | Prisma.ExhibitionWhereInput[]
   name?: Prisma.StringFilter<"Exhibition"> | string
   curatorialText?: Prisma.StringNullableFilter<"Exhibition"> | string | null
+  linkTitle?: Prisma.StringNullableFilter<"Exhibition"> | string | null
+  link?: Prisma.StringNullableFilter<"Exhibition"> | string | null
   coverUrl?: Prisma.StringNullableFilter<"Exhibition"> | string | null
   coverPublicId?: Prisma.StringNullableFilter<"Exhibition"> | string | null
   venue?: Prisma.StringNullableFilter<"Exhibition"> | string | null
@@ -339,6 +359,8 @@ export type ExhibitionOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   curatorialText?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  link?: Prisma.SortOrderInput | Prisma.SortOrder
   coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   coverPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   venue?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -364,6 +386,8 @@ export type ExhibitionScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Exhibition"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Exhibition"> | string
   curatorialText?: Prisma.StringNullableWithAggregatesFilter<"Exhibition"> | string | null
+  linkTitle?: Prisma.StringNullableWithAggregatesFilter<"Exhibition"> | string | null
+  link?: Prisma.StringNullableWithAggregatesFilter<"Exhibition"> | string | null
   coverUrl?: Prisma.StringNullableWithAggregatesFilter<"Exhibition"> | string | null
   coverPublicId?: Prisma.StringNullableWithAggregatesFilter<"Exhibition"> | string | null
   venue?: Prisma.StringNullableWithAggregatesFilter<"Exhibition"> | string | null
@@ -380,6 +404,8 @@ export type ExhibitionCreateInput = {
   name: string
   slug: string
   curatorialText?: string | null
+  linkTitle?: string | null
+  link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   venue?: string | null
@@ -398,6 +424,8 @@ export type ExhibitionUncheckedCreateInput = {
   name: string
   slug: string
   curatorialText?: string | null
+  linkTitle?: string | null
+  link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   venue?: string | null
@@ -415,6 +443,8 @@ export type ExhibitionUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   curatorialText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -433,6 +463,8 @@ export type ExhibitionUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   curatorialText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -451,6 +483,8 @@ export type ExhibitionCreateManyInput = {
   name: string
   slug: string
   curatorialText?: string | null
+  linkTitle?: string | null
+  link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   venue?: string | null
@@ -467,6 +501,8 @@ export type ExhibitionUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   curatorialText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -484,6 +520,8 @@ export type ExhibitionUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   curatorialText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -501,6 +539,8 @@ export type ExhibitionCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   curatorialText?: Prisma.SortOrder
+  linkTitle?: Prisma.SortOrder
+  link?: Prisma.SortOrder
   coverUrl?: Prisma.SortOrder
   coverPublicId?: Prisma.SortOrder
   venue?: Prisma.SortOrder
@@ -523,6 +563,8 @@ export type ExhibitionMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   curatorialText?: Prisma.SortOrder
+  linkTitle?: Prisma.SortOrder
+  link?: Prisma.SortOrder
   coverUrl?: Prisma.SortOrder
   coverPublicId?: Prisma.SortOrder
   venue?: Prisma.SortOrder
@@ -540,6 +582,8 @@ export type ExhibitionMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   curatorialText?: Prisma.SortOrder
+  linkTitle?: Prisma.SortOrder
+  link?: Prisma.SortOrder
   coverUrl?: Prisma.SortOrder
   coverPublicId?: Prisma.SortOrder
   venue?: Prisma.SortOrder
@@ -584,6 +628,8 @@ export type ExhibitionCreateWithoutMediaInput = {
   name: string
   slug: string
   curatorialText?: string | null
+  linkTitle?: string | null
+  link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   venue?: string | null
@@ -601,6 +647,8 @@ export type ExhibitionUncheckedCreateWithoutMediaInput = {
   name: string
   slug: string
   curatorialText?: string | null
+  linkTitle?: string | null
+  link?: string | null
   coverUrl?: string | null
   coverPublicId?: string | null
   venue?: string | null
@@ -633,6 +681,8 @@ export type ExhibitionUpdateWithoutMediaInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   curatorialText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -650,6 +700,8 @@ export type ExhibitionUncheckedUpdateWithoutMediaInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   curatorialText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -698,6 +750,8 @@ export type ExhibitionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   name?: boolean
   slug?: boolean
   curatorialText?: boolean
+  linkTitle?: boolean
+  link?: boolean
   coverUrl?: boolean
   coverPublicId?: boolean
   venue?: boolean
@@ -717,6 +771,8 @@ export type ExhibitionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   slug?: boolean
   curatorialText?: boolean
+  linkTitle?: boolean
+  link?: boolean
   coverUrl?: boolean
   coverPublicId?: boolean
   venue?: boolean
@@ -734,6 +790,8 @@ export type ExhibitionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   slug?: boolean
   curatorialText?: boolean
+  linkTitle?: boolean
+  link?: boolean
   coverUrl?: boolean
   coverPublicId?: boolean
   venue?: boolean
@@ -751,6 +809,8 @@ export type ExhibitionSelectScalar = {
   name?: boolean
   slug?: boolean
   curatorialText?: boolean
+  linkTitle?: boolean
+  link?: boolean
   coverUrl?: boolean
   coverPublicId?: boolean
   venue?: boolean
@@ -763,7 +823,7 @@ export type ExhibitionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ExhibitionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "curatorialText" | "coverUrl" | "coverPublicId" | "venue" | "location" | "startDate" | "endDate" | "isPublished" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["exhibition"]>
+export type ExhibitionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "curatorialText" | "linkTitle" | "link" | "coverUrl" | "coverPublicId" | "venue" | "location" | "startDate" | "endDate" | "isPublished" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["exhibition"]>
 export type ExhibitionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   media?: boolean | Prisma.Exhibition$mediaArgs<ExtArgs>
   _count?: boolean | Prisma.ExhibitionCountOutputTypeDefaultArgs<ExtArgs>
@@ -781,6 +841,8 @@ export type $ExhibitionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     name: string
     slug: string
     curatorialText: string | null
+    linkTitle: string | null
+    link: string | null
     coverUrl: string | null
     coverPublicId: string | null
     venue: string | null
@@ -1219,6 +1281,8 @@ export interface ExhibitionFieldRefs {
   readonly name: Prisma.FieldRef<"Exhibition", 'String'>
   readonly slug: Prisma.FieldRef<"Exhibition", 'String'>
   readonly curatorialText: Prisma.FieldRef<"Exhibition", 'String'>
+  readonly linkTitle: Prisma.FieldRef<"Exhibition", 'String'>
+  readonly link: Prisma.FieldRef<"Exhibition", 'String'>
   readonly coverUrl: Prisma.FieldRef<"Exhibition", 'String'>
   readonly coverPublicId: Prisma.FieldRef<"Exhibition", 'String'>
   readonly venue: Prisma.FieldRef<"Exhibition", 'String'>

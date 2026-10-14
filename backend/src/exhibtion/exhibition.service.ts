@@ -35,6 +35,8 @@ export class ExhibitionService {
             name: dto.name,
             slug: dto.slug,
             curatorialText: dto.curatorialText,
+            linkTitle: dto.linkTitle,
+            link: dto.link || null,
             venue: dto.venue,
             location: dto.location,
             startDate: dto.startDate
@@ -128,6 +130,13 @@ export class ExhibitionService {
           ...(dto.slug !== undefined && { slug: dto.slug }),
           ...(dto.curatorialText !== undefined && {
             curatorialText: dto.curatorialText,
+          }),
+          ...(dto.linkTitle !== undefined && {
+              linkTitle: dto.linkTitle,
+          }),
+
+          ...(dto.link !== undefined && {
+              link: dto.link || null,
           }),
         
           ...(dto.venue !== undefined && { venue: dto.venue }),
