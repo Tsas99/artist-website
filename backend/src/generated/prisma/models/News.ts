@@ -28,10 +28,12 @@ export type AggregateNews = {
 
 export type NewsAvgAggregateOutputType = {
   id: number | null
+  sortOrder: number | null
 }
 
 export type NewsSumAggregateOutputType = {
   id: number | null
+  sortOrder: number | null
 }
 
 export type NewsMinAggregateOutputType = {
@@ -40,12 +42,14 @@ export type NewsMinAggregateOutputType = {
   slug: string | null
   category: string | null
   date: string | null
+  venue: string | null
   location: string | null
   description: string | null
   posterUrl: string | null
   posterPublicId: string | null
   externalLink: string | null
   isPublished: boolean | null
+  sortOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,12 +60,14 @@ export type NewsMaxAggregateOutputType = {
   slug: string | null
   category: string | null
   date: string | null
+  venue: string | null
   location: string | null
   description: string | null
   posterUrl: string | null
   posterPublicId: string | null
   externalLink: string | null
   isPublished: boolean | null
+  sortOrder: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,12 +78,14 @@ export type NewsCountAggregateOutputType = {
   slug: number
   category: number
   date: number
+  venue: number
   location: number
   description: number
   posterUrl: number
   posterPublicId: number
   externalLink: number
   isPublished: number
+  sortOrder: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -86,10 +94,12 @@ export type NewsCountAggregateOutputType = {
 
 export type NewsAvgAggregateInputType = {
   id?: true
+  sortOrder?: true
 }
 
 export type NewsSumAggregateInputType = {
   id?: true
+  sortOrder?: true
 }
 
 export type NewsMinAggregateInputType = {
@@ -98,12 +108,14 @@ export type NewsMinAggregateInputType = {
   slug?: true
   category?: true
   date?: true
+  venue?: true
   location?: true
   description?: true
   posterUrl?: true
   posterPublicId?: true
   externalLink?: true
   isPublished?: true
+  sortOrder?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -114,12 +126,14 @@ export type NewsMaxAggregateInputType = {
   slug?: true
   category?: true
   date?: true
+  venue?: true
   location?: true
   description?: true
   posterUrl?: true
   posterPublicId?: true
   externalLink?: true
   isPublished?: true
+  sortOrder?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -130,12 +144,14 @@ export type NewsCountAggregateInputType = {
   slug?: true
   category?: true
   date?: true
+  venue?: true
   location?: true
   description?: true
   posterUrl?: true
   posterPublicId?: true
   externalLink?: true
   isPublished?: true
+  sortOrder?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -233,12 +249,14 @@ export type NewsGroupByOutputType = {
   slug: string
   category: string | null
   date: string | null
+  venue: string | null
   location: string | null
   description: string | null
   posterUrl: string | null
   posterPublicId: string | null
   externalLink: string | null
   isPublished: boolean
+  sortOrder: number
   createdAt: Date
   updatedAt: Date
   _count: NewsCountAggregateOutputType | null
@@ -272,12 +290,14 @@ export type NewsWhereInput = {
   slug?: Prisma.StringFilter<"News"> | string
   category?: Prisma.StringNullableFilter<"News"> | string | null
   date?: Prisma.StringNullableFilter<"News"> | string | null
+  venue?: Prisma.StringNullableFilter<"News"> | string | null
   location?: Prisma.StringNullableFilter<"News"> | string | null
   description?: Prisma.StringNullableFilter<"News"> | string | null
   posterUrl?: Prisma.StringNullableFilter<"News"> | string | null
   posterPublicId?: Prisma.StringNullableFilter<"News"> | string | null
   externalLink?: Prisma.StringNullableFilter<"News"> | string | null
   isPublished?: Prisma.BoolFilter<"News"> | boolean
+  sortOrder?: Prisma.IntFilter<"News"> | number
   createdAt?: Prisma.DateTimeFilter<"News"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"News"> | Date | string
 }
@@ -288,12 +308,14 @@ export type NewsOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
+  venue?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   posterUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   posterPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   externalLink?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -307,12 +329,14 @@ export type NewsWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"News"> | string
   category?: Prisma.StringNullableFilter<"News"> | string | null
   date?: Prisma.StringNullableFilter<"News"> | string | null
+  venue?: Prisma.StringNullableFilter<"News"> | string | null
   location?: Prisma.StringNullableFilter<"News"> | string | null
   description?: Prisma.StringNullableFilter<"News"> | string | null
   posterUrl?: Prisma.StringNullableFilter<"News"> | string | null
   posterPublicId?: Prisma.StringNullableFilter<"News"> | string | null
   externalLink?: Prisma.StringNullableFilter<"News"> | string | null
   isPublished?: Prisma.BoolFilter<"News"> | boolean
+  sortOrder?: Prisma.IntFilter<"News"> | number
   createdAt?: Prisma.DateTimeFilter<"News"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"News"> | Date | string
 }, "id" | "slug">
@@ -323,12 +347,14 @@ export type NewsOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
+  venue?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   posterUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   posterPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   externalLink?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.NewsCountOrderByAggregateInput
@@ -347,12 +373,14 @@ export type NewsScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"News"> | string
   category?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
   date?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
+  venue?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
   location?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
   posterUrl?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
   posterPublicId?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
   externalLink?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
   isPublished?: Prisma.BoolWithAggregatesFilter<"News"> | boolean
+  sortOrder?: Prisma.IntWithAggregatesFilter<"News"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"News"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"News"> | Date | string
 }
@@ -362,12 +390,14 @@ export type NewsCreateInput = {
   slug: string
   category?: string | null
   date?: string | null
+  venue?: string | null
   location?: string | null
   description?: string | null
   posterUrl?: string | null
   posterPublicId?: string | null
   externalLink?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -378,12 +408,14 @@ export type NewsUncheckedCreateInput = {
   slug: string
   category?: string | null
   date?: string | null
+  venue?: string | null
   location?: string | null
   description?: string | null
   posterUrl?: string | null
   posterPublicId?: string | null
   externalLink?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -393,12 +425,14 @@ export type NewsUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posterPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -409,12 +443,14 @@ export type NewsUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posterPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -425,12 +461,14 @@ export type NewsCreateManyInput = {
   slug: string
   category?: string | null
   date?: string | null
+  venue?: string | null
   location?: string | null
   description?: string | null
   posterUrl?: string | null
   posterPublicId?: string | null
   externalLink?: string | null
   isPublished?: boolean
+  sortOrder?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -440,12 +478,14 @@ export type NewsUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posterPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -456,12 +496,14 @@ export type NewsUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posterPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -472,18 +514,21 @@ export type NewsCountOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   category?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  venue?: Prisma.SortOrder
   location?: Prisma.SortOrder
   description?: Prisma.SortOrder
   posterUrl?: Prisma.SortOrder
   posterPublicId?: Prisma.SortOrder
   externalLink?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type NewsAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
 }
 
 export type NewsMaxOrderByAggregateInput = {
@@ -492,12 +537,14 @@ export type NewsMaxOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   category?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  venue?: Prisma.SortOrder
   location?: Prisma.SortOrder
   description?: Prisma.SortOrder
   posterUrl?: Prisma.SortOrder
   posterPublicId?: Prisma.SortOrder
   externalLink?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -508,18 +555,21 @@ export type NewsMinOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   category?: Prisma.SortOrder
   date?: Prisma.SortOrder
+  venue?: Prisma.SortOrder
   location?: Prisma.SortOrder
   description?: Prisma.SortOrder
   posterUrl?: Prisma.SortOrder
   posterPublicId?: Prisma.SortOrder
   externalLink?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type NewsSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
 }
 
 
@@ -530,12 +580,14 @@ export type NewsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   slug?: boolean
   category?: boolean
   date?: boolean
+  venue?: boolean
   location?: boolean
   description?: boolean
   posterUrl?: boolean
   posterPublicId?: boolean
   externalLink?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["news"]>
@@ -546,12 +598,14 @@ export type NewsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   slug?: boolean
   category?: boolean
   date?: boolean
+  venue?: boolean
   location?: boolean
   description?: boolean
   posterUrl?: boolean
   posterPublicId?: boolean
   externalLink?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["news"]>
@@ -562,12 +616,14 @@ export type NewsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   slug?: boolean
   category?: boolean
   date?: boolean
+  venue?: boolean
   location?: boolean
   description?: boolean
   posterUrl?: boolean
   posterPublicId?: boolean
   externalLink?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["news"]>
@@ -578,17 +634,19 @@ export type NewsSelectScalar = {
   slug?: boolean
   category?: boolean
   date?: boolean
+  venue?: boolean
   location?: boolean
   description?: boolean
   posterUrl?: boolean
   posterPublicId?: boolean
   externalLink?: boolean
   isPublished?: boolean
+  sortOrder?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type NewsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "category" | "date" | "location" | "description" | "posterUrl" | "posterPublicId" | "externalLink" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["news"]>
+export type NewsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "category" | "date" | "venue" | "location" | "description" | "posterUrl" | "posterPublicId" | "externalLink" | "isPublished" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["news"]>
 
 export type $NewsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "News"
@@ -599,12 +657,14 @@ export type $NewsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     slug: string
     category: string | null
     date: string | null
+    venue: string | null
     location: string | null
     description: string | null
     posterUrl: string | null
     posterPublicId: string | null
     externalLink: string | null
     isPublished: boolean
+    sortOrder: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["news"]>
@@ -1035,12 +1095,14 @@ export interface NewsFieldRefs {
   readonly slug: Prisma.FieldRef<"News", 'String'>
   readonly category: Prisma.FieldRef<"News", 'String'>
   readonly date: Prisma.FieldRef<"News", 'String'>
+  readonly venue: Prisma.FieldRef<"News", 'String'>
   readonly location: Prisma.FieldRef<"News", 'String'>
   readonly description: Prisma.FieldRef<"News", 'String'>
   readonly posterUrl: Prisma.FieldRef<"News", 'String'>
   readonly posterPublicId: Prisma.FieldRef<"News", 'String'>
   readonly externalLink: Prisma.FieldRef<"News", 'String'>
   readonly isPublished: Prisma.FieldRef<"News", 'Boolean'>
+  readonly sortOrder: Prisma.FieldRef<"News", 'Int'>
   readonly createdAt: Prisma.FieldRef<"News", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"News", 'DateTime'>
 }

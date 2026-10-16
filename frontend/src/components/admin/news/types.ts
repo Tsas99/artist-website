@@ -5,6 +5,7 @@ export type NewsItem = {
 category: string | null;
   date: string | null;
   location: string | null;
+  venue: string | null;
   description: string | null;
 
   posterUrl: string | null;

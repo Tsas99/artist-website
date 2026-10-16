@@ -226,12 +226,14 @@ export const NewsScalarFieldEnum = {
   slug: 'slug',
   category: 'category',
   date: 'date',
+  venue: 'venue',
   location: 'location',
   description: 'description',
   posterUrl: 'posterUrl',
   posterPublicId: 'posterPublicId',
   externalLink: 'externalLink',
   isPublished: 'isPublished',
+  sortOrder: 'sortOrder',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

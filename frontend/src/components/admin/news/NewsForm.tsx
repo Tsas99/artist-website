@@ -142,6 +142,11 @@ export default function NewsForm() {
             date: String(
                 formData.get('date') ?? '',
             ).trim() || undefined,
+
+            venue: String(
+                formData.get('venue') ?? '',
+            ).trim() || undefined,
+
             location:
                 String(
                     formData.get(
@@ -236,8 +241,8 @@ export default function NewsForm() {
 
                 <label
                     className={`inline-flex cursor-pointer items-center border border-neutral-300 px-4 py-2 text-xs uppercase tracking-[0.12em] transition-colors hover:border-neutral-950 ${uploading
-                            ? 'pointer-events-none opacity-40'
-                            : ''
+                        ? 'pointer-events-none opacity-40'
+                        : ''
                         }`}
                 >
                     {uploading
@@ -284,6 +289,12 @@ export default function NewsForm() {
                 name="date"
                 placeholder="17–18 September 2027"
                 maxLength={100}
+            />
+            <Field
+                label="Venue"
+                name="venue"
+                placeholder="Mongolian Art Gallery"
+                maxLength={200}
             />
 
             <Field

@@ -31,6 +31,11 @@ export class CreateNewsDto {
   @IsOptional()
   @IsString()
   @MaxLength(200)
+  venue?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
   location?: string;
 
   @IsOptional()

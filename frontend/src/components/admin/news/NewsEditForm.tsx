@@ -199,6 +199,10 @@ export default function NewsEditForm({
                     ) ?? '',
                 ).trim() ||
                 undefined,
+            venue:
+                String(
+                    formData.get('venue') ?? '',
+                ).trim(),
 
             location:
                 String(
@@ -208,13 +212,10 @@ export default function NewsEditForm({
                 ).trim() ||
                 undefined,
 
-            description:
-                String(
-                    formData.get(
-                        'description',
-                    ) ?? '',
-                ).trim() ||
-                undefined,
+
+            description: String(
+                formData.get('description') ?? '',
+            ).trim(),
 
             posterUrl:
                 posterUrl ||
@@ -365,8 +366,8 @@ export default function NewsEditForm({
 
                 <label
                     className={`inline-flex cursor-pointer items-center border border-neutral-300 px-4 py-2 text-xs uppercase tracking-[0.12em] transition-colors hover:border-neutral-950 ${uploading || saving
-                            ? 'pointer-events-none opacity-40'
-                            : ''
+                        ? 'pointer-events-none opacity-40'
+                        : ''
                         }`}
                 >
                     {uploading
@@ -431,6 +432,15 @@ export default function NewsEditForm({
                 placeholder="17–18 September 2027"
                 maxLength={100}
             />
+
+            <Field
+                label="Venue"
+                name="venue"
+                defaultValue={news.venue ?? ''}
+                placeholder="Mongolian Art Gallery"
+                maxLength={200}
+            />
+
 
             <Field
                 label="Location"

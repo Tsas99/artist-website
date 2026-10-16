@@ -1,12 +1,15 @@
+
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+
 import { PrismaService } from '../prisma/prisma.service';
 import { UploadService } from '../upload/upload.service';
+
 import { CreateNewsDto } from './dto/create_news.dto';
 import { UpdateNewsDto } from './dto/update_news.dto';
-
 
 @Injectable()
 export class NewsService {
@@ -15,30 +18,44 @@ export class NewsService {
     private readonly uploadService: UploadService,
   ) {}
 
-  create(createNewsDto: CreateNewsDto) {
-    return this.prisma.news.create({
-      data: createNewsDto,
+  // CREATE
+  async create(createNewsDto: CreateNewsDto) {
+    return this.prisma.$transaction(async (tx) => {
+      const lastNews = await tx.news.findFirst({
+        orderBy: [
+          { sortOrder: 'desc' },
+          { id: 'desc' },
+        ],
+        select: {
+          sortOrder: true,
+        },
+      });
+
+      return tx.news.create({
+        data: {
+          ...createNewsDto,
+          sortOrder: (lastNews?.sortOrder ?? -1) + 1,
+        },
+      });
     });
   }
 
+  // GET ALL - SORTED
   findAll() {
     return this.prisma.news.findMany({
       orderBy: [
-        {
-          createdAt: 'desc',
-        },
-        {
-          id: 'desc',
-        },
+        { sortOrder: 'asc' },
+        { createdAt: 'desc' },
+        { id: 'desc' },
       ],
     });
   }
 
+  // GET ONE
   async findOne(id: number) {
-    const news =
-      await this.prisma.news.findUnique({
-        where: { id },
-      });
+    const news = await this.prisma.news.findUnique({
+      where: { id },
+    });
 
     if (!news) {
       throw new NotFoundException(
@@ -49,11 +66,11 @@ export class NewsService {
     return news;
   }
 
+  // GET BY SLUG
   async findBySlug(slug: string) {
-    const news =
-      await this.prisma.news.findUnique({
-        where: { slug },
-      });
+    const news = await this.prisma.news.findUnique({
+      where: { slug },
+    });
 
     if (!news) {
       throw new NotFoundException(
@@ -64,6 +81,7 @@ export class NewsService {
     return news;
   }
 
+  // UPDATE
   async update(
     id: number,
     updateNewsDto: UpdateNewsDto,
@@ -76,6 +94,60 @@ export class NewsService {
     });
   }
 
+  // REORDER
+  async reorder(ids: number[]) {
+    if (
+      !Array.isArray(ids) ||
+      ids.length === 0 ||
+      ids.some(
+        (id) => !Number.isInteger(id) || id <= 0,
+      ) ||
+      new Set(ids).size !== ids.length
+    ) {
+      throw new BadRequestException(
+        'Invalid news order.',
+      );
+    }
+
+    const totalNews = await this.prisma.news.count();
+
+    if (ids.length !== totalNews) {
+      throw new BadRequestException(
+        'The news order must include all entries.',
+      );
+    }
+
+    const existingNews =
+      await this.prisma.news.findMany({
+        where: {
+          id: { in: ids },
+        },
+        select: {
+          id: true,
+        },
+      });
+
+    if (existingNews.length !== ids.length) {
+      throw new NotFoundException(
+        'One or more news entries were not found.',
+      );
+    }
+
+    await this.prisma.$transaction(
+      ids.map((id, index) =>
+        this.prisma.news.update({
+          where: { id },
+          data: {
+            sortOrder: index,
+          },
+        }),
+      ),
+    );
+
+    return this.findAll();
+  }
+
+  // DELETE
   async remove(id: number) {
     const news = await this.findOne(id);
 
