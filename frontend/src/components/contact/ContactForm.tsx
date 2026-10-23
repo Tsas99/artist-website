@@ -2,6 +2,7 @@
 
 import {
     FormEvent,
+    useEffect,
     useState,
 } from 'react';
 
@@ -11,9 +12,27 @@ type FormStatus =
     | 'success'
     | 'error';
 
+
+
 export default function ContactForm() {
     const [status, setStatus] =
         useState<FormStatus>('idle');
+
+
+    useEffect(() => {
+        if (status !== 'success') {
+            return;
+        }
+
+        const timer = window.setTimeout(() => {
+            setStatus('idle');
+        }, 10000);
+
+        return () => {
+            window.clearTimeout(timer);
+        };
+    }, [status]);
+
     const [errorMessage, setErrorMessage] =
         useState('');
 
@@ -181,7 +200,7 @@ export default function ContactForm() {
                     aria-live="polite"
                 >
                     {status === 'success' && (
-                        <span className="text-neutral-600">
+                        <span className="text-neutral-950">
                             Message sent. Thank you.
                         </span>
                     )}
@@ -196,15 +215,36 @@ export default function ContactForm() {
                     )}
                 </div>
 
+
+
                 <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="min-w-[110px] bg-neutral-950 px-7 py-3 text-sm text-white transition-opacity duration-200 hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="
+        group relative min-w-[110px]
+        cursor-pointer px-7 py-3
+        text-sm text-black
+        disabled:cursor-pointer
+    "
                 >
-                    {status === 'sending'
-                        ? 'Sending...'
-                        : 'Send'}
+                    <span className="relative inline-block">
+                        {status === 'sending'
+                            ? 'Sending...'
+                            : 'Send'}
+
+                        <span
+                            className="
+                absolute -bottom-1 left-0
+                h-px w-full bg-black
+                origin-left scale-x-0
+                transition-transform duration-300 ease-out
+                group-hover:scale-x-100
+                group-disabled:scale-x-0
+            "
+                        />
+                    </span>
                 </button>
+
             </div>
         </form>
     );

@@ -70,6 +70,9 @@ model Admin {
   id           Int      @id @default(autoincrement())
   email        String   @unique
   passwordHash String
+  tokenVersion Int @default(0)
+  resetTokenHash      String?
+  resetTokenExpiresAt DateTime?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

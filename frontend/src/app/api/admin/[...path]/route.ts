@@ -6,10 +6,11 @@ const API_URL =
   process.env.NEXT_PUBLIC_API_URL ??
   'http://localhost:3001';
 
+
 const ALLOWED_PREFIXES = [
   'works',
   'work-media',
-    'exhibitions',
+  'exhibitions',
   'exhibition-media',
   'upload',
   'about',
@@ -19,6 +20,8 @@ const ALLOWED_PREFIXES = [
   'home-media',
   'news',
 ];
+
+const ALLOWED_AUTH_PATH = 'auth/change-password';
 
 async function proxyRequest(
   request: Request,
@@ -30,7 +33,16 @@ async function proxyRequest(
 
   const firstSegment = path[0];
 
-  if (!ALLOWED_PREFIXES.includes(firstSegment)) {
+  
+const isAllowed =
+  ALLOWED_PREFIXES.includes(firstSegment) ||
+  (
+    path.join('/') === ALLOWED_AUTH_PATH &&
+    request.method === 'PATCH'
+  );
+
+if (!isAllowed) {
+
     return NextResponse.json(
       { message: 'Not allowed.' },
       { status: 403 },

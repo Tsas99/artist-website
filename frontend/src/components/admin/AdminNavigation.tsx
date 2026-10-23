@@ -34,6 +34,10 @@ const navigation = [
         label: 'PRESS',
         href: '/admin/press',
     },
+    {
+        label: 'SECURITY',
+        href: '/admin/security',
+    },
 ];
 
 export default function AdminNavigation() {

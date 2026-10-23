@@ -6,10 +6,18 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { EmailService } from './email.service';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
     PrismaModule,
+     ThrottlerModule.forRoot([
+      {
+        ttl: 60_000,
+        limit: 5,
+      },
+    ]),
 
     JwtModule.register({
       secret: process.env.JWT_SECRET,
@@ -25,7 +33,9 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 
   providers: [
     AuthService,
+    EmailService,
     JwtAuthGuard,
+    ThrottlerGuard,
   ],
 
   exports: [

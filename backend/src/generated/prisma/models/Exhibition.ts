@@ -606,10 +606,6 @@ export type ExhibitionScalarRelationFilter = {
   isNot?: Prisma.ExhibitionWhereInput
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type ExhibitionCreateNestedOneWithoutMediaInput = {
   create?: Prisma.XOR<Prisma.ExhibitionCreateWithoutMediaInput, Prisma.ExhibitionUncheckedCreateWithoutMediaInput>
   connectOrCreate?: Prisma.ExhibitionCreateOrConnectWithoutMediaInput

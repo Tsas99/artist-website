@@ -51,10 +51,20 @@ export default async function AboutPage() {
                         <img
                             src={about.profileImageUrl}
                             alt="Tsagaantsooj Erdenechimeg"
-                            className="h-auto w-full"
+                            className="h-auto w-full mt-10"
                         />
                     )}
+                    <div className="mt-10 border-t border-neutral-200 pt-6">
+                        <Link
+                            href="/cv"
+                            className="inline-flex text-sm font-medium tracking-wide text-neutral-950 transition-opacity hover:opacity-50"
+                        >
+                            VIEW CV →
+                        </Link>
+                    </div>
+
                 </div>
+
 
                 <div className="md:pt-1">
 
@@ -75,14 +85,7 @@ export default async function AboutPage() {
                         )}
                     </div>
 
-                    <div className="mt-10 border-t border-neutral-200 pt-6">
-                        <Link
-                            href="/cv"
-                            className="inline-flex text-sm font-medium tracking-wide text-neutral-950 transition-opacity hover:opacity-50"
-                        >
-                            VIEW CV →
-                        </Link>
-                    </div>
+
                 </div>
             </div>
         </main>

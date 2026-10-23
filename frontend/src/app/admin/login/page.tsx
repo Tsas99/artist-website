@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -6,17 +7,18 @@ import {
 } from 'react';
 
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { Eye, EyeOff } from 'lucide-react';
 
 export default function AdminLoginPage() {
     const router = useRouter();
 
     const [email, setEmail] = useState('');
-
     const [password, setPassword] = useState('');
-
     const [error, setError] = useState('');
 
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     async function handleSubmit(
         event: FormEvent<HTMLFormElement>,
@@ -32,8 +34,7 @@ export default function AdminLoginPage() {
                 {
                     method: 'POST',
                     headers: {
-                        'Content-Type':
-                            'application/json',
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         email,
@@ -42,13 +43,11 @@ export default function AdminLoginPage() {
                 },
             );
 
-            const data =
-                await response.json();
+            const data = await response.json();
 
             if (!response.ok) {
                 throw new Error(
-                    data.message ||
-                    'Login failed.',
+                    data.message || 'Login failed.',
                 );
             }
 
@@ -97,9 +96,7 @@ export default function AdminLoginPage() {
                             required
                             value={email}
                             onChange={(event) =>
-                                setEmail(
-                                    event.target.value,
-                                )
+                                setEmail(event.target.value)
                             }
                             className="w-full border border-neutral-300 px-4 py-3 outline-none transition focus:border-neutral-950"
                         />
@@ -113,23 +110,66 @@ export default function AdminLoginPage() {
                             Password
                         </label>
 
-                        <input
-                            id="password"
-                            type="password"
-                            autoComplete="current-password"
-                            required
-                            value={password}
-                            onChange={(event) =>
-                                setPassword(
-                                    event.target.value,
-                                )
-                            }
-                            className="w-full border border-neutral-300 px-4 py-3 outline-none transition focus:border-neutral-950"
-                        />
+                        <div className="relative">
+                            <input
+                                id="password"
+                                type={
+                                    showPassword
+                                        ? 'text'
+                                        : 'password'
+                                }
+                                autoComplete="current-password"
+                                required
+                                value={password}
+                                onChange={(event) =>
+                                    setPassword(event.target.value)
+                                }
+                                className="w-full border border-neutral-300 px-4 py-3 pr-12 outline-none transition focus:border-neutral-950"
+                            />
+
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    setShowPassword((prev) => !prev)
+                                }
+                                aria-label={
+                                    showPassword
+                                        ? 'Hide password'
+                                        : 'Show password'
+                                }
+                                aria-pressed={showPassword}
+                                className="absolute inset-y-0 right-4 flex cursor-pointer items-center justify-center text-neutral-500 transition-colors duration-200 hover:text-neutral-950"
+                            >
+                                {showPassword ? (
+                                    <EyeOff
+                                        size={19}
+                                        strokeWidth={1.5}
+                                    />
+                                ) : (
+                                    <Eye
+                                        size={19}
+                                        strokeWidth={1.5}
+                                    />
+                                )}
+                            </button>
+                        </div>
                     </div>
 
+                    <div className="flex justify-end">
+                        <Link
+                            href="/admin/forgot-password"
+                            className="text-xs text-neutral-500 underline-offset-4 transition-colors duration-200 hover:text-neutral-950 hover:underline"
+                        >
+                            Forgot password?
+                        </Link>
+                    </div>
+
+
                     {error && (
-                        <p className="text-sm text-red-600">
+                        <p
+                            role="alert"
+                            className="text-sm text-red-600"
+                        >
                             {error}
                         </p>
                     )}
@@ -137,7 +177,7 @@ export default function AdminLoginPage() {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-neutral-950 px-4 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="w-full cursor-pointer bg-neutral-950 px-4 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-neutral-800 disabled:cursor-pointer"
                     >
                         {isLoading
                             ? 'Signing in...'

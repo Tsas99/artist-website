@@ -26,7 +26,7 @@
     "@nestjs/jwt": "^12.0.2",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^11.0.1",
-    "@nestjs/throttler": "^6.7.0",
+    "@nestjs/throttler": "^6.7.1",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "bcrypt": "^6.0.0",
@@ -37,7 +37,7 @@
     "multer": "^2.2.0",
     "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2",
-    "resend": "^6.28.1",
+    "resend": "^6.34.1",
     "rxjs": "^7.8.1",
     "sharp": "^0.35.5"
   },
