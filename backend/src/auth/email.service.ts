@@ -38,30 +38,48 @@ export class EmailService {
 
     resetUrl.searchParams.set('token', token);
 
-    const { error } = await resend.emails.send({
-      from,
-      to: recipientEmail,
-      subject: 'Reset your admin password',
-      text: [
-        'You requested a password reset for your artist website.',
-        '',
-        'Open this link to create a new password:',
-        resetUrl.toString(),
-        '',
-        'This link expires in 15 minutes and can only be used once.',
-        '',
-        'If you did not request this, you can ignore this email.',
-      ].join('\n'),
-    });
+    
+try {
+  const { data, error } = await resend.emails.send({
+    from,
+    to: recipientEmail,
+    subject: 'Reset your admin password',
+    text: [
+      'You requested a password reset for your artist website.',
+      '',
+      'Open this link to create a new password:',
+      resetUrl.toString(),
+      '',
+      'This link expires in 15 minutes and can only be used once.',
+      '',
+      'If you did not request this, you can ignore this email.',
+    ].join('\n'),
+  });
 
-    if (error) {
-      this.logger.error(
-        `Password reset email delivery failed: ${error.name}`,
-      );
+  if (error) {
+    this.logger.error(
+      `Password reset email rejected: ${error.name}`,
+    );
 
-      throw new InternalServerErrorException(
-        'Email service is unavailable.',
-      );
-    }
+    throw new Error('Resend rejected the request.');
+  }
+
+  if (!data?.id) {
+    this.logger.error(
+      'Password reset email returned no message ID.',
+    );
+
+    throw new Error('Missing email message ID.');
+  }
+} catch (error) {
+  this.logger.error(
+    'Password reset email request failed.',
+  );
+
+  throw new InternalServerErrorException(
+    'Email service is unavailable.',
+  );
+}
+
   }
 }

@@ -93,7 +93,7 @@ function getExternalUrl(value: string) {
         return null;
     }
 }
-
+// export const dynamic = 'force-dynamic';
 export default async function NewsPage() {
     const news = await getNews();
 
@@ -125,6 +125,7 @@ export default async function NewsPage() {
                                         />
                                     )}
                                 </div>
+
 
                                 {/* INFORMATION */}
                                 <div className="min-w-0 text-neutral-950">
@@ -181,7 +182,10 @@ export default async function NewsPage() {
                                         )}
                                     </div>
                                 </div>
+
+
                             </article>
+
                         );
                     })}
                 </div>

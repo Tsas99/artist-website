@@ -149,6 +149,7 @@ export const AdminScalarFieldEnum = {
   tokenVersion: 'tokenVersion',
   resetTokenHash: 'resetTokenHash',
   resetTokenExpiresAt: 'resetTokenExpiresAt',
+  resetRequestedAt: 'resetRequestedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

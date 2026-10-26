@@ -43,6 +43,7 @@ export type AdminMinAggregateOutputType = {
   tokenVersion: number | null
   resetTokenHash: string | null
   resetTokenExpiresAt: Date | null
+  resetRequestedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +55,7 @@ export type AdminMaxAggregateOutputType = {
   tokenVersion: number | null
   resetTokenHash: string | null
   resetTokenExpiresAt: Date | null
+  resetRequestedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,6 +67,7 @@ export type AdminCountAggregateOutputType = {
   tokenVersion: number
   resetTokenHash: number
   resetTokenExpiresAt: number
+  resetRequestedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -88,6 +91,7 @@ export type AdminMinAggregateInputType = {
   tokenVersion?: true
   resetTokenHash?: true
   resetTokenExpiresAt?: true
+  resetRequestedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,6 +103,7 @@ export type AdminMaxAggregateInputType = {
   tokenVersion?: true
   resetTokenHash?: true
   resetTokenExpiresAt?: true
+  resetRequestedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -110,6 +115,7 @@ export type AdminCountAggregateInputType = {
   tokenVersion?: true
   resetTokenHash?: true
   resetTokenExpiresAt?: true
+  resetRequestedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -208,6 +214,7 @@ export type AdminGroupByOutputType = {
   tokenVersion: number
   resetTokenHash: string | null
   resetTokenExpiresAt: Date | null
+  resetRequestedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: AdminCountAggregateOutputType | null
@@ -242,6 +249,7 @@ export type AdminWhereInput = {
   tokenVersion?: Prisma.IntFilter<"Admin"> | number
   resetTokenHash?: Prisma.StringNullableFilter<"Admin"> | string | null
   resetTokenExpiresAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
+  resetRequestedAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
 }
@@ -253,6 +261,7 @@ export type AdminOrderByWithRelationInput = {
   tokenVersion?: Prisma.SortOrder
   resetTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  resetRequestedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -267,6 +276,7 @@ export type AdminWhereUniqueInput = Prisma.AtLeast<{
   tokenVersion?: Prisma.IntFilter<"Admin"> | number
   resetTokenHash?: Prisma.StringNullableFilter<"Admin"> | string | null
   resetTokenExpiresAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
+  resetRequestedAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
 }, "id" | "email">
@@ -278,6 +288,7 @@ export type AdminOrderByWithAggregationInput = {
   tokenVersion?: Prisma.SortOrder
   resetTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  resetRequestedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AdminCountOrderByAggregateInput
@@ -297,6 +308,7 @@ export type AdminScalarWhereWithAggregatesInput = {
   tokenVersion?: Prisma.IntWithAggregatesFilter<"Admin"> | number
   resetTokenHash?: Prisma.StringNullableWithAggregatesFilter<"Admin"> | string | null
   resetTokenExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
+  resetRequestedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
 }
@@ -307,6 +319,7 @@ export type AdminCreateInput = {
   tokenVersion?: number
   resetTokenHash?: string | null
   resetTokenExpiresAt?: Date | string | null
+  resetRequestedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -318,6 +331,7 @@ export type AdminUncheckedCreateInput = {
   tokenVersion?: number
   resetTokenHash?: string | null
   resetTokenExpiresAt?: Date | string | null
+  resetRequestedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -328,6 +342,7 @@ export type AdminUpdateInput = {
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   resetTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resetRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -339,6 +354,7 @@ export type AdminUncheckedUpdateInput = {
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   resetTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resetRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -350,6 +366,7 @@ export type AdminCreateManyInput = {
   tokenVersion?: number
   resetTokenHash?: string | null
   resetTokenExpiresAt?: Date | string | null
+  resetRequestedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -360,6 +377,7 @@ export type AdminUpdateManyMutationInput = {
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   resetTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resetRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -371,6 +389,7 @@ export type AdminUncheckedUpdateManyInput = {
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   resetTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resetRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -382,6 +401,7 @@ export type AdminCountOrderByAggregateInput = {
   tokenVersion?: Prisma.SortOrder
   resetTokenHash?: Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrder
+  resetRequestedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -398,6 +418,7 @@ export type AdminMaxOrderByAggregateInput = {
   tokenVersion?: Prisma.SortOrder
   resetTokenHash?: Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrder
+  resetRequestedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -409,6 +430,7 @@ export type AdminMinOrderByAggregateInput = {
   tokenVersion?: Prisma.SortOrder
   resetTokenHash?: Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrder
+  resetRequestedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -431,6 +453,7 @@ export type AdminSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   tokenVersion?: boolean
   resetTokenHash?: boolean
   resetTokenExpiresAt?: boolean
+  resetRequestedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["admin"]>
@@ -442,6 +465,7 @@ export type AdminSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   tokenVersion?: boolean
   resetTokenHash?: boolean
   resetTokenExpiresAt?: boolean
+  resetRequestedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["admin"]>
@@ -453,6 +477,7 @@ export type AdminSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   tokenVersion?: boolean
   resetTokenHash?: boolean
   resetTokenExpiresAt?: boolean
+  resetRequestedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["admin"]>
@@ -464,11 +489,12 @@ export type AdminSelectScalar = {
   tokenVersion?: boolean
   resetTokenHash?: boolean
   resetTokenExpiresAt?: boolean
+  resetRequestedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "tokenVersion" | "resetTokenHash" | "resetTokenExpiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "tokenVersion" | "resetTokenHash" | "resetTokenExpiresAt" | "resetRequestedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
 
 export type $AdminPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Admin"
@@ -480,6 +506,7 @@ export type $AdminPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     tokenVersion: number
     resetTokenHash: string | null
     resetTokenExpiresAt: Date | null
+    resetRequestedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["admin"]>
@@ -911,6 +938,7 @@ export interface AdminFieldRefs {
   readonly tokenVersion: Prisma.FieldRef<"Admin", 'Int'>
   readonly resetTokenHash: Prisma.FieldRef<"Admin", 'String'>
   readonly resetTokenExpiresAt: Prisma.FieldRef<"Admin", 'DateTime'>
+  readonly resetRequestedAt: Prisma.FieldRef<"Admin", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Admin", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Admin", 'DateTime'>
 }

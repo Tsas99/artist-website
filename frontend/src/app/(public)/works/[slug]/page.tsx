@@ -115,15 +115,17 @@ export default async function WorkDetailPage({
           )}
         </header> */}
 
+
         {work.imageUrl && (
-          <div className="mb-12 overflow-hidden sm:mb-16">
+          <div className="mb-12 flex w-full items-center justify-center sm:mb-16">
             <img
               src={work.imageUrl}
               alt={work.title}
-              className="h-auto w-full object-contain"
+              className="block h-auto max-h-[65vh] w-auto max-w-full object-contain"
             />
           </div>
         )}
+
         <h1 className="text-4xl font-medium font-display tracking-tight text-neutral-950 sm:text-4xl lg:text-5xl">
           {work.title}
         </h1>

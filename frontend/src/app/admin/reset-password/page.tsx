@@ -3,17 +3,18 @@
 
 import {
     FormEvent,
-    Suspense,
+
+    useEffect,
     useState,
 } from 'react';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
 function ResetPasswordForm() {
-    const searchParams = useSearchParams();
-    const token = searchParams.get('token');
+    const [token, setToken] = useState<string | null>(null);
+    const [tokenChecked, setTokenChecked] = useState(false);
 
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -25,6 +26,24 @@ function ResetPasswordForm() {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
 
+    useEffect(() => {
+        const url = new URL(window.location.href);
+        const resetToken = url.searchParams.get('token');
+
+        // Remove token from the address bar and current history entry.
+        if (url.searchParams.has('token')) {
+            url.searchParams.delete('token');
+
+            window.history.replaceState(
+                window.history.state,
+                '',
+                url.pathname + url.search + url.hash,
+            );
+        }
+
+        setToken(resetToken);
+        setTokenChecked(true);
+    }, []);
     async function handleSubmit(
         event: FormEvent<HTMLFormElement>,
     ) {
@@ -89,6 +108,18 @@ function ResetPasswordForm() {
             setIsLoading(false);
         }
     }
+
+
+    if (!tokenChecked) {
+        return (
+            <main className="flex min-h-screen items-center justify-center bg-white">
+                <p className="text-sm text-neutral-500">
+                    Loading...
+                </p>
+            </main>
+        );
+    }
+
 
     return (
         <main className="flex min-h-screen items-center justify-center bg-white px-4">
@@ -260,15 +291,5 @@ function ResetPasswordForm() {
 }
 
 export default function ResetPasswordPage() {
-    return (
-        <Suspense fallback={
-            <main className="flex min-h-screen items-center justify-center bg-white">
-                <p className="text-sm text-neutral-500">
-                    Loading...
-                </p>
-            </main>
-        }>
-            <ResetPasswordForm />
-        </Suspense>
-    );
+    return <ResetPasswordForm />;
 }

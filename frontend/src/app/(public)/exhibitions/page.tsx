@@ -99,10 +99,10 @@ function formatDateRange(
 export default async function ExhibitionsPage() {
     const exhibitions = await getExhibitions();
 
+
     return (
         <main className="min-h-screen bg-white">
-            <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
-
+            <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
                 {exhibitions.length === 0 ? (
                     <p className="text-sm text-neutral-500">
                         No published exhibitions yet.
@@ -118,48 +118,62 @@ export default async function ExhibitionsPage() {
                             return (
                                 <article
                                     key={exhibition.id}
-                                    className={`py-8 ${index === 0 ? 'pt-0' : ''}`}
+                                    className={`pb-16 sm:pb-20 ${index === 0 ? '' : 'pt-4'
+                                        }`}
                                 >
-
-
                                     <Link
                                         href={`/exhibitions/${exhibition.slug}`}
-                                        className="exhibition-list-item group"
+                                        className="group flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10"
                                     >
                                         {/* Exhibition cover */}
-                                        <div className="exhibition-list-cover">
+                                        <div className="flex w-full min-w-0 items-center justify-center lg:w-1/2 lg:shrink-0">
                                             {exhibition.coverUrl ? (
                                                 <img
                                                     src={exhibition.coverUrl}
                                                     alt={exhibition.name}
+                                                    loading={index === 0 ? 'eager' : 'lazy'}
+                                                    className="
+        block
+        h-auto
+        w-auto
+        max-w-[90%]
+        max-h-[350px]
+        object-contain
+        sm:max-w-[380px]
+        sm:max-h-[400px]
+        lg:max-w-[450px]
+        lg:max-h-[450px]
+      "
                                                 />
                                             ) : (
-                                                <p className="text-xs text-neutral-400">
-                                                    No cover image
-                                                </p>
+                                                <div className="flex aspect-[4/3] w-full items-center justify-center bg-neutral-100">
+                                                    <p className="text-xs text-neutral-400">
+                                                        No cover image
+                                                    </p>
+                                                </div>
                                             )}
                                         </div>
 
                                         {/* Exhibition information */}
-                                        <div className="exhibition-list-info">
-                                            <h2 className="font-display text-lg leading-snug text-neutral-950 sm:text-xl">
+                                        <div className="w-[90%] min-w-0 self-center lg:w-full lg:flex-1 lg:self-auto">
+                                            <h2 className="font-display text-xl leading-snug text-neutral-950 sm:text-2xl ">
                                                 {exhibition.name}
                                             </h2>
 
                                             {exhibition.venue && (
-                                                <p className="mt-3 text-xs text-neutral-800 sm:text-sm">
+                                                <p className="mt-3 text-sm text-neutral-800">
                                                     {exhibition.venue}
                                                 </p>
                                             )}
 
                                             {exhibition.location && (
-                                                <p className="mt-1 text-xs text-neutral-800">
+                                                <p className="mt-1 text-xs text-neutral-800 sm:text-sm">
                                                     {exhibition.location}
                                                 </p>
                                             )}
 
                                             {dateRange && (
-                                                <p className="mt-3 text-xs text-neutral-800">
+                                                <p className="mt-3 text-xs text-neutral-800 sm:text-sm">
                                                     {dateRange}
                                                 </p>
                                             )}
@@ -169,8 +183,6 @@ export default async function ExhibitionsPage() {
                                             </span>
                                         </div>
                                     </Link>
-
-
                                 </article>
                             );
                         })}
@@ -179,4 +191,5 @@ export default async function ExhibitionsPage() {
             </div>
         </main>
     );
+
 }

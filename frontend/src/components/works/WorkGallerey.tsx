@@ -105,7 +105,7 @@ export default function WorkGallery({
     return (
         <>
             <section className="mt-14 border-t border-neutral-200 pt-10 sm:mt-20 sm:pt-14">
-                <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2">
+                <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
                     {media.map((item) => {
                         if (item.type === 'video') {
                             return (
