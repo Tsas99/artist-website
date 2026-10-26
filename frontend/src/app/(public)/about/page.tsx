@@ -75,7 +75,7 @@ export default async function AboutPage() {
                         </h3>
 
                         {about?.artistStatement ? (
-                            <div className="max-w-2xl whitespace-pre-line text-[15px] leading-7 text-neutral-700">
+                            <div className="max-w-2xl whitespace-pre-line text-justify text-[15px] leading-7 text-neutral-700">
                                 {about.artistStatement}
                             </div>
                         ) : (

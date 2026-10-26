@@ -40,7 +40,7 @@ export default function CuratorialText({ text }: Props) {
         <div className="max-w-2xl">
             <div
                 ref={textRef}
-                className="whitespace-pre-line text-sm leading-7 text-neutral-700 sm:text-base sm:leading-8"
+                className="whitespace-pre-line text-justify text-sm leading-7 text-neutral-700 sm:text-base sm:leading-8"
                 style={{
                     maxHeight: expanded ? 'none' : '12rem',
                     overflow: expanded ? 'visible' : 'hidden',

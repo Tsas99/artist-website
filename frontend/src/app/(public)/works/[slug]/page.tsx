@@ -241,7 +241,7 @@ export default async function WorkDetailPage({
           <section>
             {work.description && (
               <div className="max-w-3xl">
-                <p className="whitespace-pre-line text-base leading-8 text-neutral-700 sm:text-lg">
+                <p className="whitespace-pre-line text-justify text-base leading-8 text-neutral-700 sm:text-lg">
                   {work.description}
                 </p>
               </div>

@@ -236,12 +236,7 @@ export default function HomeMediaManager() {
                 );
             }
 
-            setItems((current) =>
-                current.filter(
-                    (item) =>
-                        item.id !== id,
-                ),
-            );
+            await loadItems();
         } catch (error) {
             console.error(error);
 
